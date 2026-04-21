@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#2563eb">
+<title>YourLife 資産形成シミュレーター</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Playfair+Display:wght@700&display=swap');
+:root{
+  --bg:#f0f4ff;--bg2:#ffffff;
+  --accent:#2563eb;--accent2:#7c3aed;--accent-light:#dbeafe;
+  --gold:#d97706;--green:#059669;--red:#dc2626;
+  --text:#1e293b;--text2:#64748b;--text3:#94a3b8;
+  --border:#e2e8f0;--card:#ffffff;
+  --shadow:0 2px 16px rgba(37,99,235,.08);
+  --r:18px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-top:env(safe-area-inset-top,0px);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Noto Sans JP',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  overscroll-behavior:none;
+}
+header{
+  background:#fff;border-bottom:1px solid var(--border);
+  padding:calc(12px + var(--safe-top)) 16px 12px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:0 1px 8px rgba(37,99,235,.07);
+  position:sticky;top:0;z-index:200;
+}
+.lmark{
+  width:40px;height:40px;min-width:40px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:22px;color:#fff;
+  box-shadow:0 3px 10px rgba(37,99,235,.3);
+}
+.ltxt h1{font-size:15px;font-weight:700;color:var(--text);line-height:1.2;}
+.ltxt p{font-size:9px;color:var(--text2);letter-spacing:.06em;margin-top:2px;}
+.wrap{max-width:680px;margin:0 auto;padding:20px 14px calc(40px + var(--safe-bottom));}
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.pbw{flex:1;background:#e2e8f0;border-radius:99px;height:6px;overflow:hidden;}
+.pb{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .5s cubic-bezier(.16,1,.3,1);}
+.prog-txt{font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap;min-width:36px;text-align:right;}
+.sdots{display:flex;justify-content:center;gap:6px;margin-bottom:20px;}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s;}
+.sdot.done{background:var(--green);}
+.sdot.active{background:var(--accent);width:22px;border-radius:4px;}
+.qc{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:24px 18px 22px;
+  box-shadow:var(--shadow);
+  animation:fadeUp .35s cubic-bezier(.16,1,.3,1);
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.qph{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  color:var(--accent);text-transform:uppercase;
+  background:var(--accent-light);padding:4px 10px;border-radius:99px;
+  margin-bottom:14px;
+}
+.qt{font-size:19px;font-weight:700;line-height:1.45;margin-bottom:6px;color:var(--text);}
+.qs{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.55;}
+.chs{display:flex;flex-direction:column;gap:10px;}
+.cb{
+  background:#f8fafc;border:2px solid var(--border);border-radius:14px;
+  padding:15px 16px;color:var(--text);font-size:15px;
+  font-family:'Noto Sans JP',sans-serif;font-weight:500;
+  cursor:pointer;text-align:left;
+  transition:all .12s;display:flex;align-items:center;gap:12px;
+  -webkit-appearance:none;width:100%;min-height:58px;
+  -webkit-user-select:none;user-select:none;
+}
+.cb:active{transform:scale(.975);border-color:var(--accent);background:var(--accent-light);}
+.cb.sel{border-color:var(--accent);background:var(--accent-light);color:var(--accent);}
+.cb.sel .ci{background:var(--accent);color:#fff;}
+.ci{
+  width:32px;height:32px;min-width:32px;border-radius:9px;
+  background:#e0eaff;display:flex;align-items:center;
+  justify-content:center;font-size:16px;transition:all .12s;
+}
+.auto-hint{font-size:11px;color:var(--text3);text-align:center;margin-top:12px;animation:pulse 1.5s ease infinite;}
+@keyframes pulse{0%,100%{opacity:.5}50%{opacity:1}}
+/* ── AGE INPUT ── */
+.age-display{
+  background:#f0f4ff;border:3px solid var(--border);border-radius:16px;
+  padding:18px 20px;margin-bottom:16px;
+  display:flex;align-items:baseline;justify-content:center;gap:8px;
+  transition:border-color .2s;
+}
+.age-display.filled{border-color:var(--accent);background:var(--accent-light);}
+.age-display.error{border-color:var(--red);background:#fef2f2;}
+.age-num{
+  font-family:'Playfair Display',serif;
+  font-size:64px;line-height:1;font-weight:700;
+  color:var(--text3);transition:color .2s;min-width:100px;text-align:center;
+}
+.age-num.filled{color:var(--accent);}
+.age-unit-lbl{font-size:20px;font-weight:700;color:var(--text2);}
+.age-err-msg{
+  font-size:12px;color:var(--red);font-weight:600;
+  text-align:center;margin-top:-10px;margin-bottom:10px;
+  min-height:18px;
+}
+/* Numpad grid */
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.npk{
+  background:#fff;border:2px solid var(--border);border-radius:14px;
+  padding:0;height:60px;
+  font-size:22px;font-weight:700;color:var(--text);
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all .1s;-webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.npk:active{transform:scale(.93);background:var(--accent-light);border-color:var(--accent);color:var(--accent);}
+.npk.del{font-size:18px;color:var(--text2);}
+.npk.del:active{color:var(--red);border-color:var(--red);background:#fef2f2;}
+.npk.zero{grid-column:1/3;}
+.age-next-btn{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border:none;border-radius:14px;padding:16px 28px;
+  color:#fff;font-size:16px;font-weight:700;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;width:100%;
+  min-height:56px;box-shadow:0 4px 14px rgba(37,99,235,.3);
+  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.age-next-btn:active{transform:scale(.97);}
+.age-next-btn:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none;}
+.lod{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;gap:16px;}
+.sp{width:44px;height:44px;border:4px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lod-steps{display:flex;flex-direction:column;gap:8px;width:100%;max-width:260px;}
+.lod-step{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text3);}
+.lod-step.on{color:var(--accent);font-weight:600;}
+.lod-step-dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.lod-step.on .lod-step-dot{background:var(--accent);}
+#rpage{display:none;animation:fadeUp .5s cubic-bezier(.16,1,.3,1);}
+.rh{text-align:center;margin-bottom:20px;}
+.rh h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:5px;color:var(--text);line-height:1.3;}
+.rh p{color:var(--text2);font-size:12px;}
+.diff-banner{
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:var(--r);padding:22px;margin-bottom:14px;
+  text-align:center;box-shadow:0 6px 24px rgba(37,99,235,.28);
+}
+.diff-banner .dl{font-size:11px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.75);margin-bottom:6px;}
+.diff-banner .da{font-family:'Playfair Display',serif;font-size:38px;color:#fff;line-height:1;}
+.diff-banner .ds{font-size:11px;color:rgba(255,255,255,.75);margin-top:5px;}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.cc{background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:18px 14px;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.cc.best{border-color:var(--accent);box-shadow:0 4px 20px rgba(37,99,235,.18);}
+.cc.best::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.clb{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.clb.now{color:var(--text3);}
+.clb.bl{color:var(--accent);}
+.ca{font-family:'Playfair Display',serif;font-size:clamp(20px,5vw,32px);line-height:1;margin-bottom:3px;}
+.ca.now{color:var(--text3);}
+.ca.best{color:var(--accent);}
+.cu{font-size:10px;color:var(--text2);margin-bottom:8px;}
+.db{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(124,58,237,.1));border:1.5px solid rgba(37,99,235,.25);border-radius:99px;padding:4px 9px;font-size:11px;font-weight:700;color:var(--accent);}
+.cw{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:18px 14px;margin-bottom:14px;box-shadow:var(--shadow);}
+.ct{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px;color:var(--text);}
+canvas{width:100%!important;}
+.sec-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;letter-spacing:.05em;}
+.bgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.bi{background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px 12px;box-shadow:var(--shadow);}
+.bi.total{border:2px solid var(--accent);background:linear-gradient(135deg,rgba(37,99,235,.04),rgba(124,58,237,.04));grid-column:1/-1;}
+.bii{font-size:22px;margin-bottom:5px;}
+.bil{font-size:11px;color:var(--text2);margin-bottom:4px;line-height:1.4;}
+.biv{font-size:18px;font-weight:700;color:var(--green);}
+.biv.z{color:var(--text3);}
+.tl{display:flex;gap:10px;margin-bottom:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+.tl::-webkit-scrollbar{display:none;}
+.tli{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;min-width:115px;flex-shrink:0;box-shadow:var(--shadow);}
+.tly{font-size:10px;color:var(--text2);margin-bottom:3px;}
+.tlv{font-size:18px;font-weight:700;color:var(--accent);}
+.tld{font-size:10px;color:var(--green);margin-top:2px;font-weight:500;}
+.al{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 16px;box-shadow:var(--shadow);margin-bottom:14px;}
+.al h3{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);}
+.ai{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);}
+.ai:last-child{border-bottom:none;padding-bottom:0;}
+.an{width:24px;height:24px;min-width:24px;border-radius:7px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-top:1px;}
+.at{font-size:13px;line-height:1.65;color:var(--text);}
+.at strong{color:var(--accent);}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;border-radius:14px;padding:15px 22px;color:#fff;font-size:14px;font-weight:700;font-family:'Noto Sans JP',sans-serif;cursor:pointer;margin-top:4px;width:100%;min-height:54px;box-shadow:0 4px 14px rgba(37,99,235,.3);}
+.share-btn:active{opacity:.85;transform:scale(.98);}
+.rbtn{background:#fff;border:2px solid var(--border);border-radius:14px;padding:15px 22px;color:var(--text2);font-size:14px;font-family:'Noto Sans JP',sans-serif;cursor:pointer;margin-top:10px;transition:all .2s;width:100%;min-height:54px;}
+.rbtn:active{border-color:var(--accent);color:var(--accent);}
+@media(min-width:640px){
+  .wrap{padding:32px 24px 60px;}
+  .qc{padding:32px 28px;}
+  .bgrid{grid-template-columns:repeat(3,1fr);}
+  .cb:hover{border-color:var(--accent);background:var(--accent-light);}
+  .qt{font-size:21px;}
+  header{padding:14px 32px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="lmark">Y</div>
+  <div class="ltxt">
+    <h1>YourLife 資産形成シミュレーター</h1>
+    <p>ASSET FORMATION SIMULATOR — YOURLIFE CO., LTD.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="prog-row" id="prog-row">
+    <div class="pbw"><div class="pb" id="pb" style="width:0%"></div></div>
+    <div class="prog-txt" id="prog-txt">1 / 9</div>
+  </div>
+  <div class="sdots" id="sdots"></div>
+  <div id="qpage"><div class="qc" id="qc"></div></div>
+  <div id="rpage"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const ANS={};
+const QS=[
+  {
+    id:'age',ph:'基本情報',
+    q:'現在の年齢を入力してください',
+    s:'65歳までの期間を正確に計算します',
+    type:'number',min:20,max:64
+  },
+  {id:'income',ph:'基本情報',q:'世帯年収（手取りベース）を入力してください',s:'万円単位で入力してください（例：500）。税効果や保険適正額の計算に使います',type:'number',min:100,max:5000,maxDigits:4,unit:'万円'},
+  {id:'family',ph:'家族構成',q:'家族構成を教えてください',s:'必要な保障額の算出に使います',type:'choices',cs:[
+    {l:'独身',v:'single',i:'👤'},{l:'夫婦のみ',v:'couple',i:'👫'},
+    {l:'子ども1人（〜12歳）',v:'cy',i:'👨‍👩‍👧'},{l:'子ども1人（13〜18歳）',v:'ct',i:'👨‍👩‍👦'},
+    {l:'子ども2人以上',v:'c2',i:'👨‍👩‍👧‍👦'}]},
+  {id:'insurance',ph:'現在の保険',q:'現在の月々の保険料合計は？',s:'だいたいの金額で大丈夫です',type:'choices',cs:[
+    {l:'5,000円未満',v:3000,i:'🛡️'},{l:'5,000〜10,000円',v:7500,i:'🛡️'},
+    {l:'10,000〜20,000円',v:15000,i:'🛡️'},{l:'20,000〜30,000円',v:25000,i:'🛡️'},
+    {l:'30,000〜40,000円',v:35000,i:'🛡️'},{l:'40,000〜50,000円',v:45000,i:'🛡️'},
+    {l:'50,000円以上',v:65000,i:'🛡️'}]},
+  {id:'savtype',ph:'現在の保険',q:'貯蓄型保険（養老・ドル建て終身など）に加入していますか？',s:'NISA転換効果を算出します',type:'choices',cs:[
+    {l:'はい・加入している',v:'yes',i:'📋'},{l:'いいえ・掛け捨てのみ',v:'no',i:'✅'},{l:'わからない',v:'unk',i:'❓'}]},
+  {id:'nisa_tsumitate',ph:'NISA状況',q:'NISA積立枠：月の積立金額を入力してください',s:'まだ始めていない場合は「0」を入力してください（上限：月10万円）',type:'number',min:0,max:10,maxDigits:2,unit:'万円/月'},
+  {id:'nisa_lump',ph:'NISA状況',q:'NISA成長投資枠：すでに拠出している金額を入力してください',s:'まだ拠出していない場合は「0」を入力してください（上限：240万円）',type:'number',min:0,max:240,maxDigits:3,unit:'万円'},
+  {id:'nisa_surplus',ph:'NISA状況',q:'今後、投資に回したい余剰資金はいくらですか？',s:'NISA成長投資枠への追加拠出に充てる金額の目安を入力してください（既存拠出と合計240万円が上限）',type:'number',min:0,max:240,maxDigits:3,unit:'万円'},
+  {id:'housing',ph:'住まい',q:'現在の住まいの状況を教えてください',s:'住宅資産効果を算出します',type:'choices',cs:[
+    {l:'賃貸（購入検討なし）',v:'rn',i:'🏢'},{l:'賃貸（購入を検討中）',v:'ry',i:'🏢'},
+    {l:'持ち家（住み替え予定なし）',v:'os',i:'🏠'},{l:'持ち家（住み替えを検討中）',v:'om',i:'🏠'}]},
+  {id:'re',ph:'投資不動産',q:'投資用不動産の保有・関心状況は？',s:'与信枠と資産形成効果を計算します',type:'choices',cs:[
+    {l:'持っていない・興味なし',v:'none',i:'🔴'},{l:'持っていないが興味あり',v:'int',i:'🟡'},
+    {l:'1件保有中',v:'one',i:'🟢'},{l:'2件以上保有中',v:'multi',i:'⭐'}]},
+
+];
+
+let cur=0;
+let numVal=''; // generic numpad buffer
+
+function renderDots(){
+  const el=document.getElementById('sdots');
+  el.innerHTML=QS.map((_,i)=>`<div class="sdot${i<cur?' done':i===cur?' active':''}"></div>`).join('');
+}
+
+function renderQ(){
+  const q=QS[cur];
+  const pct=Math.round(cur/QS.length*100);
+  document.getElementById('pb').style.width=pct+'%';
+  document.getElementById('prog-txt').textContent=(cur+1)+' / '+QS.length;
+  renderDots();
+  const c=document.getElementById('qc');
+
+  if(q.type==='number'){
+    numVal='';
+    const unit=q.unit||'歳';
+    // font size: shrink for longer units
+    const unitSize=unit.length>2?'14px':'20px';
+    c.innerHTML=`
+      <div class="qph">${q.ph} — ${cur+1}/${QS.length}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qs">${q.s}</div>
+      <div class="age-display" id="age-disp">
+        <span class="age-num" id="age-num">--</span>
+        <span class="age-unit-lbl" style="font-size:${unitSize}">${unit}</span>
+      </div>
+      <div class="age-err-msg" id="age-err"></div>
+      <div class="numpad">
+        <button class="npk" ontouchstart="" onclick="npTap('7')">7</button>
+        <button class="npk" ontouchstart="" onclick="npTap('8')">8</button>
+        <button class="npk" ontouchstart="" onclick="npTap('9')">9</button>
+        <button class="npk" ontouchstart="" onclick="npTap('4')">4</button>
+        <button class="npk" ontouchstart="" onclick="npTap('5')">5</button>
+        <button class="npk" ontouchstart="" onclick="npTap('6')">6</button>
+        <button class="npk" ontouchstart="" onclick="npTap('1')">1</button>
+        <button class="npk" ontouchstart="" onclick="npTap('2')">2</button>
+        <button class="npk" ontouchstart="" onclick="npTap('3')">3</button>
+        <button class="npk zero" ontouchstart="" onclick="npTap('0')">0</button>
+        <button class="npk del" ontouchstart="" onclick="npDel()">⌫</button>
+      </div>
+      <button class="age-next-btn" id="age-nb" onclick="submitNum()" disabled>次へ →</button>`;
+  } else {
+    let h=`<div class="qph">${q.ph} — ${cur+1}/${QS.length}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qs">${q.s}</div>
+      <div class="chs">`;
+    q.cs.forEach((ch,i)=>{
+      const vStr=typeof ch.v==='string'?`'${ch.v}'`:ch.v;
+      h+=`<button class="cb" ontouchstart="" onclick="pick(${i},${vStr})"><span class="ci">${ch.i}</span>${ch.l}</button>`;
+    });
+    h+=`</div><p class="auto-hint">タップで自動的に次へ進みます</p>`;
+    c.innerHTML=h;
+  }
+
+  c.style.animation='none';c.offsetHeight;c.style.animation='';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function npTap(d){
+  const q=QS[cur];
+  const maxDigits=q.maxDigits||2;
+  if(numVal.length>=maxDigits)return;
+  // prevent leading zeros — but allow plain "0" when min=0
+  if(numVal==='0' && d==='0')return;
+  if(numVal==='0' && d!=='0' && q.min>0)return;
+  if(numVal==='0' && d!=='0'){ numVal=d; updateNumDisplay(); return; }
+  numVal+=d;
+  updateNumDisplay();
+}
+function npDel(){
+  numVal=numVal.slice(0,-1);
+  updateNumDisplay();
+}
+function updateNumDisplay(){
+  const q=QS[cur];
+  const disp=document.getElementById('age-disp');
+  const numEl=document.getElementById('age-num');
+  const errEl=document.getElementById('age-err');
+  const nb=document.getElementById('age-nb');
+  if(!numEl)return;
+  const v=parseInt(numVal)||0;
+  // shrink font for 4-digit numbers
+  numEl.style.fontSize=numVal.length>=4?'44px':numVal.length===3?'52px':'64px';
+  numEl.textContent=numVal===''?'--':Number(numVal).toLocaleString();
+  if(numVal===''){
+    disp.className='age-display';numEl.className='age-num';
+    errEl.textContent='';nb.disabled=true;
+  } else if(v<q.min||v>q.max){
+    disp.className='age-display error';numEl.className='age-num';
+    errEl.textContent=`${q.min}〜${q.max.toLocaleString()}の範囲で入力してください`;nb.disabled=true;
+  } else {
+    disp.className='age-display filled';numEl.className='age-num filled';
+    errEl.textContent='';nb.disabled=false;
+  }
+}
+function submitNum(){
+  const q=QS[cur];
+  const v=parseInt(numVal);
+  if(isNaN(v)||v<q.min||v>q.max)return;
+  ANS[q.id]=v;cur++;
+  if(cur>=QS.length){showLoading();setTimeout(showResult,1500);}
+  else renderQ();
+}
+
+function pick(i,v){
+  ANS[QS[cur].id]=v;
+  document.querySelectorAll('.cb').forEach((b,j)=>b.classList.toggle('sel',j===i));
+  setTimeout(()=>{
+    cur++;
+    if(cur>=QS.length){showLoading();setTimeout(showResult,1500);}
+    else renderQ();
+  },270);
+}
+
+function showLoading(){
+  document.getElementById('prog-row').style.display='none';
+  document.getElementById('sdots').style.display='none';
+  document.getElementById('qpage').innerHTML=`
+    <div class="lod">
+      <div class="sp"></div>
+      <p style="color:var(--text2);font-size:14px;font-weight:600">資産シミュレーション計算中…</p>
+      <div class="lod-steps">
+        <div class="lod-step on"><div class="lod-step-dot"></div>保険料・削減効果を試算中</div>
+        <div class="lod-step" id="ls2"><div class="lod-step-dot"></div>NISA複利効果を計算中</div>
+        <div class="lod-step" id="ls3"><div class="lod-step-dot"></div>不動産・副収入を加算中</div>
+        <div class="lod-step" id="ls4"><div class="lod-step-dot"></div>65歳時点の資産を集計中</div>
+      </div>
+    </div>`;
+  setTimeout(()=>{const e=document.getElementById('ls2');if(e)e.classList.add('on');},450);
+  setTimeout(()=>{const e=document.getElementById('ls3');if(e)e.classList.add('on');},850);
+  setTimeout(()=>{const e=document.getElementById('ls4');if(e)e.classList.add('on');},1200);
+}
+
+function nfv(m,y,r){
+  if(m<=0||y<=0)return 0;
+  const n=y*12,rm=r/12;
+  return m*((Math.pow(1+rm,n)-1)/rm);
+}
+function calc(){
+  const age=ANS.age,inc=ANS.income,yrs=Math.max(1,65-age);
+  const ins=ANS.insurance;
+  const optIns=Math.round(inc*10000*0.05/12);
+  const red=Math.max(0,ins-optIns);
+  const redM=red/10000;
+  const surr=ANS.savtype==='yes'?120:0;
+  const insNfv=nfv(redM,yrs,.06);
+  const surrFv=surr*Math.pow(1.06,yrs);
+  // NISA積立枠：入力値（万円/月）をそのまま使用
+  const nm=ANS.nisa_tsumitate||0;               // 現在の積立月額（万円）
+  const nlump=ANS.nisa_lump||0;                 // 成長投資枠拠出済額（万円）
+  const nsurplus=ANS.nisa_surplus||0;           // 今後追加拠出する余剰資金（万円）
+  const nlumpTotal=Math.min(240,nlump+nsurplus); // 拠出済＋余剰資金（上限240万）
+  const om=Math.min(10,inc*0.1/12);             // 最適化後の積立月額上限（年収の10%/12）
+  const cnfv=nfv(nm,yrs,.06);                   // 積立枠：現状の将来額
+  const clumpFv=nlump*Math.pow(1.06,yrs);       // 成長枠：拠出済のみの将来額（年6%）
+  const onfv=nfv(om,yrs,.06);                   // 積立枠：最適化後の将来額
+  const olumpFv=nlumpTotal*Math.pow(1.06,yrs);  // 成長枠：拠出済＋余剰資金の将来額
+  const ndiff=Math.max(0,(onfv+olumpFv)-(cnfv+clumpFv));
+  const cr=inc*8;
+  const pc=ANS.re==='int'?Math.floor(cr/1800):ANS.re==='one'?1:ANS.re==='multi'?2:0;
+  const cyc=Math.floor(yrs/6);
+  const reP=ANS.re==='none'?0:pc*350*cyc;
+  const reCur=(ANS.re==='one'||ANS.re==='multi')?(ANS.re==='one'?1:2)*350*cyc*0.4:0;
+  const hcyc=Math.floor(yrs/10);
+  const hB=['ry','om'].includes(ANS.housing)?1295*hcyc:0;
+  const hCur=ANS.housing==='os'?1295*hcyc*0.25:0;
+
+  const now=cnfv+clumpFv+reCur+hCur;
+  const best=onfv+olumpFv+insNfv+surrFv+reP+hB;
+  return{age,yrs,inc,nm,nlump,nsurplus,nlumpTotal,om,red,redM,insNfv,surrFv,cnfv,clumpFv,onfv,olumpFv,ndiff,pc,reP,reCur,hB,hCur,now,best,diff:best-now};
+}
+function fmt(v){return Math.round(v).toLocaleString();}
+
+function showResult(){
+  const r=calc();
+  document.getElementById('qpage').style.display='none';
+  const rp=document.getElementById('rpage');rp.style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+
+  const tp=[];
+  for(let y=5;y<=r.yrs;y+=5){
+    const tAge=r.age+y;if(tAge>65)break;
+    const frac=y/r.yrs;
+    tp.push({l:tAge+'歳',n:Math.round(r.now*frac*0.88),b:Math.round(r.best*frac)});
+  }
+  if(tp.length===0||tp[tp.length-1].l!=='65歳'){
+    tp.push({l:'65歳',n:Math.round(r.now),b:Math.round(r.best)});
+  } else {
+    tp[tp.length-1].n=Math.round(r.now);tp[tp.length-1].b=Math.round(r.best);
+  }
+
+  const acts=[];
+  if(r.red>0)acts.push(`<strong>保険の見直し</strong>：月${r.redM.toFixed(1)}万円削減しNISAへ振り替えで、65歳時点＋${fmt(r.insNfv)}万円の効果。`);
+  if(r.ndiff>10)acts.push(`<strong>NISA最適化</strong>：積立枠を月${r.nm}万円→月${r.om.toFixed(1)}万円に増額＋成長投資枠を活用することで＋${fmt(r.ndiff)}万円の差が生まれます（参考値）。`);
+  if(r.reP>0&&ANS.re==='int')acts.push(`<strong>投資用不動産</strong>：与信枠${(r.inc*8).toLocaleString()}万円で${r.pc}件購入→${r.yrs}年で＋${fmt(r.reP)}万円。`);
+  if(r.hB>0)acts.push(`<strong>住み替え戦略</strong>：売却益＋控除＋手数料削減で＋${fmt(r.hB)}万円。`);
+  if(acts.length===0)acts.push('現在の資産形成は十分に最適化されています。このまま継続しましょう。');
+
+  rp.innerHTML=`
+  <div class="rh">
+    <h2>65歳時点の資産シミュレーション</h2>
+    <p>${r.age}歳 → 65歳（残り${r.yrs}年）のシナリオ比較</p>
+  </div>
+  <div class="diff-banner">
+    <div class="dl">最適化で増える可能性がある資産（参考値）</div>
+    <div class="da">＋${fmt(r.diff)}万円</div>
+    <div class="ds">現状のままと最適化後の差額</div>
+  </div>
+  <div class="cgrid">
+    <div class="cc">
+      <div class="clb now">現状のまま</div>
+      <div class="ca now">${fmt(r.now)}</div>
+      <div class="cu">万円（65歳時点）</div>
+      <p style="font-size:10px;color:var(--text2);line-height:1.55">現在の保険・NISA状況を継続した場合</p>
+    </div>
+    <div class="cc best">
+      <div class="clb bl">最適化後</div>
+      <div class="ca best">${fmt(r.best)}</div>
+      <div class="cu">万円（65歳時点）</div>
+      <div class="db">+${fmt(r.diff)}万円の差</div>
+    </div>
+  </div>
+  <div class="cw">
+    <div class="ct">📈 資産推移（〜65歳）</div>
+    <canvas id="lc" role="img" aria-label="現状と最適化後の資産推移グラフ"></canvas>
+  </div>
+  <div class="cw">
+    <div class="ct">📊 65歳時点の資産構成比較</div>
+    <canvas id="bc" role="img" aria-label="65歳時点の資産構成比較棒グラフ"></canvas>
+  </div>
+  <div class="sec-label" style="margin-top:4px">施策別インパクト（改善後）</div>
+  <div class="bgrid">
+    <div class="bi"><div class="bii">🛡️</div><div class="bil">保険→NISA転換</div><div class="biv ${(r.insNfv+r.surrFv)<10?'z':''}">${fmt(r.insNfv+r.surrFv)}万円</div></div>
+    <div class="bi"><div class="bii">📈</div><div class="bil">NISA積立枠（最適化）</div><div class="biv">${fmt(r.onfv)}万円</div></div>
+    <div class="bi"><div class="bii">💹</div><div class="bil">NISA成長枠（拠出済${r.nlump}万＋余剰${r.nsurplus}万＝${r.nlumpTotal}万）</div><div class="biv ${r.olumpFv<10?'z':''}">${fmt(r.olumpFv)}万円</div></div>
+    <div class="bi"><div class="bii">🏗️</div><div class="bil">投資用不動産</div><div class="biv ${r.reP<10?'z':''}">${fmt(r.reP)}万円</div></div>
+    <div class="bi"><div class="bii">🏠</div><div class="bil">住宅住み替え</div><div class="biv ${r.hB<10?'z':''}">${fmt(r.hB)}万円</div></div>
+    <div class="bi total"><div class="bii">🎯</div><div class="bil">合計インパクト</div><div class="biv">${fmt(r.diff)}万円</div></div>
+  </div>
+  <div class="sec-label">時間軸別の資産見込み</div>
+  <div class="tl">${tp.map(p=>`<div class="tli"><div class="tly">${p.l}</div><div class="tlv">${fmt(p.b)}万円</div><div class="tld">現状比 +${fmt(p.b-p.n)}万円</div></div>`).join('')}</div>
+  <div class="al">
+    <h3>🎯 優先アクション</h3>
+    ${acts.map((a,i)=>`<div class="ai"><span class="an">${i+1}</span><span class="at">${a}</span></div>`).join('')}
+  </div>
+  <button class="share-btn" onclick="shareResult(${r.best},${r.now},${r.age})">📤 結果をシェア・保存する</button>
+  <button class="rbtn" onclick="restart()">← もう一度シミュレーションする</button>
+  <p style="margin-top:20px;font-size:10px;color:var(--text3);line-height:2.0;text-align:center;padding:0 4px">
+    ※ 本シミュレーションはすべて参考値です。将来の資産額を保証するものではありません。<br>
+    ※ NISA運用利回りは年6%（インデックス参考値）を使用。<br>
+    ※ 詳細は担当コンサルタントへご相談ください。
+  </p>`;
+
+  new Chart(document.getElementById('lc'),{
+    type:'line',
+    data:{
+      labels:tp.map(p=>p.l),
+      datasets:[
+        {label:'現状のまま',data:tp.map(p=>p.n),borderColor:'rgba(148,163,184,.9)',backgroundColor:'rgba(148,163,184,.08)',fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'rgba(148,163,184,.9)'},
+        {label:'最適化後',data:tp.map(p=>p.b),borderColor:'rgba(37,99,235,.95)',backgroundColor:'rgba(37,99,235,.08)',fill:true,tension:.4,pointRadius:5,pointBackgroundColor:'rgba(37,99,235,.95)',borderWidth:2.5}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#64748b',font:{size:11,family:'Noto Sans JP'},boxWidth:12,padding:8}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${Math.round(c.raw).toLocaleString()}万円`}}},
+      scales:{
+        x:{ticks:{color:'#64748b',font:{size:11}},grid:{color:'#f1f5f9'}},
+        y:{ticks:{color:'#64748b',font:{size:11},callback:v=>v.toLocaleString()+'万'},grid:{color:'#f1f5f9'}}
+      }
+    }
+  });
+
+  new Chart(document.getElementById('bc'),{
+    type:'bar',
+    data:{
+      labels:['現状のまま','最適化後'],
+      datasets:[
+        {label:'NISA積立',data:[r.cnfv,r.onfv],backgroundColor:['rgba(99,102,241,.4)','rgba(99,102,241,.85)'],borderRadius:4},
+        {label:'保険→NISA転換',data:[0,r.insNfv+r.surrFv],backgroundColor:['transparent','rgba(37,99,235,.85)'],borderRadius:4},
+        {label:'投資不動産',data:[r.reCur,r.reP],backgroundColor:['rgba(217,119,6,.35)','rgba(217,119,6,.9)'],borderRadius:4},
+        {label:'住宅住み替え',data:[r.hCur,r.hB],backgroundColor:['rgba(5,150,105,.3)','rgba(5,150,105,.85)'],borderRadius:4}
+        ]
+    },
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#64748b',font:{size:10,family:'Noto Sans JP'},boxWidth:10,padding:7}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${Math.round(c.raw).toLocaleString()}万円`}}},
+      scales:{
+        x:{stacked:true,ticks:{color:'#64748b',font:{size:11}},grid:{color:'#f1f5f9'}},
+        y:{stacked:true,ticks:{color:'#64748b',font:{size:11},callback:v=>v.toLocaleString()+'万'},grid:{color:'#f1f5f9'}}
+      }
+    }
+  });
+}
+
+function shareResult(best,now,age){
+  const text=`【YourLife 資産形成シミュレーション結果】\n\n${age}歳から最適化した場合、65歳時点で\n▶ 現状のまま：${Math.round(now).toLocaleString()}万円\n▶ 最適化後：${Math.round(best).toLocaleString()}万円\n差額：＋${Math.round(best-now).toLocaleString()}万円の可能性があります\n\n※参考値・シミュレーションです`;
+  if(navigator.share){
+    navigator.share({title:'YourLife 資産形成シミュレーター',text}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text).then(()=>alert('結果をクリップボードにコピーしました')).catch(()=>alert(text));
+  }
+}
+
+function restart(){
+  Object.keys(ANS).forEach(k=>delete ANS[k]);cur=0;numVal='';
+  document.getElementById('rpage').style.display='none';
+  document.getElementById('qpage').style.display='';
+  document.getElementById('qpage').innerHTML='<div class="qc" id="qc"></div>';
+  document.getElementById('prog-row').style.display='';
+  document.getElementById('sdots').style.display='';
+  renderQ();
+}
+
+renderQ();
+</script>
+</body>
+</html>
