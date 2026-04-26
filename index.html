@@ -181,12 +181,6 @@ canvas{width:100%!important;}
 .bil{font-size:11px;color:var(--text2);margin-bottom:4px;line-height:1.4;}
 .biv{font-size:18px;font-weight:700;color:var(--green);}
 .biv.z{color:var(--text3);}
-.tl{display:flex;gap:10px;margin-bottom:14px;overflow-x:auto;padding-bottom:8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
-.tl::-webkit-scrollbar{display:none;}
-.tli{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px;min-width:115px;flex-shrink:0;box-shadow:var(--shadow);}
-.tly{font-size:10px;color:var(--text2);margin-bottom:3px;}
-.tlv{font-size:18px;font-weight:700;color:var(--accent);}
-.tld{font-size:10px;color:var(--green);margin-top:2px;font-weight:500;}
 .al{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:20px 16px;box-shadow:var(--shadow);margin-bottom:14px;}
 .al h3{font-size:13px;font-weight:700;margin-bottom:12px;color:var(--text);}
 .ai{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);}
@@ -298,6 +292,74 @@ canvas{width:100%!important;}
   transition:all .15s;
 }
 .back-btn:active{background:var(--accent-light);border-color:var(--accent);}
+
+/* NISA split input */
+.nisa-split-wrap{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px;}
+.nisa-box{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.nisa-box-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.05em;}
+.nisa-digit{
+  width:80px;height:80px;border:3px solid var(--border);border-radius:16px;
+  background:#f8fafc;
+  font-family:'Playfair Display',serif;font-size:42px;font-weight:700;
+  color:var(--text3);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;cursor:pointer;
+}
+.nisa-digit.active{border-color:var(--accent);background:var(--accent-light);box-shadow:0 0 0 3px rgba(37,99,235,.15);}
+.nisa-digit.filled{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.nisa-sep{font-size:28px;font-weight:700;color:var(--text3);padding-top:28px;}
+.nisa-unit{font-size:18px;font-weight:700;color:var(--text2);padding-top:28px;}
+.nisa-preview{
+  text-align:center;font-size:13px;color:var(--text2);
+  margin-bottom:12px;min-height:20px;
+}
+.nisa-preview strong{color:var(--accent);font-size:15px;}
+
+/* 損しないためにボタン */
+.action-trigger-wrap{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px;margin-bottom:0;}
+.action-trigger-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  background:linear-gradient(135deg,#e85d26,#c9933a);
+  border:none;border-radius:14px;padding:12px 14px;
+  color:#fff;font-family:'Noto Sans JP',sans-serif;cursor:pointer;
+  box-shadow:0 4px 14px rgba(232,93,38,.35);
+  transition:all .15s;flex:1;min-height:72px;
+  animation:pulseBtn 2s ease infinite;
+}
+@keyframes pulseBtn{0%,100%{box-shadow:0 4px 14px rgba(232,93,38,.35)}50%{box-shadow:0 4px 22px rgba(232,93,38,.6)}}
+.action-trigger-btn:active{transform:scale(.97);opacity:.9;}
+.action-trigger-icon{font-size:24px;line-height:1;}
+.action-trigger-label{font-size:12px;font-weight:700;line-height:1.4;text-align:center;}
+/* 優先アクション以降のセクション（初期非表示）*/
+#action-section{display:none;animation:fadeUp .4s cubic-bezier(.16,1,.3,1);}
+
+/* 申し込みCTA */
+.cta-block{
+  background:linear-gradient(135deg,#1a1915 0%,#2d2a22 100%);
+  border-radius:var(--r);padding:24px 20px;margin-top:6px;margin-bottom:4px;
+  text-align:center;
+  box-shadow:0 6px 24px rgba(0,0,0,.25);
+}
+.cta-block-eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;color:#c9933a;text-transform:uppercase;margin-bottom:10px;}
+.cta-block-title{font-size:18px;font-weight:700;color:#fff;line-height:1.45;margin-bottom:6px;}
+.cta-block-sub{font-size:12px;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px;}
+.cta-apply-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:linear-gradient(135deg,#c9933a,#e8b45a);
+  border:none;border-radius:14px;
+  padding:17px 24px;width:100%;
+  color:#1a1915;font-size:15px;font-weight:700;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 4px 16px rgba(201,147,58,.45);
+  transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.cta-apply-btn:active{opacity:.85;transform:scale(.97);}
+.cta-apply-arrow{font-size:18px;}
+.cta-note{font-size:10px;color:rgba(255,255,255,.4);margin-top:12px;line-height:1.7;}
 @media(min-width:640px){
   .wrap{padding:32px 24px 60px;}
   .qc{padding:32px 28px;}
@@ -345,6 +407,38 @@ canvas{width:100%!important;}
     <div id="qpage"><div class="qc" id="qc"></div></div>
   </div>
   <div id="rpage"></div>
+  <!-- アクションページ（別ページ） -->
+  <div id="apage" style="display:none">
+    <div class="wrap" style="padding-top:0">
+      <button class="back-btn" id="apage-back" style="margin-top:8px">← シミュレーション結果に戻る</button>
+      <div class="diff-banner" id="apage-diff-banner" style="margin-bottom:16px"></div>
+      <div class="al">
+        <h3>🎯 優先アクション</h3>
+        <div id="apage-acts"></div>
+      </div>
+      <div class="step-modal" id="step-modal" style="display:none">
+        <div class="step-modal-inner" id="step-modal-inner"></div>
+      </div>
+      <!-- 申し込みCTA -->
+      <div class="cta-block">
+        <div class="cta-block-eyebrow">Next Step</div>
+        <div class="cta-block-title">この差額を現実にするために<br>プロのコンサルに相談する</div>
+        <div class="cta-block-sub">シミュレーション結果をもとに、あなたに最適な<br>資産形成プランを一緒に設計します。</div>
+        <a class="cta-apply-btn" href="https://app.aitemasu.me/u/cross37freedom/afresh" target="_blank" rel="noopener">
+          <span>アフレッシュコンサルに申し込む</span>
+          <span class="cta-apply-arrow">→</span>
+        </a>
+        <div class="cta-note">無料相談・完全予約制<br>※外部サイトに移動します</div>
+      </div>
+      <button class="share-btn" id="apage-share">📤 結果をシェア・保存する</button>
+      <button class="rbtn" onclick="restart()">← もう一度シミュレーションする</button>
+      <p style="margin-top:20px;font-size:10px;color:var(--text3);line-height:2.0;text-align:center;padding:0 4px">
+        ※ 本シミュレーションはすべて参考値です。将来の資産額を保証するものではありません。<br>
+        ※ NISA運用利回りは年6%（インデックス参考値）を使用。<br>
+        ※ 詳細は担当コンサルタントへご相談ください。
+      </p>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -375,7 +469,7 @@ const QS=[
     {l:'50,000円以上',v:65000,i:'🛡️'}]},
   {id:'savtype',ph:'現在の保険',q:'貯蓄型保険（養老・ドル建て終身など）に加入していますか？',s:'NISA転換効果を算出します（※海外積立は除く）',type:'choices',cs:[
     {l:'はい・加入している',v:'yes',i:'📋'},{l:'いいえ・掛け捨てのみ',v:'no',i:'✅'},{l:'わからない',v:'unk',i:'❓'}]},
-  {id:'nisa_tsumitate',ph:'NISA状況',q:'NISA積立枠：月の積立金額を入力してください',s:'千円単位で入力してください（例：30000）。まだ始めていない場合は「0」を入力してください',type:'number',min:0,max:200000,maxDigits:6,unit:'円/月',isNisa:true},
+  {id:'nisa_tsumitate',ph:'NISA状況',q:'NISA積立枠：月の積立金額を入力してください',s:'まだ始めていない場合は両方「0」を入力してください',type:'nisa_split'},
   {id:'nisa_lump',ph:'NISA状況',q:'NISA成長投資枠：すでに拠出している金額を入力してください',s:'まだ拠出していない場合は「0」を入力してください（上限：240万円）',type:'number',min:0,max:240,maxDigits:3,unit:'万円'},
   {id:'nisa_surplus',ph:'NISA状況',q:'現在の預貯金から、一括で投資に回したい余剰資金はいくらですか？',s:'NISA成長投資枠への一括拠出に使える預貯金の目安を万円単位で入力してください',type:'number',min:0,max:9999,maxDigits:4,unit:'万円'},
   {id:'housing',ph:'住まい',q:'現在の住まいの状況を教えてください',s:'住宅資産効果を算出します',type:'choices',cs:[
@@ -418,15 +512,74 @@ function renderQ(){
 
   // ②年収設問のラベルをスコープに応じて動的変更
   if(q.id==='income'&&ANS.income_scope){
-    q=Object.assign({},q,{q:ANS.income_scope==='household'?'世帯年収（手取りベース）を入力してください':'ご自身の年収（額面）を入力してください'});
+    q=Object.assign({},q,{q:ANS.income_scope==='household'?'世帯年収（額面）を入力してください':'ご自身の年収（額面）を入力してください'});
   }
   // ②NISA積立枠：世帯スコープに応じて上限を変更
   if(q.id==='nisa_tsumitate'){
-    const nisaMax=ANS.income_scope==='household'?200000:100000;
     const nisaLabel=ANS.income_scope==='household'?'夫婦合計で上限月20万円':'上限月10万円';
-    q=Object.assign({},q,{max:nisaMax,s:'千円単位で入力してください（例：30000）。まだ始めていない場合は「0」を入力してください（'+nisaLabel+'）'});
+    q=Object.assign({},q,{nisaMax:ANS.income_scope==='household'?20:10,s:'まだ始めていない場合は両方「0」を入力してください（'+nisaLabel+'）'});
   }
-  if(q.type==='number'){
+  // NISA成長投資枠：世帯スコープに応じて上限と説明を変更
+  if(q.id==='nisa_lump'){
+    const isHH=ANS.income_scope==='household';
+    const lumpMax=isHH?480:240;
+    const lumpLabel=isHH?'夫婦2人分の上限：480万円':'上限：240万円';
+    q=Object.assign({},q,{max:lumpMax,maxDigits:3,s:'まだ拠出していない場合は「0」を入力してください（'+lumpLabel+'）'});
+  }
+  // NISA余剰資金：世帯スコープに応じて上限を変更
+  if(q.id==='nisa_surplus'){
+    const isHH=ANS.income_scope==='household';
+    const surplusNote=isHH?'（夫婦合計の成長投資枠上限：480万円）':'（成長投資枠上限：240万円）';
+    q=Object.assign({},q,{s:'NISA成長投資枠への一括拠出に使える預貯金の目安を万円単位で入力してください'+surplusNote});
+  }
+  if(q.type==='nisa_split'){
+    // 万の位・千の位を個別入力するUI
+    const nisaMax=q.nisaMax||10;
+    c.innerHTML=backHtml+`
+      <div class="qph">${q.ph} — ${cur+1}/${QS.length}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qs">${q.s}</div>
+      <div class="nisa-split-wrap">
+        <div class="nisa-box">
+          <div class="nisa-box-label">十万の位</div>
+          <div class="nisa-digit" id="nd-juman">-</div>
+        </div>
+        <div class="nisa-box">
+          <div class="nisa-box-label">万の位</div>
+          <div class="nisa-digit" id="nd-man">-</div>
+        </div>
+        <div class="nisa-sep">万</div>
+        <div class="nisa-box">
+          <div class="nisa-box-label">千の位</div>
+          <div class="nisa-digit" id="nd-sen">-</div>
+        </div>
+        <div class="nisa-unit">千円/月</div>
+      </div>
+      <div class="nisa-preview" id="nisa-preview">上の数字をテンキーで入力してください</div>
+      <div class="age-err-msg" id="age-err"></div>
+      <div class="numpad">
+        <button class="npk" ontouchstart="" onclick="nisaTap('7')">7</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('8')">8</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('9')">9</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('4')">4</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('5')">5</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('6')">6</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('1')">1</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('2')">2</button>
+        <button class="npk" ontouchstart="" onclick="nisaTap('3')">3</button>
+        <button class="npk zero" ontouchstart="" onclick="nisaTap('0')">0</button>
+        <button class="npk del" ontouchstart="" onclick="nisaDel()">⌫</button>
+      </div>
+      <button class="age-next-btn" id="age-nb" onclick="submitNisaSplit()" disabled>次へ →</button>`;
+    // 入力状態管理：十万→万→千の順
+    window._nisaStep='juman'; // 'juman', 'man', 'sen'
+    window._nisaJuman=null;
+    window._nisaMan=null;
+    window._nisaSen=null;
+    window._nisaMax=nisaMax;
+    // 十万の位をアクティブに
+    document.getElementById('nd-juman').classList.add('active');
+  } else if(q.type==='number'){
     numVal='';
     const unit=q.unit||'歳';
     // font size: shrink for longer units
@@ -473,6 +626,112 @@ function renderQ(){
 
   c.style.animation='none';c.offsetHeight;c.style.animation='';
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+// ── NISA split input functions ──
+function nisaTap(d){
+  const step=window._nisaStep;
+  const max=window._nisaMax||10; // 万円単位の上限
+  const n=parseInt(d);
+  if(step==='juman'){
+    // 十万の位（0〜2：最大20万円）
+    window._nisaJuman=n;
+    const el=document.getElementById('nd-juman');
+    if(el){el.textContent=n;el.classList.remove('active');el.classList.add('filled');}
+    window._nisaStep='man';
+    const elM=document.getElementById('nd-man');
+    if(elM)elM.classList.add('active');
+    updateNisaPreview();
+  } else if(step==='man'){
+    // 万の位
+    window._nisaMan=n;
+    const el=document.getElementById('nd-man');
+    if(el){el.textContent=n;el.classList.remove('active');el.classList.add('filled');}
+    window._nisaStep='sen';
+    const elS=document.getElementById('nd-sen');
+    if(elS)elS.classList.add('active');
+    updateNisaPreview();
+  } else {
+    // 千の位
+    window._nisaSen=n;
+    const el=document.getElementById('nd-sen');
+    if(el){el.textContent=n;el.classList.remove('active');el.classList.add('filled');}
+    updateNisaPreview();
+    // バリデーション（千円単位で max*10 が上限）
+    const juman=window._nisaJuman||0;
+    const man=window._nisaMan||0;
+    const total=juman*100+man*10+n; // 千円単位
+    const nb=document.getElementById('age-nb');
+    const errEl=document.getElementById('age-err');
+    if(total>max*10){
+      if(errEl)errEl.textContent='上限は月'+max+'万円です';
+      if(nb)nb.disabled=true;
+    } else {
+      if(errEl)errEl.textContent='';
+      if(nb)nb.disabled=false;
+    }
+  }
+}
+function nisaDel(){
+  const step=window._nisaStep;
+  const nb=document.getElementById('age-nb');
+  const errEl=document.getElementById('age-err');
+  if(step==='sen'&&window._nisaSen!==null){
+    window._nisaSen=null;
+    const el=document.getElementById('nd-sen');
+    if(el){el.textContent='-';el.classList.remove('active','filled');}
+    window._nisaStep='man';
+    const elM=document.getElementById('nd-man');
+    if(elM){elM.classList.remove('filled');elM.classList.add('active');}
+    if(nb)nb.disabled=true;
+    if(errEl)errEl.textContent='';
+  } else if(step==='man'&&window._nisaMan!==null){
+    window._nisaMan=null;
+    const el=document.getElementById('nd-man');
+    if(el){el.textContent='-';el.classList.remove('active','filled');}
+    window._nisaStep='juman';
+    const elJ=document.getElementById('nd-juman');
+    if(elJ){elJ.classList.remove('filled');elJ.classList.add('active');}
+    if(nb)nb.disabled=true;
+  } else if(step==='juman'&&window._nisaJuman!==null){
+    window._nisaJuman=null;
+    const el=document.getElementById('nd-juman');
+    if(el){el.textContent='-';el.classList.remove('active','filled');}
+    if(nb)nb.disabled=true;
+  }
+  updateNisaPreview();
+}
+function updateNisaPreview(){
+  const el=document.getElementById('nisa-preview');
+  if(!el)return;
+  const juman=window._nisaJuman;
+  const man=window._nisaMan;
+  const sen=window._nisaSen;
+  if(juman===null){el.innerHTML='十万の位を入力してください';return;}
+  if(man===null){el.innerHTML='<strong>'+juman+'0万円台</strong>　万の位を入力してください';return;}
+  if(sen===null){
+    const v=juman*10+man;
+    el.innerHTML='<strong>'+v+'万円台</strong>　千の位を入力してください';return;
+  }
+  const totalYen=(juman*100+man*10+sen)*1000; // 円/月
+  if(totalYen===0){el.innerHTML='<strong>0円（未積立）</strong>';return;}
+  const juman_disp=juman>0?juman+'0万':'';
+  const man_disp=man>0?man+'万':'';
+  const sen_disp=sen>0?sen+'千':'';
+  const manTotal=juman*10+man;
+  el.innerHTML='月額 <strong>'+(juman_disp||man_disp?manTotal+'万':'')+(sen>0?sen+'千':'')+'円（'+(totalYen/10000).toFixed(1)+'万円/月）</strong>';
+}
+function submitNisaSplit(){
+  const juman=window._nisaJuman||0;
+  const man=window._nisaMan||0;
+  const sen=window._nisaSen||0;
+  const totalYen=(juman*100+man*10+sen)*1000; // 円/月
+  ANS[QS[cur].id]=totalYen;
+  cur++;
+  _picking=false;
+  if(cur>=QS.length){showLoading();setTimeout(showResult,1500);}
+  else renderQ();
 }
 
 function npTap(d){
@@ -573,7 +832,8 @@ function calc(){
   const nm=(ANS.nisa_tsumitate||0)/10000;       // 現在の積立月額（円→万円変換）
   const nlump=ANS.nisa_lump||0;                 // 成長投資枠拠出済額（万円）
   const nsurplus=ANS.nisa_surplus||0;           // 今後追加拠出する余剰資金（万円）
-  const nlumpTotal=Math.min(240,nlump+nsurplus); // 拠出済＋余剰資金（上限240万）
+  const lumpCap=ANS.income_scope==='household'?480:240; // 世帯なら480万、個人なら240万
+  const nlumpTotal=Math.min(lumpCap,nlump+nsurplus); // 拠出済＋余剰資金（上限）
   const om=Math.min(10,inc*0.1/12);             // 最適化後の積立月額上限（年収の10%/12）
   const cnfv=nfv(nm,yrs,.06);                   // 積立枠：現状の将来額
   const clumpFv=nlump*Math.pow(1.06,yrs);       // 成長枠：拠出済のみの将来額（年6%）
@@ -604,9 +864,6 @@ function fmt(v){
   return n.toLocaleString()+'万';
 }
 
-function buildTl(tp){
-  return tp.map(p=>'<div class="tli"><div class="tly">'+p.l+'</div><div class="tlv">'+fmt(p.b)+'円</div><div class="tld">現状比 +'+fmt(p.b-p.n)+'円</div></div>').join('');
-}
 function buildActs(acts){
   return acts.map((a,i)=>{
     const btnHtml=a.steps&&a.steps.length
@@ -685,6 +942,12 @@ function showResult(){
     <div class="da">＋${fmt(r.diff)}円</div>
     <div class="ds">現状のままと最適化後の差額</div>
   </div>
+  <div class="action-trigger-wrap">
+    <button class="action-trigger-btn" onclick="showActionPage()">
+      <span class="action-trigger-icon">🔓</span>
+      <span class="action-trigger-label">この差額を<br>損しないために</span>
+    </button>
+  </div>
   <div class="cgrid">
     <div class="cc">
       <div class="clb now">現状のまま</div>
@@ -716,22 +979,20 @@ function showResult(){
     <div class="bi"><div class="bii">🏠</div><div class="bil">住宅住み替え</div><div class="biv ${r.hB<10?'z':''}">${fmt(r.hB)}円</div></div>
     <div class="bi total"><div class="bii">🎯</div><div class="bil">合計インパクト</div><div class="biv">${fmt(r.diff)}円</div></div>
   </div>
-  <div class="sec-label">時間軸別の資産見込み</div>
-  <div class="tl">${buildTl(tp)}</div>
-  <div class="al">
-    <h3>🎯 優先アクション</h3>
-    ${buildActs(acts)}
+  <div class="action-trigger-wrap">
+    <button class="action-trigger-btn" onclick="showActionPage()">
+      <span class="action-trigger-icon">🔓</span>
+      <span class="action-trigger-label">この差額を<br>損しないために</span>
+    </button>
   </div>
-  <div class="step-modal" id="step-modal" style="display:none">
-    <div class="step-modal-inner" id="step-modal-inner"></div>
-  </div>
-  <button class="share-btn" onclick="shareResult(${r.best},${r.now},${r.age})">📤 結果をシェア・保存する</button>
-  <button class="rbtn" onclick="restart()">← もう一度シミュレーションする</button>
-  <p style="margin-top:20px;font-size:10px;color:var(--text3);line-height:2.0;text-align:center;padding:0 4px">
-    ※ 本シミュレーションはすべて参考値です。将来の資産額を保証するものではありません。<br>
-    ※ NISA運用利回りは年6%（インデックス参考値）を使用。<br>
-    ※ 詳細は担当コンサルタントへご相談ください。
-  </p>`;
+`;
+  // アクションページのコンテンツを別途セット
+  document.getElementById('apage-acts').innerHTML=buildActs(acts);
+  document.getElementById('apage-share').onclick=()=>shareResult(r.best,r.now,r.age);
+  document.getElementById('apage-diff-banner').innerHTML=
+    '<div class="dl">最適化で増える可能性がある差額</div>'+
+    '<div class="da">＋'+fmt(r.diff)+'円</div>'+
+    '<div class="ds">この差額を活かすための優先アクション</div>';
 
   new Chart(document.getElementById('lc'),{
     type:'line',
@@ -786,6 +1047,22 @@ function shareResult(best,now,age){
 
 // ③ ファーストステップモーダル
 let _acts=[];
+
+function showActionPage(){
+  // rpage を隠して apage を表示（別ページ遷移）
+  document.getElementById('rpage').style.display='none';
+  const ap=document.getElementById('apage');
+  ap.style.display='block';
+  ap.style.animation='fadeUp .35s cubic-bezier(.16,1,.3,1)';
+  window.scrollTo({top:0,behavior:'smooth'});
+  // 戻るボタン
+  const backBtn=document.getElementById('apage-back');
+  if(backBtn) backBtn.addEventListener('click',function(){
+    ap.style.display='none';
+    document.getElementById('rpage').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+}
 function showSteps(i){
   const a=_acts[i];
   if(!a||!a.steps||!a.steps.length)return;
@@ -826,8 +1103,10 @@ function restart(){
   Object.keys(ANS).forEach(k=>delete ANS[k]);cur=0;numVal='';_picking=false;
   document.getElementById('rpage').style.display='none';
   document.getElementById('sim-area').style.display='none';
+  document.getElementById('apage').style.display='none';
   document.getElementById('qpage').innerHTML='<div class="qc" id="qc"></div>';
   document.getElementById('toppage').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // 選択肢クリックをdocumentで委任（qpage内の.cbに限定）
