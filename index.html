@@ -1495,6 +1495,15 @@ function restart(){
 const B_ANS = {};
 const B_QS = [
   {
+    id:'b_scope',ph:'基本情報',
+    q:'シミュレーションの対象を教えてください',
+    s:'年金の自動設定に使います',
+    type:'choices',cs:[
+      {l:'自分だけでシミュレーションしたい',v:'self',i:'👤'},
+      {l:'夫婦でシミュレーションしたい',v:'household',i:'👫'}
+    ]
+  },
+  {
     id:'b_age',ph:'基本情報',
     q:'現在の年齢を入力してください',
     s:'積立・運用の残り年数を計算します',
@@ -1517,12 +1526,6 @@ const B_QS = [
     q:'毎月の生活費はいくらですか？',
     s:'現在の生活水準を維持するための月額支出の目安（万円単位）',
     type:'number',min:1,max:999,maxDigits:3,unit:'万円'
-  },
-  {
-    id:'b_pension',ph:'年金',
-    q:'毎月受け取る予定の年金額はいくらですか？',
-    s:'公的年金（国民年金・厚生年金など）の月額見込み額。まだ分からない場合は「0」を入力してください',
-    type:'number',min:0,max:999,maxDigits:3,unit:'万円'
   },
   {
     id:'b_insurance',ph:'保険',
@@ -1803,7 +1806,8 @@ function bCalc(){
   const investYears = Math.max(1, retireAge - currentAge); // 積立・運用年数
   const assets = B_ANS.b_assets || 0;       // 総資産（万円）
   const monthly = B_ANS.b_monthly_need || 15;       // 月額生活費（万円）
-  const pension = B_ANS.b_pension || 0;             // 月額年金（万円）
+  const scope = B_ANS.b_scope || 'self';
+  const pension = scope === 'household' ? 20 : 13;  // 月額年金（夫婦20万・個人13万）
   const monthlyNet = Math.max(0, monthly - pension); // 実質月額取り崩し（生活費−年金）
   const ins = B_ANS.b_insurance || 0;
   const nisaM = B_ANS.b_nisa_monthly || 0;   // NISA積立月額（万円）
@@ -1881,7 +1885,7 @@ function bCalc(){
 
   return {
     currentAge, retireAge, investYears,
-    assets, monthly, pension, monthlyNet, annual, ins, nisaM, lump, lumpHoken, needs,
+    scope, assets, monthly, pension, monthlyNet, annual, ins, nisaM, lump, lumpHoken, needs,
     selectedRate, rateLabel: rateLabelMap[needs] || '5%', hokenChecks,
     nowYears, nowBalance30,
     r4, r5, r6, rMain, diff
@@ -1962,7 +1966,9 @@ function bShowResult(){
   <div class="rh">
     <h2>資産活用シミュレーション結果</h2>
     <p>${r.currentAge}歳→${r.retireAge}歳（${r.investYears}年間）の運用シナリオ</p>
-    ${r.pension > 0 ? '<p style="font-size:11px;color:var(--text2);margin-top:2px">月生活費 <strong>' + r.monthly + '万円</strong> − 年金 <strong>' + r.pension + '万円</strong> ＝ 実質取り崩し <strong>' + r.monthlyNet + '万円/月</strong></p>' : '<p style="font-size:11px;color:var(--text2);margin-top:2px">月生活費 <strong>' + r.monthly + '万円</strong>（年金収入なし）</p>'}
+    <p style="font-size:11px;color:var(--text2);margin-top:2px">
+      月生活費 <strong>${r.monthly}万円</strong> − 年金 <strong>${r.pension}万円</strong>（${r.scope === 'household' ? '夫婦' : '個人'}想定）＝ 実質取り崩し <strong>${r.monthlyNet}万円/月</strong>
+    </p>
   </div>
   <div class="b-diff-hook">
     <div class="b-diff-hook-eye">運用あり vs 預金取り崩しのみ（30年後の差）</div>
@@ -1987,7 +1993,7 @@ function bShowResult(){
       <div class="b-clb now">預金のみ（運用なし）</div>
       <div class="b-ca now">${r.nowYears >= 50 ? '50年+' : r.nowYears+'年'}</div>
       <div class="b-cu">で資産が尽きる目安</div>
-      <p style="font-size:10px;color:var(--text2);line-height:1.55">${r.pension > 0 ? '年金差引後の実質取り崩し：月' + r.monthlyNet + '万円<br>' : ''}30年後の残高：${fmt(r.nowBalance30)}円</p>
+      <p style="font-size:10px;color:var(--text2);line-height:1.55">年金差引後の実質取り崩し：月${r.monthlyNet}万円<br>30年後の残高：${fmt(r.nowBalance30)}円</p>
     </div>
     <div class="b-cc best">
       <div class="b-clb bl">運用しながら取り崩し</div>
