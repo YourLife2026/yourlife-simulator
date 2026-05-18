@@ -70,7 +70,7 @@ header{
   margin-bottom:14px;
 }
 .qt{font-size:19px;font-weight:700;line-height:1.45;margin-bottom:6px;color:var(--text);}
-.qs{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.55;}
+.qs{font-size:13px;color:var(--text2);margin-bottom:20px;line-height:1.55;white-space:pre-line;}
 .chs{display:flex;flex-direction:column;gap:10px;}
 .cb{
   background:#f8fafc;border:2px solid var(--border);border-radius:14px;
@@ -368,6 +368,115 @@ canvas{width:100%!important;}
   .qt{font-size:21px;}
   header{padding:14px 32px;}
 }
+
+/* ── シミュレーター選択画面 ── */
+.sim-select-wrap{display:flex;flex-direction:column;gap:14px;margin-bottom:24px;}
+.sim-select-card{
+  background:#fff;border:2px solid var(--border);border-radius:18px;
+  padding:20px 18px;cursor:pointer;text-align:left;
+  transition:all .15s;display:flex;align-items:center;gap:16px;
+  box-shadow:var(--shadow);
+  -webkit-tap-highlight-color:transparent;
+  width:100%;font-family:'Noto Sans JP',sans-serif;
+}
+.sim-select-card:active{transform:scale(.975);}
+.sim-select-card.card-a:hover,.sim-select-card.card-a:active{border-color:var(--accent);background:var(--accent-light);}
+.sim-select-card.card-b:hover,.sim-select-card.card-b:active{border-color:#059669;background:#f0fdf4;}
+.sim-select-icon{
+  width:52px;height:52px;min-width:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+}
+.sim-select-icon.icon-a{background:linear-gradient(135deg,#dbeafe,#ede9fe);}
+.sim-select-icon.icon-b{background:linear-gradient(135deg,#d1fae5,#fef3c7);}
+.sim-select-body{flex:1;}
+.sim-select-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.sim-select-tag.tag-a{color:var(--accent);}
+.sim-select-tag.tag-b{color:#059669;}
+.sim-select-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.35;}
+.sim-select-desc{font-size:12px;color:var(--text2);line-height:1.55;}
+.sim-select-arrow{font-size:18px;color:var(--text3);}
+
+/* ── シミュレーターB専用スタイル ── */
+.b-diff-hook{
+  background:linear-gradient(135deg,#064e3b 0%,#065f46 100%);
+  border-radius:var(--r);padding:24px 20px;margin-bottom:20px;
+  text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 6px 24px rgba(6,78,59,.3);
+}
+.b-diff-hook::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(16,185,129,.2) 0%,transparent 70%);
+}
+.b-diff-hook-eye{font-size:10px;font-weight:700;letter-spacing:.18em;color:rgba(167,243,208,.9);text-transform:uppercase;margin-bottom:10px;position:relative;}
+.b-diff-hook-amt{font-family:'Playfair Display',serif;font-size:36px;color:#fff;line-height:1;margin-bottom:6px;position:relative;}
+.b-diff-hook-amt span{color:#6ee7b7;}
+.b-diff-hook-body{font-size:12px;color:rgba(255,255,255,.65);line-height:1.7;position:relative;}
+
+.b-compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.b-cc{background:#fff;border:2px solid var(--border);border-radius:var(--r);padding:16px 12px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.b-cc.best{border-color:#059669;box-shadow:0 4px 20px rgba(5,150,105,.18);}
+.b-cc.best::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#059669,#10b981);}
+.b-clb{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+.b-clb.now{color:var(--text3);}
+.b-clb.bl{color:#059669;}
+.b-ca{font-family:'Playfair Display',serif;font-size:clamp(18px,4.5vw,28px);line-height:1;margin-bottom:3px;}
+.b-ca.now{color:var(--text3);}
+.b-ca.best{color:#059669;}
+.b-cu{font-size:10px;color:var(--text2);margin-bottom:6px;}
+.b-db{display:inline-flex;align-items:center;gap:4px;background:rgba(5,150,105,.1);border:1.5px solid rgba(5,150,105,.3);border-radius:99px;padding:4px 9px;font-size:11px;font-weight:700;color:#059669;}
+
+.b-scenario-tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;}
+.b-tab{
+  flex-shrink:0;padding:8px 14px;border-radius:99px;border:2px solid var(--border);
+  background:#fff;font-size:12px;font-weight:700;color:var(--text2);
+  cursor:pointer;font-family:'Noto Sans JP',sans-serif;
+  transition:all .15s;-webkit-tap-highlight-color:transparent;
+}
+.b-tab.active{border-color:#059669;background:#f0fdf4;color:#059669;}
+
+.b-cta-block{
+  background:linear-gradient(135deg,#064e3b 0%,#065f46 60%,#047857 100%);
+  border-radius:var(--r);padding:28px 20px 24px;margin-top:6px;margin-bottom:4px;
+  text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(6,78,59,.35);
+}
+.b-cta-block::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% -10%,rgba(16,185,129,.25) 0%,transparent 65%);
+}
+.b-cta-eyebrow{font-size:10px;font-weight:700;letter-spacing:.18em;color:rgba(167,243,208,.9);text-transform:uppercase;margin-bottom:12px;position:relative;}
+.b-cta-title{font-size:20px;font-weight:700;color:#fff;line-height:1.45;margin-bottom:8px;position:relative;}
+.b-cta-sub{font-size:12px;color:rgba(255,255,255,.65);line-height:1.8;margin-bottom:22px;position:relative;}
+.b-cta-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:#fff;
+  border:none;border-radius:14px;padding:18px 24px;width:100%;
+  color:#059669;font-size:16px;font-weight:700;
+  font-family:'Noto Sans JP',sans-serif;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 4px 20px rgba(0,0,0,.2);
+  transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+}
+.b-cta-btn:active{opacity:.88;transform:scale(.97);}
+.b-cta-note{font-size:10px;color:rgba(255,255,255,.5);margin-top:10px;line-height:1.8;position:relative;}
+.b-check-item{display:flex;align-items:flex-start;gap:12px;background:#f8fafc;border:2px solid var(--border);border-radius:14px;padding:14px 16px;cursor:pointer;text-align:left;width:100%;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--text);transition:all .12s;-webkit-tap-highlight-color:transparent;margin-bottom:8px;line-height:1.55;}
+.b-check-item:active{transform:scale(.98);}
+.b-check-item.checked{border-color:var(--accent);background:var(--accent-light);}
+.b-check-box{width:22px;height:22px;min-width:22px;border-radius:5px;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;transition:all .12s;margin-top:1px;flex-shrink:0;}
+.b-check-item.checked .b-check-box{background:var(--accent);border-color:var(--accent);}
+
+.b-breakdown{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:18px 14px;margin-bottom:14px;box-shadow:var(--shadow);}
+.b-breakdown-ttl{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px;color:var(--text);}
+.b-bi{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.b-bi:last-child{border-bottom:none;padding-bottom:0;}
+.b-bi-icon{font-size:20px;min-width:28px;}
+.b-bi-body{flex:1;}
+.b-bi-lbl{font-size:12px;color:var(--text2);margin-bottom:2px;line-height:1.4;}
+.b-bi-val{font-size:15px;font-weight:700;color:#059669;}
+.b-bi-val.z{color:var(--text3);}
+.b-bi-sub{font-size:11px;color:var(--text3);margin-top:1px;}
 </style>
 </head>
 <body>
@@ -386,15 +495,29 @@ canvas{width:100%!important;}
   <div id="toppage">
     <div class="top-hero">
       <div class="top-logo">Y</div>
-      <div class="top-title">あなたの65歳時点の<br>資産をシミュレーション</div>
-      <div class="top-lead">現状のままと最適化後を比較し、<br>資産形成の改善効果を数値で見える化します。</div>
+      <div class="top-title">YourLife<br>資産シミュレーター</div>
+      <div class="top-lead">あなたの状況に合ったシミュレーターを<br>選んでください。</div>
     </div>
-    <div class="top-features">
-      <div class="top-feature"><span class="top-feature-icon">🛡️</span><div class="top-feature-text"><strong>保険の見直し効果</strong>適正保険料への見直しで生まれる余剰資金を試算</div></div>
-      <div class="top-feature"><span class="top-feature-icon">📈</span><div class="top-feature-text"><strong>NISA積立・一括投資効果</strong>複利運用で65歳時点にいくら増えるかを比較</div></div>
-      <div class="top-feature"><span class="top-feature-icon">🏢</span><div class="top-feature-text"><strong>不動産・住み替え戦略</strong>資産として活用できる不動産効果も加算</div></div>
+    <div class="sim-select-wrap">
+      <button class="sim-select-card card-a" id="start-btn-a">
+        <div class="sim-select-icon icon-a">📈</div>
+        <div class="sim-select-body">
+          <div class="sim-select-tag tag-a">Simulator A</div>
+          <div class="sim-select-title">資産をつくりたい方</div>
+          <div class="sim-select-desc">将来に向けてNISA・保険・不動産で<br>65歳時点の資産を最大化したい</div>
+        </div>
+        <div class="sim-select-arrow">→</div>
+      </button>
+      <button class="sim-select-card card-b" id="start-btn-b">
+        <div class="sim-select-icon icon-b">🏦</div>
+        <div class="sim-select-body">
+          <div class="sim-select-tag tag-b">Simulator B</div>
+          <div class="sim-select-title">資産を活かしたい方</div>
+          <div class="sim-select-desc">まとまった資産を運用・取り崩しで<br>長く豊かに活用したい</div>
+        </div>
+        <div class="sim-select-arrow">→</div>
+      </button>
     </div>
-    <button class="top-start-btn" id="start-btn">シミュレーションをはじめる →</button>
     <div class="top-note">⏱ 所要時間：約3分　※結果はすべて参考値です</div>
   </div>
   <!-- 設問エリア -->
@@ -566,6 +689,93 @@ canvas{width:100%!important;}
   </div>
 </div>
 
+  <!-- ══════════════════════════════════════
+       シミュレーターB — 資産活用シミュレーター
+  ══════════════════════════════════════ -->
+
+  <!-- B: 設問エリア -->
+  <div id="b-sim-area" style="display:none">
+    <div class="prog-row" id="b-prog-row">
+      <div class="pbw"><div class="pb" id="b-pb" style="width:0%"></div></div>
+      <div class="prog-txt" id="b-prog-txt">1 / 6</div>
+    </div>
+    <div class="sdots" id="b-sdots"></div>
+    <div id="b-qpage"><div class="qc" id="b-qc"></div></div>
+  </div>
+
+  <!-- B: 結果ページ -->
+  <div id="b-rpage" style="display:none;animation:fadeUp .5s cubic-bezier(.16,1,.3,1)"></div>
+
+  <!-- B: アクションページ -->
+  <div id="b-apage" style="display:none">
+    <div class="wrap" style="padding-top:0">
+      <button class="back-btn" id="b-apage-back" style="margin-top:8px">← シミュレーション結果に戻る</button>
+      <div id="b-apage-diff-banner" style="margin-bottom:16px"></div>
+      <div class="al">
+        <h3>🎯 優先アクション</h3>
+        <div id="b-apage-acts"></div>
+      </div>
+      <div class="step-modal" id="b-step-modal" style="display:none">
+        <div class="step-modal-inner" id="b-step-modal-inner"></div>
+      </div>
+      <!-- B用CTA -->
+      <div class="b-cta-block">
+        <div class="b-cta-eyebrow">Next Step</div>
+        <div class="b-cta-title">あなたの資産を<br>最大限に活かすために</div>
+        <div class="b-cta-sub">運用・取り崩し・相続まで、<br>あなた専用のプランを設計します。</div>
+        <a class="b-cta-btn" href="https://forms.gle/NroJC913s1f9PfWA8" target="_blank" rel="noopener">
+          <span>個別相談に申し込む</span>
+          <span style="font-size:18px">→</span>
+        </a>
+        <div class="b-cta-note">完全予約制・無料相談<br>※外部サイトに移動します</div>
+      </div>
+      <!-- LP Section B -->
+      <div style="margin-top:0;padding:0">
+        <div style="position:relative;width:100%;overflow:hidden">
+          <img src="header.png" alt="ヘッダー" style="width:100%;display:block;object-fit:cover">
+        </div>
+        <div style="padding:32px 20px;background:#FAF8F3">
+          <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:#C9A84C;font-weight:500;margin-bottom:6px">Consultant</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:#0D1B2A;margin-bottom:16px;line-height:1.5">担当コンサルタント</div>
+          <div style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(13,27,42,0.1)">
+            <div style="position:relative;overflow:hidden">
+              <img src="gunji.jpg" alt="郡司泰昭" style="width:100%;max-height:320px;display:block;object-fit:cover;object-position:center top">
+              <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,42,1),transparent);padding:40px 20px 16px">
+                <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#fff">郡司 泰昭</div>
+                <div style="font-size:0.72rem;color:#E8C97A;margin-top:4px;line-height:1.7">YourLife株式会社 代表取締役<br>資産形成コンサルタント</div>
+              </div>
+            </div>
+            <div style="padding:16px 20px 20px;border-top:3px solid #C9A84C">
+              <p style="font-size:0.8rem;color:#6B7280;line-height:2;margin:0">
+                14年間の教員経験と2児の父としての視点から、<br>
+                「暮らしに直結するお金の不安をなくし、安心をつくる」ことに情熱を注ぐ。<br><br>
+                公務員給与・副業禁止という環境のなかで資産形成を実践し、<br>
+                7年間で資産4,000万円超を達成。<br><br>
+                📺 サンテレビ出演　🎓 早稲田大学 講座 登壇
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="b-cta-block" style="border-radius:0;margin:0">
+          <div class="b-cta-eyebrow">Next Step</div>
+          <div class="b-cta-title">あなたの資産を<br>最大限に活かすために</div>
+          <div class="b-cta-sub">運用・取り崩し・相続まで、あなた専用のプランを設計します。</div>
+          <a class="b-cta-btn" href="https://forms.gle/NroJC913s1f9PfWA8" target="_blank" rel="noopener">
+            <span>個別相談に申し込む</span>
+            <span style="font-size:18px">→</span>
+          </a>
+          <div class="b-cta-note">完全予約制・無料相談<br>※外部サイトに移動します</div>
+        </div>
+      </div>
+      <button class="share-btn" id="b-apage-share" style="margin-top:16px">📥 シミュレーション結果の画像を保存</button>
+      <button class="rbtn" onclick="bRestart()">← もう一度シミュレーションする</button>
+      <p style="margin-top:20px;font-size:10px;color:var(--text3);line-height:2.0;text-align:center;padding:0 4px">
+        ※ 本シミュレーションはすべて参考値です。将来の資産額を保証するものではありません。<br>
+        ※ 運用利回りはシナリオに応じた参考値を使用。<br>
+        ※ 詳細は担当コンサルタントへご相談ください。
+      </p>
+    </div>
+  </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
@@ -615,10 +825,18 @@ let cur=0;
 let numVal='';
 
 // ① スタートボタン
-document.getElementById('start-btn').addEventListener('click',function(){
+// ── シミュレーターA スタート ──
+document.getElementById('start-btn-a').addEventListener('click',function(){
   document.getElementById('toppage').style.display='none';
   document.getElementById('sim-area').style.display='block';
   renderQ();
+});
+
+// ── シミュレーターB スタート ──
+document.getElementById('start-btn-b').addEventListener('click',function(){
+  document.getElementById('toppage').style.display='none';
+  document.getElementById('b-sim-area').style.display='block';
+  bRenderQ();
 });
 
 function renderDots(){
@@ -1269,6 +1487,717 @@ function restart(){
   document.getElementById('toppage').style.display='block';
   window.scrollTo({top:0,behavior:'smooth'});
 }
+
+// ══════════════════════════════════════════════════
+//  シミュレーターB — 資産活用シミュレーター
+// ══════════════════════════════════════════════════
+
+const B_ANS = {};
+const B_QS = [
+  {
+    id:'b_age',ph:'基本情報',
+    q:'現在の年齢を入力してください',
+    s:'積立・運用の残り年数を計算します',
+    type:'number',min:20,max:90,maxDigits:2,unit:'歳'
+  },
+  {
+    id:'b_retire_age',ph:'基本情報',
+    q:'リタイア希望年齢を入力してください',
+    s:'この年齢までの積立・運用効果を計算します',
+    type:'number',min:50,max:99,maxDigits:2,unit:'歳'
+  },
+  {
+    id:'b_assets',ph:'現在の資産',
+    q:'現在の金融資産の合計はおよそいくらですか？',
+    s:'預貯金・株式・投資信託・保険の解約返戻金など合計（万円単位）',
+    type:'number',min:0,max:99999,maxDigits:5,unit:'万円'
+  },
+  {
+    id:'b_monthly_need',ph:'生活費',
+    q:'毎月の生活費はいくらですか？',
+    s:'現在の生活水準を維持するための月額支出の目安（万円単位）',
+    type:'number',min:1,max:999,maxDigits:3,unit:'万円'
+  },
+  {
+    id:'b_pension',ph:'年金',
+    q:'毎月受け取る予定の年金額はいくらですか？',
+    s:'公的年金（国民年金・厚生年金など）の月額見込み額。まだ分からない場合は「0」を入力してください',
+    type:'number',min:0,max:999,maxDigits:3,unit:'万円'
+  },
+  {
+    id:'b_insurance',ph:'保険',
+    q:'現在の月々の保険料合計は？',
+    s:'世帯全体の合計金額（見直し効果を診断します）',
+    type:'choices',cs:[
+      {l:'5,000円未満',v:3000,i:'🛡️'},
+      {l:'5,000〜10,000円',v:7500,i:'🛡️'},
+      {l:'10,000〜20,000円',v:15000,i:'🛡️'},
+      {l:'20,000〜30,000円',v:25000,i:'🛡️'},
+      {l:'30,000〜40,000円',v:35000,i:'🛡️'},
+      {l:'40,000〜50,000円',v:45000,i:'🛡️'},
+      {l:'50,000円以上',v:65000,i:'🛡️'}
+    ]
+  },
+  {
+    id:'b_nisa_monthly',ph:'NISA積立',
+    q:'NISAの月々の積立額はいくらですか？',
+    s:'まだ始めていない場合は「0」を入力してください（万円単位）',
+    type:'number',min:0,max:20,maxDigits:2,unit:'万円'
+  },
+  {
+    id:'b_lump_invest',ph:'運用資金',
+    q:'NISA口座・特定口座で運用したい金額はいくらですか？',
+    s:'NISA成長投資枠（240万円）を優先、超過分は特定口座で運用します（0でもOK）',
+    type:'number',min:0,max:99999,maxDigits:5,unit:'万円'
+  },
+  {
+    id:'b_needs',ph:'運用方針',
+    q:'資産活用のご希望に近いものは？',
+    s:'選択した方針により運用利回りのシナリオが変わります',
+    type:'choices',cs:[
+      {l:'利回り重視で増やしたい',v:'growth',i:'📈'},
+      {l:'中長期で着実に増やしたい',v:'moderate',i:'📊'},
+      {l:'リスクを抑えて安定運用したい',v:'stable',i:'🛡️'}
+    ]
+  },
+  {
+    id:'b_hoken_check',ph:'変額保険',
+    q:'以下のうち当てはまるものはありますか？（複数選択可）',
+    s:'一つでも該当する場合、一時払い変額保険という選択肢も有効な手段です',
+    type:'multi_check',
+    cs:[
+      {l:'リスクを極力抑えながらも、ある程度の利回りを期待したい',v:'low_risk',i:'🛡️'},
+      {l:'預金だけでは物価上昇や将来の資産価値低下に不安を感じている',v:'inflation',i:'📉'},
+      {l:'相続対策も含めて資産管理を考えたい',v:'inherit',i:'🏛️'},
+      {l:'万が一の際に、家族へまとまったお金を残したい',v:'family',i:'👨‍👩‍👧'},
+      {l:'"増やす"だけでなく"守る"ことも重視した資産運用をしたい',v:'protect',i:'⭐'}
+    ]
+  },
+  {
+    id:'b_lump_hoken',ph:'変額保険',
+    q:'一時払い変額保険で運用したい金額はいくらですか？',
+    s:'✅ ご回答の内容から、一時払い変額保険はあなたのニーズに適した選択肢です。\n300万円（2万米ドル）から契約可能・積立利率4%台・10年後の解約返戻率約150%想定\n\n300万円以上での契約が難しい場合は「0」を入力してください',
+    type:'number',min:0,max:99999,maxDigits:5,unit:'万円',
+    conditional:true
+  }
+];
+
+let bCur = 0;
+let bNumVal = '';
+let bPicking = false;
+
+function bRenderDots(){
+  const el = document.getElementById('b-sdots');
+  el.innerHTML = B_QS.map((_,i) =>
+    `<div class="sdot${i < bCur ? ' done' : i === bCur ? ' active' : ''}"></div>`
+  ).join('');
+}
+
+function bRenderQ(){
+  let q = B_QS[bCur];
+
+  // conditional: b_lump_hoken はチェックあり時のみ表示、なければスキップ
+  if(q.conditional && q.id === 'b_lump_hoken'){
+    const checks = B_ANS.b_hoken_check || [];
+    if(checks.length === 0){
+      // チェックなし → スキップして次へ
+      B_ANS[q.id] = 0;
+      bCur++;
+      if(bCur >= B_QS.length){ bShowLoading(); setTimeout(bShowResult, 1500); }
+      else bRenderQ();
+      return;
+    }
+  }
+
+  const backHtml = bCur > 0
+    ? '<button class="back-btn" id="b-back-btn">← 前の質問に戻る</button>'
+    : '';
+  // プログレスは条件付き設問を除いた実効設問数で計算
+  const visibleTotal = B_QS.filter((qq,i) => {
+    if(!qq.conditional) return true;
+    if(qq.id === 'b_lump_hoken') return (B_ANS.b_hoken_check||[]).length > 0;
+    return true;
+  }).length;
+  const visibleIdx = B_QS.slice(0, bCur+1).filter((qq,i) => {
+    if(!qq.conditional) return true;
+    if(qq.id === 'b_lump_hoken') return (B_ANS.b_hoken_check||[]).length > 0;
+    return true;
+  }).length;
+  const pct = Math.round((visibleIdx - 1) / visibleTotal * 100);
+  document.getElementById('b-pb').style.width = pct + '%';
+  document.getElementById('b-prog-txt').textContent = visibleIdx + ' / ' + visibleTotal;
+  bRenderDots();
+  const c = document.getElementById('b-qc');
+
+  if(q.type === 'multi_check'){
+    let h = backHtml + `<div class="qph">${q.ph} — ${visibleIdx}/${visibleTotal}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qs">${q.s}</div>
+      <div id="b-check-list">`;
+    q.cs.forEach((ch, i) => {
+      h += `<button class="b-check-item" id="b-chk-${i}" onclick="bToggleCheck(${i})">
+        <div class="b-check-box" id="b-chk-box-${i}"></div>
+        <div>${ch.l}</div>
+      </button>`;
+    });
+    h += `</div>
+      <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:6px;margin-bottom:12px">※ 該当なしの場合はそのまま「次へ」を押してください</p>
+      <button class="age-next-btn" id="b-check-next" onclick="bSubmitCheck()">次へ →</button>`;
+    c.innerHTML = h;
+    // 既存の選択を復元
+    const prev = B_ANS.b_hoken_check || [];
+    prev.forEach(v => {
+      const idx = q.cs.findIndex(ch => ch.v === v);
+      if(idx >= 0) bToggleCheck(idx, true);
+    });
+  } else if(q.type === 'number'){
+    bNumVal = '';
+    const unit = q.unit || '万円';
+    c.innerHTML = backHtml + `
+      <div class="qph">${q.ph} — ${bCur+1}/${B_QS.length}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qs">${q.s}</div>
+      <div class="age-display" id="b-age-disp">
+        <span class="age-num" id="b-age-num">--</span>
+        <span class="age-unit-lbl">${unit}</span>
+      </div>
+      <div class="age-err-msg" id="b-age-err"></div>
+      <div class="numpad">
+        <button class="npk" ontouchstart="" onclick="bNpTap('7')">7</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('8')">8</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('9')">9</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('4')">4</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('5')">5</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('6')">6</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('1')">1</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('2')">2</button>
+        <button class="npk" ontouchstart="" onclick="bNpTap('3')">3</button>
+        <button class="npk zero" ontouchstart="" onclick="bNpTap('0')">0</button>
+        <button class="npk del" ontouchstart="" onclick="bNpDel()">⌫</button>
+      </div>
+      <button class="age-next-btn" id="b-age-nb" onclick="bSubmitNum()" disabled>次へ →</button>`;
+  } else {
+    let h = backHtml + `<div class="qph">${q.ph} — ${bCur+1}/${B_QS.length}</div>
+      <div class="qt">${q.q}</div>
+      <div class="qs">${q.s}</div>
+      <div class="chs">`;
+    q.cs.forEach((ch, i) => {
+      h += `<button class="cb" data-b-idx="${i}"><span class="ci">${ch.i}</span>${ch.l}</button>`;
+    });
+    h += `</div><p class="auto-hint">タップで自動的に次へ進みます</p>`;
+    c.innerHTML = h;
+  }
+
+  const bb = document.getElementById('b-back-btn');
+  if(bb) bb.addEventListener('click', function(){
+    if(bCur > 0){ bCur--; bNumVal = ''; bRenderQ(); }
+  });
+  c.style.animation = 'none'; c.offsetHeight; c.style.animation = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function bNpTap(d){
+  const q = B_QS[bCur];
+  const maxDigits = q.maxDigits || 5;
+  if(bNumVal.length >= maxDigits) return;
+  if(bNumVal === '0' && d === '0') return;
+  if(bNumVal === '0' && d !== '0'){ bNumVal = d; bUpdateNumDisplay(); return; }
+  bNumVal += d;
+  bUpdateNumDisplay();
+}
+function bNpDel(){
+  bNumVal = bNumVal.slice(0, -1);
+  bUpdateNumDisplay();
+}
+function bUpdateNumDisplay(){
+  const q = B_QS[bCur];
+  const disp = document.getElementById('b-age-disp');
+  const numEl = document.getElementById('b-age-num');
+  const errEl = document.getElementById('b-age-err');
+  const nb = document.getElementById('b-age-nb');
+  if(!numEl) return;
+  const v = parseInt(bNumVal) || 0;
+  const dispLen = bNumVal.length;
+  numEl.style.fontSize = dispLen >= 6 ? '32px' : dispLen >= 5 ? '36px' : dispLen >= 4 ? '44px' : dispLen >= 3 ? '52px' : '64px';
+  numEl.textContent = bNumVal === '' ? '--' : Number(bNumVal).toLocaleString();
+  if(bNumVal === ''){
+    disp.className = 'age-display'; numEl.className = 'age-num';
+    errEl.textContent = ''; nb.disabled = true;
+  } else if(v < q.min || v > q.max){
+    disp.className = 'age-display error'; numEl.className = 'age-num';
+    errEl.textContent = ''; nb.disabled = true;
+  } else {
+    // 変額保険設問：1〜299万円は警告（0はOK）
+    if(q.id === 'b_lump_hoken' && v > 0 && v < 300){
+      disp.className = 'age-display error'; numEl.className = 'age-num';
+      errEl.textContent = '最低希望金額は300万円です。難しい場合は「0」を入力してください';
+      nb.disabled = true;
+    } else {
+      disp.className = 'age-display filled'; numEl.className = 'age-num filled';
+      errEl.textContent = q.id === 'b_lump_hoken' && v >= 300
+        ? '✅ 契約可能な金額です（10年後の目安：約' + Math.round(v * 1.5).toLocaleString() + '万円）'
+        : '';
+      nb.disabled = false;
+    }
+  }
+}
+function bSubmitNum(){
+  const q = B_QS[bCur];
+  const v = parseInt(bNumVal);
+  if(isNaN(v) || v < q.min || v > q.max) return;
+  B_ANS[q.id] = v;
+  bCur++;
+  if(bCur >= B_QS.length){ bShowLoading(); setTimeout(bShowResult, 1500); }
+  else bRenderQ();
+}
+
+const _bChecked = new Set();
+function bToggleCheck(i, forceOn){
+  const btn = document.getElementById('b-chk-'+i);
+  const box = document.getElementById('b-chk-box-'+i);
+  if(!btn) return;
+  const willCheck = forceOn === true ? true : !_bChecked.has(i);
+  if(willCheck){
+    _bChecked.add(i);
+    btn.classList.add('checked');
+    if(box) box.textContent = '✓';
+  } else {
+    _bChecked.delete(i);
+    btn.classList.remove('checked');
+    if(box) box.textContent = '';
+  }
+}
+function bSubmitCheck(){
+  const q = B_QS[bCur];
+  const selected = Array.from(_bChecked).map(i => q.cs[i].v);
+  B_ANS[q.id] = selected;
+  _bChecked.clear();
+  bCur++;
+  if(bCur >= B_QS.length){ bShowLoading(); setTimeout(bShowResult, 1500); }
+  else bRenderQ();
+}
+
+function bShowLoading(){
+  document.getElementById('b-prog-row').style.display = 'none';
+  document.getElementById('b-sdots').style.display = 'none';
+  document.getElementById('b-qpage').innerHTML = `
+    <div class="lod">
+      <div class="sp"></div>
+      <p style="color:var(--text2);font-size:14px;font-weight:600">資産活用シミュレーション計算中…</p>
+      <div class="lod-steps">
+        <div class="lod-step on"><div class="lod-step-dot"></div>資産・生活費を分析中</div>
+        <div class="lod-step" id="bls2"><div class="lod-step-dot"></div>運用シナリオを計算中</div>
+        <div class="lod-step" id="bls3"><div class="lod-step-dot"></div>保険・NISA効果を試算中</div>
+        <div class="lod-step" id="bls4"><div class="lod-step-dot"></div>最適プランを策定中</div>
+      </div>
+    </div>`;
+  setTimeout(() => { const e = document.getElementById('bls2'); if(e) e.classList.add('on'); }, 450);
+  setTimeout(() => { const e = document.getElementById('bls3'); if(e) e.classList.add('on'); }, 850);
+  setTimeout(() => { const e = document.getElementById('bls4'); if(e) e.classList.add('on'); }, 1200);
+}
+
+// ── シミュレーターB 計算ロジック ──
+function bCalc(){
+  const currentAge = B_ANS.b_age || 50;          // 現在年齢
+  const retireAge = B_ANS.b_retire_age || 65;   // リタイア希望年齢
+  const investYears = Math.max(1, retireAge - currentAge); // 積立・運用年数
+  const assets = B_ANS.b_assets || 0;       // 総資産（万円）
+  const monthly = B_ANS.b_monthly_need || 15;       // 月額生活費（万円）
+  const pension = B_ANS.b_pension || 0;             // 月額年金（万円）
+  const monthlyNet = Math.max(0, monthly - pension); // 実質月額取り崩し（生活費−年金）
+  const ins = B_ANS.b_insurance || 0;
+  const nisaM = B_ANS.b_nisa_monthly || 0;   // NISA積立月額（万円）
+  const lump = B_ANS.b_lump_invest || 0;     // NISA・特定口座運用資金（万円）
+  const lumpHoken = B_ANS.b_lump_hoken || 0; // 一時払い変額保険（万円）
+  const needs = B_ANS.b_needs || 'growth';
+  // ニーズに応じた運用利回りを設定
+  const rateMap = {growth:0.06, moderate:0.05, stable:0.04};
+  const selectedRate = rateMap[needs] || 0.05;
+  const hokenChecks = B_ANS.b_hoken_check || [];
+  const annual = monthlyNet * 12;            // 年間実質取り崩し額（万円）
+
+  // ── 現状：預金取り崩しのみ（運用なし・0%）──
+  // 何年で尽きるか
+  let nowAssets = assets;
+  let nowYears = 0;
+  while(nowAssets > 0 && nowYears < 50){
+    nowAssets -= annual;
+    nowYears++;
+  }
+  // 30年後の残高
+  let nowBalance30 = assets - annual * 30;
+  if(nowBalance30 < 0) nowBalance30 = 0;
+
+  // ── 最適化後：NISA(240万上限)+特定口座で運用しながら取り崩し ──
+  // 利回り4% / 5% / 6% の3シナリオ
+  function calcWithRate(rate){
+    // 運用資産：一括資金（NISA240万優先、超過は特定口座）
+    const nisaCap = 240; // 万円
+    const nisaLump = Math.min(lump, nisaCap);
+    const tokuteiLump = Math.max(0, lump - nisaCap);
+
+    // 運用資産の30年後の価値（引き出しながら）
+    // 簡略化：資産全体を rate で運用しつつ毎年 annual を引き出す
+    const runningAssets = assets; // 全資産を運用に回す想定
+    let bal = runningAssets;
+    let years = 0;
+    while(bal > 0 && years < 50){
+      bal = bal * (1 + rate) - annual;
+      years++;
+    }
+
+    // 30年後残高
+    let bal30 = runningAssets;
+    for(let y = 0; y < 30; y++){
+      bal30 = bal30 * (1 + rate) - annual;
+      if(bal30 < 0){ bal30 = 0; break; }
+    }
+
+    // 保険見直し効果（積立NISA増額）
+    const optIns = 10000; // 適正保険料（月1万円目安）
+    const insRed = Math.max(0, ins - optIns) / 10000; // 削減額（万円/月）
+    const totalNisaM = nisaM + insRed; // 増額後のNISA積立月額
+    // 20年間の積立効果
+    const investMonths = investYears * 12;
+    const nisaFv = totalNisaM > 0
+      ? totalNisaM * ((Math.pow(1 + rate/12, investMonths) - 1) / (rate/12))
+      : 0;
+
+    // 変額保険（一時払い）効果：300万円以上の場合
+    const hokenBase = Math.min(lumpHoken, 3000); // 最大3000万円
+    const hokenFv = hokenBase >= 300 ? hokenBase * 1.5 : 0; // 10年後150%
+
+    return { years, bal30, nisaFv, hokenFv, insRed, totalNisaM, nisaLump, tokuteiLump };
+  }
+
+  const r4 = calcWithRate(0.04);
+  const r5 = calcWithRate(0.05);
+  const r6 = calcWithRate(0.06);
+  const rMain = calcWithRate(selectedRate);
+
+  // 差額（選択シナリオ vs 現状）
+  const diff = rMain.bal30 - nowBalance30;
+  const rateLabelMap = {growth:'6%（利回り重視）', moderate:'5%（着実）', stable:'4%（安定）'};
+
+  return {
+    currentAge, retireAge, investYears,
+    assets, monthly, pension, monthlyNet, annual, ins, nisaM, lump, lumpHoken, needs,
+    selectedRate, rateLabel: rateLabelMap[needs] || '5%', hokenChecks,
+    nowYears, nowBalance30,
+    r4, r5, r6, rMain, diff
+  };
+}
+
+let _bActs = [];
+let _bR = null;
+
+function bShowResult(){
+  const r = bCalc();
+  _bR = r;
+  document.getElementById('b-sim-area').style.display = 'none';
+  const rp = document.getElementById('b-rpage');
+  rp.style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  // アクション生成
+  const acts = [];
+  if(r.r5.insRed > 0) acts.push({
+    title:'保険の見直し',
+    desc:`月${r.rMain.insRed.toFixed(1)}万円削減しNISAへ振り替えることで、${r.investYears}年間の運用効率がさらにUPします。`,
+    steps:[
+      {icon:'📋', label:'現在の保険証券を手元に用意する'},
+      {icon:'💬', label:'担当コンサルタントに保険診断を依頼する'},
+      {icon:'💰', label:'削減分をNISA積立に振り替える'},
+    ]
+  });
+  if(r.nisaM < 10) acts.push({
+    title:'NISA積立枠の活用',
+    desc:`月${r.nisaM}万円→月10万円に増額で、${r.investYears}年間・年利${r.rateLabel}での運用効果が大きく向上します。`,
+    steps:[
+      {icon:'🏦', label:'証券口座を開設（SBI証券 or 楽天証券）'},
+      {icon:'📱', label:'全世界株式インデックスで月額積立設定'},
+      {icon:'💹', label:'成長投資枠でスポット購入も検討'},
+    ]
+  });
+  if(r.lump >= 1) acts.push({
+    title:'一括資金の運用（NISA＋特定口座）',
+    desc:`${r.lump}万円のうちNISA成長投資枠240万円を優先、超過分は特定口座で運用。`,
+    steps:[
+      {icon:'📊', label:'NISA成長投資枠（240万円）を優先的に活用'},
+      {icon:'🏦', label:'超過分は特定口座でインデックスファンドに投資'},
+      {icon:'📈', label:'4〜6%の長期運用で資産寿命を延ばす'},
+    ]
+  });
+  if(r.lumpHoken >= 300 && r.hokenChecks.length > 0) acts.push({
+    title:'一時払い変額保険の活用',
+    desc:`300万円（約2万米ドル）から契約可能。積立利率4%台・10年後の解約返戻率約150%。相続対策にも有効。`,
+    steps:[
+      {icon:'🛡️', label:'一時払い保険の詳細資料を取り寄せる'},
+      {icon:'📋', label:'受取人の設定で相続対策として活用'},
+      {icon:'💬', label:'担当コンサルタントにシミュレーションを依頼'},
+    ]
+  });
+  if(acts.length === 0) acts.push({
+    title:'現状の運用を継続',
+    desc:'現在の資産活用は十分に最適化されています。このまま継続しましょう。',
+    steps:[]
+  });
+  _bActs = acts;
+
+  // 30年後の推移データ（5年刻み）
+  const tp = [];
+  for(let y = 5; y <= 30; y += 5){
+    let n = r.assets - r.annual * y; if(n < 0) n = 0;
+    let b4 = r.assets; for(let i=0;i<y;i++){b4=b4*1.04-r.annual;if(b4<0){b4=0;break;}}
+    let b5 = r.assets; for(let i=0;i<y;i++){b5=b5*1.05-r.annual;if(b5<0){b5=0;break;}}
+    let b6 = r.assets; for(let i=0;i<y;i++){b6=b6*1.06-r.annual;if(b6<0){b6=0;break;}}
+    tp.push({l: y+'年後', n, b4, b5, b6});
+  }
+
+  const nowDesc = r.nowYears >= 50
+    ? '50年以上<br>（資産維持）'
+    : `約${r.nowYears}年<br>（${new Date().getFullYear() + r.nowYears}年頃）`;
+
+  rp.innerHTML = `
+  <div class="rh">
+    <h2>資産活用シミュレーション結果</h2>
+    <p>${r.currentAge}歳→${r.retireAge}歳（${r.investYears}年間）の運用シナリオ</p>
+    ${r.pension > 0 ? '<p style="font-size:11px;color:var(--text2);margin-top:2px">月生活費 <strong>' + r.monthly + '万円</strong> − 年金 <strong>' + r.pension + '万円</strong> ＝ 実質取り崩し <strong>' + r.monthlyNet + '万円/月</strong></p>' : '<p style="font-size:11px;color:var(--text2);margin-top:2px">月生活費 <strong>' + r.monthly + '万円</strong>（年金収入なし）</p>'}
+  </div>
+  <div class="b-diff-hook">
+    <div class="b-diff-hook-eye">運用あり vs 預金取り崩しのみ（30年後の差）</div>
+    <div class="b-diff-hook-amt">＋<span id="b-diff-display">${fmt(Math.max(0,r.diff))}</span>円</div>
+    <div class="b-diff-hook-body">
+      あなたの運用方針（年利${r.rateLabel}）で運用しながら取り崩すことで、<br>
+      <strong style="color:#6ee7b7">資産が長持ち・増加</strong>します。
+    </div>
+  </div>
+
+  <div style="margin-bottom:12px">
+    <div style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:8px">▼ 利回りシナリオを比較</div>
+    <div class="b-scenario-tabs">
+      <button class="b-tab ${r.needs==='growth'?'active':''}" id="b-tab-6" onclick="bSwitchTab(6)">📈 利回り6%（利回り重視）</button>
+      <button class="b-tab ${r.needs==='moderate'?'active':''}" id="b-tab-5" onclick="bSwitchTab(5)">📊 利回り5%（着実）</button>
+      <button class="b-tab ${r.needs==='stable'?'active':''}" id="b-tab-4" onclick="bSwitchTab(4)">🛡️ 利回り4%（安定）</button>
+    </div>
+  </div>
+
+  <div class="b-compare-grid">
+    <div class="b-cc">
+      <div class="b-clb now">預金のみ（運用なし）</div>
+      <div class="b-ca now">${r.nowYears >= 50 ? '50年+' : r.nowYears+'年'}</div>
+      <div class="b-cu">で資産が尽きる目安</div>
+      <p style="font-size:10px;color:var(--text2);line-height:1.55">${r.pension > 0 ? '年金差引後の実質取り崩し：月' + r.monthlyNet + '万円<br>' : ''}30年後の残高：${fmt(r.nowBalance30)}円</p>
+    </div>
+    <div class="b-cc best">
+      <div class="b-clb bl">運用しながら取り崩し</div>
+      <div class="b-ca best" id="b-years-display">${r.rMain.years >= 50 ? '50年+' : r.rMain.years+'年'}</div>
+      <div class="b-cu">資産が持続する目安（年利${r.rateLabel}）</div>
+      <div class="b-db" id="b-bal30-display">30年後 ${fmt(Math.max(0,r.rMain.bal30))}円</div>
+    </div>
+  </div>
+
+  <div class="cw">
+    <div class="ct">📈 資産推移（30年間）</div>
+    <canvas id="b-lc" role="img"></canvas>
+  </div>
+
+  <div class="b-breakdown">
+    <div class="b-breakdown-ttl">💡 最適化による追加効果</div>
+    <div class="b-bi">
+      <div class="b-bi-icon">🛡️</div>
+      <div class="b-bi-body">
+        <div class="b-bi-lbl">保険見直し→NISA積立増額（${r.investYears}年・年利${r.rateLabel}）</div>
+        <div class="b-bi-val ${r.rMain.nisaFv < 10 ? 'z' : ''}">${fmt(r.rMain.nisaFv)}円</div>
+        <div class="b-bi-sub">月${r.rMain.insRed.toFixed(1)}万円削減→NISA積立に振替</div>
+      </div>
+    </div>
+    <div class="b-bi">
+      <div class="b-bi-icon">💹</div>
+      <div class="b-bi-body">
+        <div class="b-bi-lbl">一括資金の運用（NISA優先）</div>
+        <div class="b-bi-val ${r.lump < 10 ? 'z' : ''}">${r.lump}万円 → 運用で長期増加</div>
+        <div class="b-bi-sub">NISA枠240万円優先、超過分は特定口座で運用</div>
+      </div>
+    </div>
+    ${r.lumpHoken >= 300 && r.hokenChecks.length > 0 ? `
+    <div class="b-bi">
+      <div class="b-bi-icon">🏛️</div>
+      <div class="b-bi-body">
+        <div class="b-bi-lbl">一時払い変額保険（10年後）</div>
+        <div class="b-bi-val">${fmt(r.rMain.hokenFv)}円</div>
+        <div class="b-bi-sub">積立利率4%台・10年後解約返戻率約150%・相続対策にも有効</div>
+      </div>
+    </div>` : ''}
+  </div>
+
+  <div class="action-trigger-wrap">
+    <button class="action-trigger-btn" style="background:linear-gradient(135deg,#059669,#047857)" onclick="bShowActionPage()">
+      <span class="action-trigger-label">より詳細な内容は<br>こちらをクリック</span>
+      <span class="action-trigger-icon">👆</span>
+    </button>
+  </div>
+  `;
+
+  // アクションページのコンテンツをセット
+  document.getElementById('b-apage-acts').innerHTML = bBuildActs(acts);
+  document.getElementById('b-apage-share').onclick = () => bSaveImage();
+  document.getElementById('b-apage-diff-banner').innerHTML =
+    '<div class="diff-banner" style="background:linear-gradient(135deg,#059669,#047857)">' +
+    '<div class="dl">運用で増える可能性がある差額（30年後）</div>' +
+    '<div class="da">＋' + fmt(Math.max(0,r.diff)) + '円</div>' +
+    '<div class="ds">この差額を活かすための優先アクション</div></div>';
+
+  // グラフ描画
+  new Chart(document.getElementById('b-lc'), {
+    type:'line',
+    data:{
+      labels: tp.map(p => p.l),
+      datasets:[
+        {label:'預金のみ', data:tp.map(p=>p.n), borderColor:'rgba(148,163,184,.9)', backgroundColor:'rgba(148,163,184,.08)', fill:true, tension:.4, pointRadius:4, borderDash:[5,3]},
+        {label:'運用4%', data:tp.map(p=>p.b4), borderColor:'rgba(59,130,246,.7)', backgroundColor:'rgba(59,130,246,.06)', fill:true, tension:.4, pointRadius:4},
+        {label:'運用5%', data:tp.map(p=>p.b5), borderColor:'rgba(5,150,105,.95)', backgroundColor:'rgba(5,150,105,.1)', fill:true, tension:.4, pointRadius:5, borderWidth:2.5},
+        {label:'運用6%', data:tp.map(p=>p.b6), borderColor:'rgba(217,119,6,.85)', backgroundColor:'rgba(217,119,6,.07)', fill:true, tension:.4, pointRadius:4},
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{labels:{color:'#64748b',font:{size:11,family:'Noto Sans JP'},boxWidth:12,padding:8}},
+        tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${Math.round(c.raw).toLocaleString()}万円`}}},
+      scales:{
+        x:{ticks:{color:'#64748b',font:{size:11}},grid:{color:'#f1f5f9'}},
+        y:{ticks:{color:'#64748b',font:{size:11},callback:v=>v.toLocaleString()+'万'},grid:{color:'#f1f5f9'}}
+      }
+    }
+  });
+}
+
+function bSwitchTab(rate){
+  [4,5,6].forEach(r => {
+    const t = document.getElementById('b-tab-'+r);
+    if(t) t.classList.toggle('active', r === rate);
+  });
+  if(!_bR) return;
+  const rData = rate === 4 ? _bR.r4 : rate === 5 ? _bR.r5 : _bR.r6;
+  const diff = rData.bal30 - _bR.nowBalance30;
+  const lbl = rate === 6 ? '6%（利回り重視）' : rate === 5 ? '5%（着実）' : '4%（安定）';
+  const diffEl = document.getElementById('b-diff-display');
+  const yearsEl = document.getElementById('b-years-display');
+  const bal30El = document.getElementById('b-bal30-display');
+  if(diffEl) diffEl.textContent = fmt(Math.max(0, diff)).replace('円','');
+  if(yearsEl) yearsEl.textContent = rData.years >= 50 ? '50年+' : rData.years + '年';
+  if(bal30El) bal30El.textContent = '30年後 ' + fmt(Math.max(0, rData.bal30)) + '円（年利' + lbl + '）';
+}
+
+function bBuildActs(acts){
+  return acts.map((a,i) => {
+    const btnHtml = a.steps && a.steps.length
+      ? '<button class="step-btn" onclick="bShowSteps('+i+')">ファーストステップを見る →</button>'
+      : '';
+    return '<div class="ai"><span class="an">'+(i+1)+'</span><div class="at-wrap"><div class="at"><strong>'+a.title+'</strong>　'+a.desc+'</div>'+btnHtml+'</div></div>';
+  }).join('');
+}
+
+function bShowSteps(i){
+  const a = _bActs[i];
+  if(!a || !a.steps || !a.steps.length) return;
+  const modal = document.getElementById('b-step-modal');
+  const inner = document.getElementById('b-step-modal-inner');
+  const stepsHtml = a.steps.map((s,j) =>
+    '<div class="sm-step"><div class="sm-step-num">'+(j+1)+'</div><div class="sm-step-body"><div class="sm-step-icon">'+s.icon+'</div><div class="sm-step-label">'+s.label+'</div></div></div>'
+  ).join('');
+  inner.innerHTML =
+    '<div class="sm-handle"></div>'+
+    '<div class="sm-title">🎯 '+a.title+'</div>'+
+    '<div class="sm-desc">'+a.desc+'</div>'+
+    '<div class="sm-steps">'+stepsHtml+'</div>'+
+    '<button class="sm-close" onclick="bCloseSteps()">閉じる</button>';
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function bCloseSteps(){
+  document.getElementById('b-step-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function bShowActionPage(){
+  document.getElementById('b-rpage').style.display = 'none';
+  const ap = document.getElementById('b-apage');
+  ap.style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+  const backBtn = document.getElementById('b-apage-back');
+  if(backBtn) backBtn.addEventListener('click', function(){
+    ap.style.display = 'none';
+    document.getElementById('b-rpage').style.display = 'block';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+}
+
+function bSaveImage(){
+  if(typeof html2canvas === 'undefined'){
+    alert('画像保存機能を利用できません。');
+    return;
+  }
+  const btn = document.getElementById('b-apage-share');
+  const orig = btn.innerHTML;
+  btn.innerHTML = '⏳ 画像を生成中...';
+  btn.disabled = true;
+  const bApageEl = document.getElementById('b-apage');
+  const bRpageEl = document.getElementById('b-rpage');
+  bApageEl.style.display = 'none';
+  bRpageEl.style.display = 'block';
+  html2canvas(bRpageEl, {scale:2, useCORS:true, backgroundColor:'#f0f4ff', logging:false, windowWidth:390})
+    .then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'yourlife_asset_simulation.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      bRpageEl.style.display = 'none';
+      bApageEl.style.display = 'block';
+      btn.innerHTML = orig;
+      btn.disabled = false;
+    }).catch(() => {
+      bRpageEl.style.display = 'none';
+      bApageEl.style.display = 'block';
+      btn.innerHTML = orig;
+      btn.disabled = false;
+    });
+}
+
+function bRestart(){
+  Object.keys(B_ANS).forEach(k => delete B_ANS[k]);
+  bCur = 0; bNumVal = ''; bPicking = false; _bR = null; _bChecked.clear();
+  document.getElementById('b-rpage').style.display = 'none';
+  document.getElementById('b-sim-area').style.display = 'none';
+  document.getElementById('b-apage').style.display = 'none';
+  document.getElementById('b-qpage').innerHTML = '<div class="qc" id="b-qc"></div>';
+  document.getElementById('b-prog-row').style.display = 'flex';
+  document.getElementById('b-sdots').style.display = 'flex';
+  document.getElementById('toppage').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// B用 選択肢クリック委任
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('#b-qpage .cb');
+  if(!btn) return;
+  e.stopPropagation();
+  if(btn.classList.contains('sel')) return;
+  const idx = parseInt(btn.dataset.bIdx);
+  if(isNaN(idx)) return;
+  const q = B_QS[bCur];
+  if(!q || !q.cs || !q.cs[idx]) return;
+  if(bPicking) return;
+  bPicking = true;
+  B_ANS[q.id] = q.cs[idx].v;
+  document.querySelectorAll('#b-qpage .cb').forEach((b,j) => b.classList.toggle('sel', j === idx));
+  setTimeout(() => {
+    bCur++;
+    bPicking = false;
+    if(bCur >= B_QS.length){ bShowLoading(); setTimeout(bShowResult, 1500); }
+    else bRenderQ();
+  }, 270);
+});
+
 
 // 選択肢クリックをdocumentで委任（qpage内の.cbに限定）
 document.addEventListener('click',function(e){
