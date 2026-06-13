@@ -1323,7 +1323,7 @@ function showResult(){
   <div class="bgrid">
     <div class="bi"><div class="bii">🛡️</div><div class="bil">保険→NISA転換</div><div class="biv ${(r.insNfv+r.surrFv)<10?'z':''}">${fmt(r.insNfv+r.surrFv)}円</div></div>
     <div class="bi"><div class="bii">📈</div><div class="bil">NISA積立枠（最適化）</div><div class="biv">${fmt(r.onfv)}円</div></div>
-    <div class="bi"><div class="bii">💹</div><div class="bil">NISA成長枠（拠出済${r.nlump}万＋余剰${r.nsurplus}万＝${r.nlumpTotal}万）</div><div class="biv ${r.olumpFv<10?'z':''}">${fmt(r.olumpFv)}円</div></div>
+    <div class="bi"><div class="bii">💹</div><div class="bil">NISA成長枠（拠出済${r.nlump}万＋余剰${r.nsurplus}万</div><div class="biv ${r.olumpFv<10?'z':''}">${fmt(r.olumpFv)}円</div></div>
     <div class="bi"><div class="bii">🏗️</div><div class="bil">投資用不動産</div><div class="biv ${r.reP<10?'z':''}">${fmt(r.reP)}円</div></div>
     <div class="bi"><div class="bii">🏠</div><div class="bil">住宅住み替え</div><div class="biv ${r.hB<10?'z':''}">${fmt(r.hB)}円</div></div>
     <div class="bi total"><div class="bii">🎯</div><div class="bil">合計インパクト</div><div class="biv">${fmt(r.diff)}円</div></div>
