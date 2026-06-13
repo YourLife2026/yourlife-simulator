@@ -1185,10 +1185,16 @@ function calc(){
   const olumpFv=nlumpTotal*Math.pow(1.06,yrs);  // 成長枠：拠出済＋余剰資金の将来額
   const ndiff=Math.max(0,(onfv+olumpFv)-(cnfv+clumpFv));
   const cr=inc*8;
-  const pc=ANS.re==='int'?Math.floor(cr/1800):ANS.re==='one'?1:ANS.re==='multi'?2:0;
-  const cyc=Math.floor(yrs/6);
-  const reP=ANS.re==='none'?0:pc*350*cyc;
-  const reCur=(ANS.re==='one'||ANS.re==='multi')?(ANS.re==='one'?1:2)*350*cyc*0.4:0;
+  const pc=ANS.re==='int'?Math.floor(cr/2000):ANS.re==='one'?1:ANS.re==='multi'?2:0;
+  let reP=0;
+  if(ANS.re!=='none'){
+    let buyAge=age;
+    while(buyAge<60){
+      if(buyAge+10<=65){ reP+=pc*200; }
+      buyAge+=10;
+    }
+  }
+  const reCur=(ANS.re==='one'||ANS.re==='multi')?(ANS.re==='one'?1:2)*200*0.4:0;
   const hcyc=Math.floor(yrs/10);
   const hB=['ry','om'].includes(ANS.housing)?1295*hcyc:0;
   const hCur=ANS.housing==='os'?1295*hcyc*0.25:0;
