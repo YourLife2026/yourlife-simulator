@@ -806,7 +806,7 @@ const QS=[
   {id:'savtype',ph:'現在の保険',q:'貯蓄型保険（養老・ドル建て終身など）に加入していますか？',s:'NISA転換効果を算出します（※海外積立は除く）',type:'choices',cs:[
     {l:'はい・加入している',v:'yes',i:'📋'},{l:'いいえ・掛け捨てのみ',v:'no',i:'✅'},{l:'わからない',v:'unk',i:'❓'}]},
   {id:'nisa_tsumitate',ph:'NISA状況',q:'NISA積立枠：月の積立金額を入力してください',s:'まだ始めていない場合は両方「0」を入力してください',type:'nisa_split'},
-  {id:'nisa_lump',ph:'NISA状況',q:'NISA成長投資枠：すでに拠出している金額を入力してください',s:'まだ拠出していない場合は「0」を入力してください（上限：240万円）',type:'number',min:0,max:240,maxDigits:3,unit:'万円'},
+  {id:'nisa_lump',ph:'NISA状況',q:'NISA成長投資枠：すでに拠出している金額を入力してください',s:'まだ拠出していない場合は「0」を入力してください',type:'number',min:0,max:9999,maxDigits:4,unit:'万円'},
   {id:'nisa_surplus',ph:'NISA状況',q:'現在の預貯金から、一括で投資に回したい余剰資金はいくらですか？',s:'NISA成長投資枠への一括拠出に使える預貯金の目安を万円単位で入力してください',type:'number',min:0,max:9999,maxDigits:4,unit:'万円'},
   {id:'housing',ph:'住まい',q:'現在の住まいの状況を教えてください',s:'住宅資産効果を算出します',type:'choices',cs:[
     {l:'賃貸（購入検討なし）',v:'rn',i:'🏢'},
