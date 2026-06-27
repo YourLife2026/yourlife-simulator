@@ -1177,7 +1177,7 @@ function calc(){
   const nlump=ANS.nisa_lump||0;                 // 成長投資枠拠出済額（万円）
   const nsurplus=ANS.nisa_surplus||0;           // 今後追加拠出する余剰資金（万円）
   const nlumpTotal=nlump+nsurplus;
-  const om=Math.min(10,inc*0.1/12);             // 最適化後の積立月額上限（年収の10%/12）
+  const om=Math.max(nm,Math.min(10,inc*0.1/12));             // 最適化後の積立月額上限（年収の10%/12）
   const cnfv=nfv(nm,yrs,.06);                   // 積立枠：現状の将来額
   const clumpFv=nlump*Math.pow(1.06,yrs);       // 成長枠：拠出済のみの将来額（年6%）
   const onfv=nfv(om,yrs,.06);                   // 積立枠：最適化後の将来額
