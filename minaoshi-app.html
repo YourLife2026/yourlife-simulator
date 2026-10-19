@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>YourLife 家計見直しシミュレーター</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2736;--sub:#5b6878;--paper:#f6f8fb;--card:#fff;--line:#d9e1ea;--brand:#2563eb;--brand-soft:#e8effd;--err:#c02626;
+--m:#9a5b00;--m-soft:#fff1d6;--k:#0e6e70;--k-soft:#dff3f3;--f:#1d4fd0;--f-soft:#e6ecfd;color-scheme:light;box-sizing:border-box;
+padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;font-size:16px;line-height:1.75;font-feature-settings:"palt" 1}
+.wrap{max-width:640px;margin:0 auto;padding:20px 16px 60px}
+.brand{color:var(--brand);font-weight:700;font-size:14px}h1{font-size:24px;margin:6px 0 4px;line-height:1.4}
+.lead{color:var(--sub);font-size:14px;margin:0 0 14px}
+.prog{display:flex;gap:4px;margin-bottom:14px}.prog i{flex:1;height:6px;border-radius:3px;background:var(--line)}.prog i.on{background:var(--brand)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 18px;margin-bottom:14px}
+h2{font-size:19px;margin:0 0 4px}.d{color:var(--sub);font-size:13px;margin:0 0 14px}
+.sec{font-weight:700;font-size:15px;margin:18px 0 8px;padding-left:8px;border-left:4px solid var(--brand)}
+.f{margin-bottom:12px}.f>label,.f>.lb{display:block;font-weight:500;font-size:14px;margin-bottom:4px}
+.req{color:var(--err);font-size:11px;margin-left:4px}.opt{color:var(--sub);font-size:11px;margin-left:4px}
+input[type=text],input[type=email],input[type=number],select{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink);min-height:44px}
+input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(--brand)}
+.row{display:flex;gap:8px;align-items:center}.row span{flex:none;color:var(--sub);font-size:14px}
+.radios{display:grid;gap:6px}.radio{position:relative}.radio input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.radio span{display:block;border:2px solid var(--line);border-radius:10px;padding:9px 12px;background:#fff;font-size:15px}
+.radio input:checked+span{border-color:var(--brand);background:var(--brand-soft)}.radio input:focus-visible+span{outline:3px solid rgba(37,99,235,.35)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin-top:6px;cursor:pointer}.chk input{width:18px;height:18px;margin-top:3px;accent-color:var(--brand)}
+.hint{font-size:12.5px;color:var(--sub);margin-top:4px;line-height:1.6}.guide{background:var(--brand-soft);border-radius:10px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.err{display:none;color:var(--err);font-size:12.5px;margin-top:4px}.bad .err{display:block}.bad input,.bad select{border-color:var(--err)}
+.hide{display:none}
+.nav{display:flex;gap:10px}.btn{flex:1;font:inherit;font-weight:700;font-size:16px;border-radius:10px;padding:13px;cursor:pointer;border:2px solid var(--brand);background:var(--brand);color:#fff}
+.btn.g{background:#fff;color:var(--brand)}.btn:disabled{opacity:.6;cursor:wait}
+.box{border-radius:12px;padding:12px 14px;margin-bottom:8px}.box .l{font-size:13px;font-weight:700}.box .v{font-size:28px;font-weight:700;line-height:1.3;font-variant-numeric:tabular-nums}.box .s{font-size:12px;color:var(--sub)}
+.mam{background:var(--m-soft)}.mam .l{color:var(--m)}.kas{background:var(--k-soft)}.kas .l{color:var(--k)}.fuy{background:var(--f-soft)}.fuy .l{color:var(--f)}
+.total{background:var(--ink);color:#fff;border-radius:12px;padding:14px 16px}.total .l{font-size:13px;color:#c9d4e2}.total .v{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}
+.list{width:100%;border-collapse:collapse;font-size:14px}.list td{border-bottom:1px solid var(--line);padding:8px 4px;vertical-align:top}.list .n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.list .nt{font-size:12px;color:var(--sub)}
+.steps li{margin-bottom:8px;font-size:14px}.steps .t{font-size:13px;color:var(--sub)}
+.demo{background:#fff8d6;color:#6b5400;border-radius:8px;padding:8px 12px;font-size:13px;margin-bottom:12px}
+.msg{color:var(--err);font-size:14px;margin-top:10px}.note{font-size:11.5px;color:var(--sub);margin-top:14px;line-height:1.7}
+.hp{position:absolute;left:-9999px}
+</style></head><body><div class="wrap">
+<div class="brand">YourLife</div><h1>家計見直しシミュレーター</h1>
+<p class="lead">入力はこのページだけ。送信すると、浮く・稼ぐ・増やす・得する金額がわかり、結果のPDFが届きます。</p>
+<div id="demo" class="demo hide">テストモードです（送信先が未設定のため、保存・PDF・メールは行われません）。</div>
+<div id="loading" class="card">料金表を読み込んでいます…</div>
+<div class="prog" id="prog"></div>
+<section class="card step hide" data-s="1">
+ <h2>1. あなたについて</h2><p class="d">結果のお届けと、65歳までの期間の計算に使います。</p>
+ <div class="f" id="f-name"><label>お名前<span class="req">必須</span></label><input type="text" id="name" autocomplete="name" placeholder="例：山田 太郎"><div class="err">入力してください</div></div>
+ <div class="f" id="f-email"><label>メールアドレス<span class="req">必須</span></label><input type="email" id="email" autocomplete="email"><div class="err">メールアドレスの形式で入力してください</div></div>
+ <div class="f" id="f-email2"><label>メールアドレス（確認のためもう一度）<span class="req">必須</span></label><input type="email" id="email2" autocomplete="off"><div class="err">上と同じメールアドレスを入力してください</div></div>
+ <div class="f" id="f-age"><label>年齢<span class="req">必須</span></label><div class="row"><input type="number" id="age" inputmode="numeric" min="18" max="64"><span>歳</span></div><div class="err" id="ageErr">18〜64の数字で入力してください</div></div>
+ <div class="f"><span class="lb">性別<span class="opt">任意</span></span><select id="gender"><option value="">選択してください</option><option>男性</option><option>女性</option><option>回答しない</option></select></div>
+ <div class="f" id="f-house"><span class="lb">お住まい<span class="req">必須</span></span><div class="radios"><label class="radio"><input type="radio" name="house" value="戸建て"><span>戸建て</span></label><label class="radio"><input type="radio" name="house" value="マンション"><span>マンション・アパート</span></label></div><div class="err">選んでください</div></div>
+</section>
+
+<section class="card step hide" data-s="2">
+ <h2>2. 電気・都市ガス</h2><p class="d">エネチェンジで比較した結果を書き写してください。</p>
+ <div class="guide">エネチェンジ（<a href="https://enechange.jp/" target="_blank" rel="noopener">enechange.jp</a>）で、電気は結果を<b>「電気代の安い順」</b>に切り替え、赤枠の<b>「初年度 電気代 ○円節約」</b>の金額を使います。キャッシュバックやポイントは含めません。</div>
+ <div class="sec">電気<span class="req">必須</span></div>
+ <div class="f" id="f-elecResult"><div class="radios"><label class="radio"><input type="radio" name="elecResult" value="found"><span>今より安いプランが見つかった</span></label><label class="radio"><input type="radio" name="elecResult" value="current"><span>今のプランが一番安かった</span></label></div><div class="err">選んでください</div></div>
+ <div id="elecFound" class="hide">
+  <div class="f" id="f-elecPlan"><label>選んだプラン名<span class="req">必須</span></label><input type="text" id="elecPlan"><div class="err">入力してください</div></div>
+  <div class="f" id="f-elecSave"><label>赤枠の「初年度 電気代 ○円節約」の金額<span class="req">必須</span></label><div class="row"><input type="number" id="elecSave" inputmode="numeric" min="1"><span>円／年</span></div><div class="err">1以上の数字で入力してください（0円以下なら「今のプランが一番安かった」を選んでください）</div></div>
+ </div>
+ <div class="sec">都市ガス<span class="opt">任意</span></div>
+ <div class="hint" style="margin-bottom:8px">都市ガスの方のみ。結果画面に並び替えがないため、各プランの「料金詳細」の表の<b>「ガス代」の行</b>を使います。加入条件（エネファーム利用など）も確認してください。</div>
+ <div class="f"><div class="radios"><label class="radio"><input type="radio" name="gasResult" value="skip" checked><span>入力しない（都市ガスではない／今回は見直さない）</span></label><label class="radio"><input type="radio" name="gasResult" value="found"><span>今より安いプランが見つかった</span></label><label class="radio"><input type="radio" name="gasResult" value="current"><span>今のプランが一番安かった</span></label></div></div>
+ <div id="gasFound" class="hide">
+  <div class="f" id="f-gasPlan"><label>選んだプラン名<span class="req">必須</span></label><input type="text" id="gasPlan"><div class="err">入力してください</div></div>
+  <div class="f" id="f-gasCur"><label>「ガス代」の行の「現在のプラン」<span class="req">必須</span></label><div class="row"><input type="number" id="gasCur" inputmode="numeric"><span>円／年</span></div><div class="err">数字で入力してください</div></div>
+  <div class="f" id="f-gasAfter"><label>「ガス代」の行の「切り替え後」<span class="req">必須</span></label><div class="row"><input type="number" id="gasAfter" inputmode="numeric"><span>円／年</span></div><div class="err">現在より安い金額を入力してください（高い場合は「今のプランが一番安かった」を選んでください）</div></div>
+ </div>
+</section>
+
+<section class="card step hide" data-s="3">
+ <h2>3. 携帯・インターネット</h2><p class="d">今の契約を選ぶだけで、乗り換え先はアプリが選びます。</p>
+ <div class="sec">携帯（メインの1台）</div>
+ <div class="f" id="f-carrier"><label>今の携帯会社<span class="req">必須</span></label><select id="carrier"></select><div class="err">選んでください</div></div>
+ <div class="f hide" id="f-network"><label>使っている電波の会社<span class="req">必須</span></label><select id="network"><option value="">選択してください</option><option>ドコモ</option><option>ソフトバンク</option><option>au</option><option>わからない</option></select><div class="err">選んでください</div></div>
+ <div class="f" id="f-gb"><label>毎月のギガ数<span class="req">必須</span></label><select id="gb"></select><div class="err">選んでください</div></div>
+ <div class="f" id="f-pcost"><label>今の携帯代（月額）<span class="req">必須</span></label><div class="row"><input type="number" id="pcost" inputmode="numeric"><span>円／月</span></div><div class="hint">機種代金の分割払いを除いた金額です。</div><label class="chk"><input type="checkbox" id="pcostNA">わからない</label><div class="err">金額を入力するか「わからない」を選んでください</div></div>
+ <div class="f" id="f-chg"><span class="lb">電波の会社を変えてもいいですか？<span class="req">必須</span></span><div class="radios"><label class="radio"><input type="radio" name="chg" value="変えてもいい"><span>変えてもいい（一番安い会社を提案）</span></label><label class="radio"><input type="radio" name="chg" value="変えたくない"><span>変えたくない（今の電波のまま安くする）</span></label><label class="radio"><input type="radio" name="chg" value="わからない"><span>わからない</span></label></div><div class="hint">電波の会社が変わると、つながりやすい場所が変わることがあります。</div><div class="err">選んでください</div></div>
+ <div class="sec">インターネット</div>
+ <div class="f" id="f-ncost"><label>今のネット代（月額）<span class="req">必須</span></label><div class="row"><input type="number" id="ncost" inputmode="numeric"><span>円／月</span></div><label class="chk"><input type="checkbox" id="ncostNA">わからない</label><div class="hint">使ったデータ量によって月額料金が変わるプランは、比較の対象外としています。</div><div class="err">金額を入力するか「わからない」を選んでください</div></div>
+</section>
+
+<section class="card step hide" data-s="4">
+ <h2>4. カード・NISA</h2><p class="d">ポイントで「稼ぐ」金額の計算に使います。</p>
+ <div class="sec">メインのクレジットカード</div>
+ <div class="f" id="f-ccard"><label>今のメインカード<span class="req">必須</span></label><select id="ccard"></select><div class="err">選んでください</div></div>
+ <div class="f hide" id="f-crate"><label>そのカードの還元率<span class="req">必須</span></label><div class="row"><input type="number" id="crate" step="0.1" inputmode="decimal"><span>%</span></div><div class="hint">わからない場合は 0.5 と入力してください。</div><div class="err">数字で入力してください</div></div>
+ <div class="f" id="f-cfee"><label>今のカードの年会費（ほかのカードも含めた合計）<span class="req">必須</span></label><div class="row"><input type="number" id="cfee" inputmode="numeric"><span>円／年</span></div><label class="chk"><input type="checkbox" id="cfeeNA">わからない</label><div class="hint">無料なら0円。</div><div class="err">金額を入力するか「わからない」を選んでください</div></div>
+ <div class="f" id="f-spend"><label>毎月のカード利用額（すべてのカードの合計・目安）<span class="req">必須</span></label><div class="row"><input type="number" id="spend" inputmode="numeric"><span>円／月</span></div><div class="err">数字で入力してください</div></div>
+ <div class="sec">NISA</div>
+ <div class="f" id="f-nisa"><div class="radios"><label class="radio"><input type="radio" name="nisa" value="積み立てている"><span>NISA口座があり、積み立てている</span></label><label class="radio"><input type="radio" name="nisa" value="積み立てていない"><span>NISA口座はあるが、まだ積み立てていない</span></label><label class="radio"><input type="radio" name="nisa" value="口座なし"><span>NISA口座を持っていない</span></label></div><div class="err">選んでください</div></div>
+ <div class="f hide" id="f-broker"><label>NISA口座の証券会社<span class="req">必須</span></label><select id="broker"></select><div class="err">選んでください</div></div>
+ <div class="f hide" id="f-tcard"><label>積立に使っている支払い方法<span class="req">必須</span></label><select id="tcard"></select><div class="err">選んでください</div></div>
+ <div class="f hide" id="f-tmon"><label>毎月の積立額<span class="req">必須</span></label><div class="row"><input type="number" id="tmon" inputmode="numeric"><span>円／月</span></div><div class="err">数字で入力してください</div></div>
+</section>
+
+<section class="card step hide" data-s="5">
+ <h2>5. ふるさと納税</h2>
+ <div class="f" id="f-furu"><div class="radios"><label class="radio"><input type="radio" name="furu" value="している"><span>している</span></label><label class="radio"><input type="radio" name="furu" value="していない"><span>していない</span></label></div><div class="err">選んでください</div></div>
+ <div class="f hide" id="f-flim"><label>ふるさと納税の上限額<span class="opt">任意</span></label><div class="row"><input type="number" id="flim" inputmode="numeric"><span>円／年</span></div><div class="hint">わかる方のみ。ふるさと納税サイトのシミュレーションや、お住まいの市区町村で確認できます。入力しない場合は計算に含めません。</div></div>
+</section>
+
+<section class="card step hide" data-s="6">
+ <h2>6. あなたの見直し効果</h2><p class="d" id="rlead"></p>
+ <div class="box mam"><div class="l">守って浮く金額</div><div class="v" id="vUku"></div><div class="s" id="sUku"></div></div>
+ <div class="box kas"><div class="l">65歳まで稼ぐ金額</div><div class="v" id="vKas"></div><div class="s" id="sKas"></div></div>
+ <div class="box fuy"><div class="l">65歳までで増やす金額</div><div class="v" id="vFuy"></div><div class="s" id="sFuy"></div></div>
+ <div class="total"><div class="l">見直しを実践することでこれから得する金額</div><div class="v" id="vTok"></div></div>
+ <div id="netChoice" class="f hide" style="margin-top:14px"><span class="lb">インターネットの候補を選んでください</span><div class="radios"><label class="radio"><input type="radio" name="netc" value="大手" checked><span id="netBig"></span></label><label class="radio"><input type="radio" name="netc" value="安さ重視"><span id="netCheap"></span></label></div></div>
+ <div class="sec">内訳（年あたり）</div><table class="list" id="rows"></table>
+ <div class="sec">次にやること</div><p class="hint" style="margin-top:0">各社の料金や契約条件、手続きの詳細は、それぞれの会社に直接お問い合わせください。</p><ol class="steps" id="nextList"></ol>
+ <div class="sec">結果を送る</div>
+ <label class="chk"><input type="checkbox" id="consult">浮いたお金の活かし方を、担当コンサルタントに相談したい</label>
+ <div class="f" id="f-agree" style="margin-top:8px"><div class="hint" style="background:var(--paper);padding:10px;border-radius:8px">入力いただいた情報は、YourLife株式会社が保管し、資産形成に関するご提案やご連絡のために利用します。結果のPDFを入力いただいたメールアドレスにお送りします。<a href="https://your-life.co.jp/privacypolicy/" target="_blank" rel="noopener">プライバシーポリシー</a>に同意のうえ送信してください。</div><label class="chk"><input type="checkbox" id="agree">上記に同意します<span class="req">必須</span></label><div class="err">送信するには同意が必要です</div></div>
+ <div class="hp" aria-hidden="true"><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
+ <p class="note">料金や使用量が今のまま続いた場合の見込みです。運用利回りは年7%（為替の影響を除いた株式指数の長期実績を下回る控えめな水準）を使用しています。将来の運用成果を保証するものではありません。ポイントは1ポイント＝1円として計算しています。</p>
+</section>
+
+<section class="card hide" id="done">
+ <h2>結果を送信しました</h2>
+ <p>結果のPDFを、入力いただいたメールアドレスにお送りしました。届かない場合は迷惑メールのフォルダもご確認ください。</p>
+ <button class="btn" id="dl" type="button">結果のPDFをダウンロード</button>
+ <p class="note">内容を変えてもう一度確かめたいときは、ページを開き直して入力してください。新しい結果も保存されます。</p>
+</section>
+
+<div class="nav hide" id="nav"><button class="btn g" id="prev" type="button">戻る</button><button class="btn" id="next" type="button">次へ</button></div>
+<div class="msg" id="msg"></div>
+</div>
+<script>
+/* 見直しシミュレーター 計算エンジン（画面と受信用スクリプトで共通） */
+var MinaoshiCalc = (function () {
+  function n(v) { var x = Number(v); return isFinite(x) ? x : null; }
+
+  // 携帯：ギガ数を満たすプランの最安（network 指定時はその電波のみ）
+  function bestPhone(M, cap, network) {
+    if (cap == null) return null;
+    var c = M.phone.filter(function (p) { return p.gb >= cap && (!network || p.network === network); });
+    c.sort(function (a, b) { return a.price - b.price; });
+    return c[0] || null;
+  }
+  function phone(M, inp) {
+    var b = M.gbBuckets.filter(function (x) { return x.label === inp.gb; })[0];
+    var cap = b ? b.cap : null, curNet = M.phoneCurrent[inp.carrier] === "選択" ? inp.network : M.phoneCurrent[inp.carrier];
+    var cost = n(inp.cost), res = { known: cost != null };
+    function pack(p) {
+      if (!p || cost == null) return { plan: p, monthly: 0, status: cost == null ? "不明" : "見直し不要" };
+      var s = cost - p.price; return s > 0 ? { plan: p, monthly: s, status: "提案" } : { plan: p, monthly: 0, status: "見直し不要" };
+    }
+    res.change = pack(bestPhone(M, cap, null));
+    res.keep = pack(curNet && curNet !== "わからない" ? bestPhone(M, cap, curNet) : null);
+    var st = M.phone.filter(function (p) { return cap != null && p.gb >= cap && p.store; }).sort(function (a, b) { return a.price - b.price; })[0];
+    res.storeOption = st || null;
+    var pick = inp.changeNetwork === "変えたくない" ? res.keep : res.change;
+    if (inp.changeNetwork === "わからない") pick = res.keep.monthly <= res.change.monthly ? res.keep : res.change; // 控えめな方
+    res.chosen = pick; res.annual = pick.monthly * 12; return res;
+  }
+
+  // ネット：大手の最安と安さ重視（大手より安い場合のみ）
+  function net(M, inp, phoneCompany) {
+    var cost = n(inp.cost), house = inp.house;
+    var big = M.net.filter(function (x) { return x.cls === "大手" && x.house === house && (!x.ahamoOnly || phoneCompany === "ahamo"); })
+      .sort(function (a, b) { return a.price - b.price; })[0];
+    var cheap = M.net.filter(function (x) { return x.cls === "安さ重視" && x.house === house; }).sort(function (a, b) { return a.price - b.price; })[0];
+    if (cheap && big && cheap.price >= big.price) cheap = null;
+    function pack(c) { if (!c || cost == null) return { line: c, monthly: 0 }; var s = cost - c.price; return { line: c, monthly: s > 0 ? s : 0 }; }
+    var r = { known: cost != null, big: pack(big), cheap: cheap ? pack(cheap) : null };
+    r.chosen = (inp.choice === "安さ重視" && r.cheap) ? r.cheap : r.big;
+    r.annual = r.chosen.monthly * 12; return r;
+  }
+
+  // カード：メイン（年間ポイント・年会費）
+  function mainPts(card, annual) {
+    var p = Math.floor(annual * card.rate);
+    if (card.bonusAt && annual >= card.bonusAt) p += card.bonus;
+    var fee = card.feeFreeAt && annual >= card.feeFreeAt ? 0 : card.fee;
+    return { points: p, fee: fee };
+  }
+  // 積立：月の積立額と、そのカードでの年間ショッピング額から年間ポイント
+  function tsumiPts(rule, monthly, annualShop) {
+    var m = Math.min(Math.max(monthly, 0), rule.maxMonthly);
+    if (rule.rule === "flat") return Math.floor(m * rule.rate) * 12;
+    if (rule.rule === "usageTier") {
+      var t = rule.tiers.filter(function (x) { return annualShop >= x.minAnnual; })[0];
+      return Math.floor(m * (t ? t.rate : 0)) * 12;
+    }
+    if (rule.rule === "monex") {
+      var monthShop = annualShop / 12, lv = monthShop >= rule.shopLevels[0] ? 0 : (monthShop >= rule.shopLevels[1] ? 1 : 2);
+      var pts = 0, prev = 0;
+      rule.bands.forEach(function (b) { var part = Math.max(0, Math.min(m, b.upTo) - prev); pts += part * b.rates[lv]; prev = b.upTo; });
+      return Math.floor(pts) * 12;
+    }
+    return 0;
+  }
+
+  function cards(M, inp, mamoruMonthly) {
+    var S = Math.max(n(inp.monthlySpend) || 0, 0) * 12;
+    var curFee = n(inp.curFee); curFee = curFee == null ? 0 : curFee;              // わからない＝0円（控えめ）
+    var curMain = M.mainCards.filter(function (c) { return c.name === inp.curCard; })[0];
+    var curRate = curMain ? null : n(inp.curRate);
+    var curMainPts = curMain ? mainPts(curMain, S).points : Math.floor(S * ((curRate || 0) / 100));
+    // 積立の土台：今の積立額（なしの場合は浮いた金額）
+    var base = inp.nisa === "積み立てている" ? (n(inp.tsumiMonthly) || 0) : Math.max(mamoruMonthly, 0);
+    var curT = M.tsumitate.filter(function (t) { return t.card === inp.tsumiCard && (inp.nisa === "口座なし" || t.broker === inp.broker); })[0];
+    var curTPts = 0;
+    if (inp.nisa === "積み立てている" && curT) curTPts = tsumiPts(curT, base, curT.card === inp.curCard ? S : Infinity); // 今は条件を満たしている前提（控えめ）
+    var curTotal = curMainPts - curFee + curTPts;
+    // 候補の組み合わせ
+    var brokerOK = inp.nisa === "口座なし" ? null : inp.broker;
+    var tCands = M.tsumitate.filter(function (t) { return brokerOK === null || t.broker === brokerOK; });
+    var best = null;
+    function shopSide(t, X) { // 積立カード側で X 円買い物したときのポイントと年会費
+      if (!t.shop || X <= 0) return { points: 0, fee: 0 };
+      if (t.shop.mainCard) return mainPts(M.mainCards.filter(function (c) { return c.name === t.shop.mainCard; })[0], X);
+      return { points: Math.floor(X * t.shop.rate), fee: t.shop.fee };
+    }
+    function splits(t) { // 試す使い分け額（年額）：0 と、条件の境目
+      var xs = [0];
+      if (t && t.shop) {
+        if (t.rule === "usageTier") t.tiers.forEach(function (x) { if (x.minAnnual > 0) xs.push(x.minAnnual); });
+        if (t.rule === "monex") t.shopLevels.forEach(function (v) { xs.push(v * 12); });
+      }
+      return [0]; // 払い分けは提案しない（カードは1枚にまとめる）
+    }
+    M.mainCards.forEach(function (mc) {
+      (tCands.length ? tCands : [null]).forEach(function (t) {
+        var same = t && t.card === mc.name;
+        (same ? [0] : splits(t)).forEach(function (X) {
+          var mp = mainPts(mc, S - X), sp = t && !same ? shopSide(t, X) : { points: 0, fee: 0 };
+          var tp = t ? tsumiPts(t, base, same ? S : X) : 0;
+          var total = mp.points + sp.points - mp.fee - sp.fee + tp;
+          if (!best || total > best.total) best = { main: mc, t: t, split: X, mainPts: mp.points + sp.points, fee: mp.fee + sp.fee, tPts: tp, total: total };
+        });
+      });
+    });
+    var r = { curTotal: curTotal, best: best, brokerOutside: inp.nisa !== "口座なし" && tCands.length === 0 };
+    if (!best || best.total <= curTotal) { r.status = "見直し不要"; r.mamoru = 0; r.kasegu = 0; return r; }
+    r.status = "提案";
+    // 積立カードを変えても得がない場合は「変更なし」と表示し、条件を外れて減る分を説明できるようにする
+    if (best.t && (best.tPts === 0 || best.t.card === inp.tsumiCard)) { r.tsumiChange = false; } else { r.tsumiChange = !!best.t; }
+    r.tsumiLoss = curTPts > best.tPts ? curTPts - best.tPts : 0;
+    r.mamoru = curFee - best.fee;                               // 年会費の差（守る）
+    r.kaseguMain = best.mainPts - curMainPts;                   // ポイント差（稼ぐ）
+    r.kaseguT = best.tPts - curTPts;
+    r.kasegu = r.kaseguMain + r.kaseguT;
+    return r;
+  }
+
+  function fv(monthly, years, rate) {
+    if (monthly <= 0 || years <= 0) return 0;
+    var r = rate / 12, k = years * 12; return monthly * (Math.pow(1 + r, k) - 1) / r;
+  }
+
+  function run(M, inp) {
+    var years = M.settings.targetAge - inp.age;
+    var elec = Math.max(n(inp.elecSave) || 0, 0);
+    var gas = inp.gasCur != null && inp.gasAfter != null ? Math.max(inp.gasCur - inp.gasAfter, 0) : 0;
+    var ph = phone(M, inp.phone);
+    var nt = net(M, inp.net, ph.chosen.plan && ph.chosen.status === "提案" ? ph.chosen.plan.company : inp.phone.carrier);
+    var mamoruBeforeCard = elec + gas + ph.annual + nt.annual;
+    var cd = cards(M, inp.card, mamoruBeforeCard / 12);
+    var furu = (inp.furusato === "していない" && n(inp.furusatoLimit) > 0) ? Math.max(Math.floor(inp.furusatoLimit * 0.3 - 2000), 0) : 0;
+    var mamoru = mamoruBeforeCard + cd.mamoru, kasegu = cd.kasegu + furu;
+    var total = mamoru + kasegu, inv = total - furu, F = fv(inv / 12, years, M.settings.rate); // ふるさと納税（返礼品）は現金で残らないため積立・運用からは外す
+    var items = [
+      { key: "電気", annual: elec }, { key: "都市ガス", annual: gas }, { key: "携帯", annual: ph.annual },
+      { key: "インターネット", annual: nt.annual }, { key: "メインカード", annual: (cd.mamoru || 0) + (cd.kaseguMain || 0) },
+      { key: "積立カード", annual: cd.kaseguT || 0 }, { key: "ふるさと納税", annual: furu }];
+    var next = items.filter(function (x) { return x.annual > 0; })
+      .sort(function (a, b) { return (M.ease[a.key] || 99) - (M.ease[b.key] || 99); });
+    return { years: years, elec: elec, gas: gas, phone: ph, net: nt, card: cd, furusato: furu,
+      mamoruAnnual: mamoru, kaseguAnnual: kasegu,
+      uku: Math.round(mamoru * years), kasegu: Math.round(kasegu * years),
+      fuyasu: Math.round(F - inv * years), next: next, invMonthly: inv / 12,
+      tokusuru: Math.round(mamoru * years) + Math.round(kasegu * years) + Math.round(F - inv * years) };
+  }
+  return { run: run, tsumiPts: tsumiPts, mainPts: mainPts, fv: fv };
+})();
+
+
+/* 結果レポート（PDF）と「次にやること」の文面。画面と受信用スクリプトで共通 */
+var MinaoshiReport = (function () {
+  function yen(n) { n = Math.round(n || 0); return (n < 0 ? "−" : "") + Math.abs(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "円"; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  var COMMON = "各社の料金や契約条件、手続きの詳細は、それぞれの会社に直接お問い合わせください。";
+  var OUTSIDE = "お使いの証券会社は、このシミュレーターの計算の対象外のため、積立のポイントは計算に含めていません。お使いの証券会社のサイトで『クレカ積立』に対応しているかを確認してみましょう。対応していれば、毎月の積立でポイントがもらえる場合があります。証券会社選びも含めて見直したい方は、面談の際にお気軽にご相談ください。";
+
+  // 項目ごとの行（見直し先・年額・補足）
+  function rows(R, I) {
+    var out = [];
+    out.push({ k: "電気", to: R.elec > 0 ? (I.elecPlan || "エネチェンジで選んだプラン") : "今のプランのまま", y: R.elec, note: "" });
+    if (I.gasUse) out.push({ k: "都市ガス", to: R.gas > 0 ? (I.gasPlan || "エネチェンジで選んだプラン") : "今のプランのまま", y: R.gas, note: "" });
+    var p = R.phone.chosen;
+    out.push({ k: "携帯", to: !R.phone.known ? "金額がわからなかったため計算していません" : (p.status === "提案" ? p.plan.company + " " + p.plan.plan : "今のプランのまま"), y: R.phone.annual,
+      note: (R.phone.known && R.phone.keep.plan && R.phone.change.plan && R.phone.keep.plan.company !== R.phone.change.plan.company && R.phone.change.monthly > R.phone.keep.monthly && I.phone.changeNetwork !== "変えてもいい")
+        ? "電波の会社を変えると" + R.phone.change.plan.company + "で月" + yen(R.phone.change.monthly - R.phone.keep.monthly) + "さらに安くなります" : "" });
+    var n = R.net.chosen;
+    out.push({ k: "インターネット", to: !R.net.known ? "金額がわからなかったため計算していません" : (n.monthly > 0 ? n.line.name : "今の回線のまま"), y: R.net.annual,
+      note: R.net.known && R.net.cheap && I.net.choice !== "安さ重視" && R.net.cheap.monthly > R.net.big.monthly ? "安さ重視なら" + R.net.cheap.line.name + "で月" + yen(R.net.cheap.monthly - R.net.big.monthly) + "さらに安くなります" : "" });
+    var c = R.card;
+    out.push({ k: "メインカード", to: c.status === "提案" ? c.best.main.name : "今のカードのまま", y: (c.mamoru || 0) + (c.kaseguMain || 0),
+      note: c.status === "提案" && c.mamoru > 0 ? "年会費" + yen(c.mamoru) + "（今のカードの特典を使っていない場合）を含みます" : "" });
+    out.push({ k: "積立カード", to: c.brokerOutside ? "計算の対象外" : (c.status === "提案" && c.tsumiChange ? c.best.t.broker + "／" + c.best.t.card : "今のまま"), y: c.kaseguT || 0,
+      note: c.tsumiLoss > 0 ? "メインカードを変えると今の積立カードの条件を外れ、積立のポイントが年" + yen(c.tsumiLoss) + "減ります（差し引き済み）" : "" });
+    out.push({ k: "ふるさと納税", to: I.furusato === "している" ? "ご利用中" : (R.furusato > 0 ? "上限額の範囲で寄付" : "上限額を入力すると計算します"), y: R.furusato,
+      note: R.furusato > 0 ? "返礼品の価値を寄付額の30%とみなした目安で、現金で戻る金額ではありません" : "" });
+    return out;
+  }
+
+  function nextSteps(R, I, M) {
+    var txt = {}; (M.nextText || []).forEach(function (x) { txt[x.key] = x.text; });
+    var list = R.next.map(function (x) { return { k: x.key, y: x.annual, t: txt[x.key] || "" }; });
+    if (!R.phone.known) list.push({ k: "携帯", y: 0, t: "携帯会社のマイページや請求書で月額（機種代金を除く）を確認して、もう一度入力すると削減額がわかります。" });
+    if (!R.net.known) list.push({ k: "インターネット", y: 0, t: "請求書やマイページで月額を確認して、もう一度入力すると削減額がわかります。" });
+    if (R.card.brokerOutside) list.push({ k: "積立", y: 0, t: OUTSIDE });
+    if (I.furusato === "していない" && !(R.furusato > 0)) list.push({ k: "ふるさと納税", y: 0, t: "ふるさと納税サイトのシミュレーションやお住まいの市区町村で上限額を調べて、ふるさと納税を始めてみましょう。" });
+    // 最後の一歩：浮いた分と稼いだ分を積み立てる（増やす金額の前提）
+    var m = Math.floor(R.invMonthly / 100) * 100;
+    if (m >= 100) {
+      var head = "見直しで浮いた分と稼いだ分" + (R.furusato > 0 ? "（ふるさと納税の返礼品は除く）" : "") + "の毎月約" + yen(m) + "を、NISAの積立に回しましょう。", how;
+      if (I.card.nisa === "積み立てている") {
+        var cur = Math.max(Number(I.card.tsumiMonthly) || 0, 0);
+        how = cur > 0 ? "今の積立額（毎月" + yen(cur) + "）に上乗せして、毎月約" + yen(cur + m) + "にします。" : "今の積立額に、毎月約" + yen(m) + "を上乗せします。";
+      } else if (I.card.nisa === "積み立てていない") how = "今の証券会社で、毎月約" + yen(m) + "の積立を始めましょう。";
+      else how = "提案した証券会社でNISA口座を開設し、毎月約" + yen(m) + "の積立を始めましょう。";
+      list.push({ k: "浮いたお金を積み立てる", y: 0, t: head + how + "「増やす金額」は、この金額を" + M.settings.targetAge + "歳まで積み立てた場合の見込みです。" });
+    }
+    return list;
+  }
+
+  function html(R, I, M, meta) {
+    var tr = rows(R, I).map(function (r) {
+      return "<tr><td class='k'>" + esc(r.k) + "</td><td>" + esc(r.to) + (r.note ? "<div class='nt'>" + esc(r.note) + "</div>" : "") + "</td><td class='n'>" + yen(r.y) + "</td></tr>";
+    }).join("");
+    var ns = nextSteps(R, I, M).map(function (s, i) { return "<tr" + (s.k === "浮いたお金を積み立てる" ? " class='goal'" : "") + "><td class='no'>" + (i + 1) + "</td><td><b>" + esc(s.k) + "</b>" + (s.y > 0 ? "（年" + yen(s.y) + "）" : "") + "<br><span class='sm'>" + esc(s.t) + "</span></td></tr>"; }).join("");
+    return "<html><head><meta charset='UTF-8'><style>" +
+      "body{font-family:'Noto Sans JP','Noto Sans CJK JP','Hiragino Sans',sans-serif;color:#1c2736;font-size:9.5pt;line-height:1.45;margin:0}" +
+      "h1{font-size:17pt;margin:0}.top td{vertical-align:bottom}.brand{color:#2563eb;font-weight:bold}.meta{text-align:right;font-size:8.5pt;color:#5b6878}" +
+      "table{width:100%;border-collapse:collapse}.box td{padding:8px 10px}.lb{font-size:8.5pt;font-weight:bold}.v{font-size:15pt;font-weight:bold}.s{font-size:8pt;color:#5b6878}" +
+      ".total td{background:#1c2736;color:#fff;padding:10px 12px}.tv{font-size:20pt;font-weight:bold;text-align:right}" +
+      "h2{font-size:11pt;margin:10px 0 4px;border-left:4px solid #2563eb;padding-left:7px}.list td{border-bottom:1px solid #d9e1ea;padding:3px 6px;vertical-align:top}" +
+      ".k{width:22%;font-weight:bold}.n{width:16%;text-align:right;white-space:nowrap}.nt{font-size:8pt;color:#5b6878}.no{width:5%;color:#2563eb;font-weight:bold}.sm{font-size:7.8pt;color:#3b4756}.goal td{background:#e6ecfd}" +
+      ".note{font-size:7pt;color:#5b6878;margin-top:8px;line-height:1.4}</style></head><body>" +
+      "<table class='top'><tr><td><div class='brand'>YourLife株式会社</div><h1>家計見直し 結果レポート</h1></td><td class='meta'>" + esc(meta.name) + " 様（" + I.age + "歳）<br>作成日：" + esc(meta.date) + "<br>受付ID：" + esc(meta.id) + "</td></tr></table>" +
+      "<p>今回の見直しを実践した場合に、" + M.settings.targetAge + "歳までの" + R.years + "年間で見込める効果です。</p>" +
+      "<table class='box'><tr>" +
+      "<td style='background:#fff1d6'><div class='lb' style='color:#9a5b00'>守って浮く金額</div><div class='v'>" + yen(R.uku) + "</div><div class='s'>毎年" + yen(R.mamoruAnnual) + " × " + R.years + "年</div></td>" +
+      "<td style='background:#dff3f3'><div class='lb' style='color:#0e6e70'>" + M.settings.targetAge + "歳まで稼ぐ金額</div><div class='v'>" + yen(R.kasegu) + "</div><div class='s'>毎年" + yen(R.kaseguAnnual) + " × " + R.years + "年</div></td>" +
+      "<td style='background:#e6ecfd'><div class='lb' style='color:#1d4fd0'>" + M.settings.targetAge + "歳までで増やす金額</div><div class='v'>" + yen(R.fuyasu) + "</div><div class='s'>浮いた分と稼いだ分（ふるさと納税を除く）を年" + Math.round(M.settings.rate * 100) + "%で運用した運用益</div></td>" +
+      "</tr></table><table class='total' style='margin-top:6px'><tr><td>見直しを実践することでこれから得する金額<br><span class='s' style='color:#b4c0cf'>浮く金額 ＋ 稼ぐ金額 ＋ 増やす金額（" + M.settings.targetAge + "歳時点）</span></td><td class='tv'>" + yen(R.tokusuru) + "</td></tr></table>" +
+      "<h2>項目ごとの内訳（年あたり）</h2><table class='list'>" + tr + "</table>" +
+      "<h2 style='page-break-before:always'>次にやること</h2><div class='sm' style='margin-bottom:4px'>" + esc(COMMON) + "</div><table class='list'>" + ns + "</table>" +
+      "<div class='note'>本レポートは参考値です。電気・ガスはエネチェンジの比較結果をもとに、ポイントやキャッシュバックを除いた金額で計算しています。携帯・インターネット・カードは公式に確認した割引前の基本料金・還元率で計算しています。使ったデータ量によって月額料金が変わるインターネット回線は比較の対象外としています。インターネットはお住まいの建物で利用できるかのご確認が必要です。料金や使用量が今のまま続いた場合の見込みで、実際の削減額を保証するものではありません。運用利回りは年" + Math.round(M.settings.rate * 100) + "%を使用しています。為替の影響を除いた株式指数（S&amp;P500・全世界株式）の長期実績を下回る、控えめな水準として設定しています。将来の運用成果を保証するものではありません。ポイントは1ポイント＝1円として計算しています。</div>" +
+      "</body></html>";
+  }
+  return { html: html, rows: rows, nextSteps: nextSteps, yen: yen };
+})();
+
+
+const FALLBACK_MASTER={"settings": {"rate": 0.07, "targetAge": 65}, "gbBuckets": [{"label": "～3GB", "cap": 3}, {"label": "～10GB", "cap": 10}, {"label": "～20GB", "cap": 20}, {"label": "～30GB", "cap": 30}, {"label": "～40GB", "cap": 40}, {"label": "～60GB", "cap": 60}, {"label": "60GB超（～120GB）", "cap": 120}, {"label": "120GB超", "cap": null}], "phone": [{"company": "ahamo", "network": "ドコモ", "plan": "ステップ1（～40GB）", "gb": 40, "price": 3135, "store": false}, {"company": "ahamo", "network": "ドコモ", "plan": "ステップ2（～60GB）", "gb": 60, "price": 4125, "store": false}, {"company": "ahamo", "network": "ドコモ", "plan": "ステップ3（～120GB）", "gb": 120, "price": 5115, "store": false}, {"company": "ワイモバイル", "network": "ソフトバンク", "plan": "シンプル3 S", "gb": 5, "price": 3278, "store": true}, {"company": "ワイモバイル", "network": "ソフトバンク", "plan": "シンプル3 M", "gb": 30, "price": 4378, "store": true}, {"company": "ワイモバイル", "network": "ソフトバンク", "plan": "シンプル3 L", "gb": 35, "price": 5478, "store": true}, {"company": "UQモバイル", "network": "au", "plan": "コミコミプランバリュー", "gb": 35, "price": 3828, "store": true}, {"company": "UQモバイル", "network": "au", "plan": "トクトクプラン2", "gb": 30, "price": 4048, "store": true}], "phoneCurrent": {"ドコモ": "ドコモ", "ソフトバンク": "ソフトバンク", "au": "au", "楽天モバイル": "楽天モバイル", "ahamo": "ドコモ", "ワイモバイル": "ソフトバンク", "UQモバイル": "au", "LINEMO": "ソフトバンク", "povo": "au", "irumo": "ドコモ", "その他の格安SIM": "選択"}, "net": [{"name": "ahamo光 1ギガ", "cls": "大手", "ahamoOnly": true, "house": "マンション", "price": 3630}, {"name": "ahamo光 1ギガ", "cls": "大手", "ahamoOnly": true, "house": "戸建て", "price": 4950}, {"name": "ドコモ光 1ギガ タイプA", "cls": "大手", "ahamoOnly": false, "house": "マンション", "price": 4400}, {"name": "ドコモ光 1ギガ タイプA", "cls": "大手", "ahamoOnly": false, "house": "戸建て", "price": 5720}, {"name": "SoftBank光 1ギガ", "cls": "大手", "ahamoOnly": false, "house": "マンション", "price": 4510}, {"name": "SoftBank光 1ギガ", "cls": "大手", "ahamoOnly": false, "house": "戸建て", "price": 6050}, {"name": "NURO光 One 2ギガ", "cls": "大手", "ahamoOnly": false, "house": "戸建て", "price": 5720}, {"name": "NURO光 2ギガ（マンション）", "cls": "大手", "ahamoOnly": false, "house": "マンション", "price": 4235}, {"name": "auひかりプラス ホーム", "cls": "大手", "ahamoOnly": false, "house": "戸建て", "price": 7238}, {"name": "auひかりプラス マンション", "cls": "大手", "ahamoOnly": false, "house": "マンション", "price": 6160}, {"name": "楽天ひかり", "cls": "大手", "ahamoOnly": false, "house": "マンション", "price": 4180}, {"name": "楽天ひかり", "cls": "大手", "ahamoOnly": false, "house": "戸建て", "price": 5280}, {"name": "enひかり ＋ v6プラス", "cls": "安さ重視", "ahamoOnly": false, "house": "戸建て", "price": 4818}, {"name": "enひかり ＋ v6プラス", "cls": "安さ重視", "ahamoOnly": false, "house": "マンション", "price": 3718}], "mainCards": [{"name": "リクルートカード", "rate": 0.012, "fee": 0}, {"name": "楽天カード", "rate": 0.01, "fee": 0}, {"name": "Amazon Mastercard", "rate": 0.01, "fee": 0}, {"name": "三井住友カード ゴールド（NL）", "rate": 0.005, "fee": 5500, "feeFreeAt": 1000000, "bonusAt": 1000000, "bonus": 10000}], "tsumitate": [{"broker": "SBI証券", "card": "三井住友カード ゴールド（NL）", "rule": "usageTier", "maxMonthly": 100000, "tiers": [{"minAnnual": 1000000, "rate": 0.01}, {"minAnnual": 100000, "rate": 0.0075}, {"minAnnual": 0, "rate": 0}], "shop": {"mainCard": "三井住友カード ゴールド（NL）"}}, {"broker": "SBI証券", "card": "三井住友カード（NL）", "rule": "usageTier", "maxMonthly": 100000, "tiers": [{"minAnnual": 100000, "rate": 0.005}, {"minAnnual": 0, "rate": 0}]}, {"broker": "楽天証券", "card": "楽天カード", "rule": "flat", "rate": 0.005, "maxMonthly": 100000}, {"broker": "三菱UFJ eスマート証券（旧auカブコム証券）", "card": "au PAYカード", "rule": "flat", "rate": 0.005, "maxMonthly": 100000}, {"broker": "マネックス証券", "card": "マネックスカード", "rule": "monex", "maxMonthly": 100000, "bands": [{"upTo": 50000, "rates": [0.011, 0.0055, 0]}, {"upTo": 70000, "rates": [0.006, 0.003, 0]}, {"upTo": 100000, "rates": [0.002, 0.001, 0]}], "shopLevels": [50000, 10000], "shop": {"rate": 0.01, "fee": 0}}], "ease": {"携帯": 1, "インターネット": 2, "電気": 3, "都市ガス": 4, "メインカード": 5, "積立カード": 6, "ふるさと納税": 7}, "nextText": [{"key": "携帯", "text": "乗り換え先の会社のエリアマップで、ご自宅や職場がつながるか確認してから、オンラインで申し込みます。今の電話番号はそのまま使えるので、申し込みの際に番号の引き継ぎ（MNP）を選んでください。今の携帯会社のメールアドレスは乗り換えると使えなくなる場合があるため、ネットショップや銀行などに登録しているメールアドレスを先に変更しておくと安心です。SIMが届いたら切り替えて完了です。オンラインでの手続きが不安な方は、店舗サポートのあるワイモバイル・UQモバイルも選べます。家族割や光回線とのセット割を使っている方は、乗り換えると割引がなくなる場合があるため、今の携帯会社と乗り換え先の会社に直接ご確認ください。"}, {"key": "インターネット", "text": "乗り換え先の会社のサイトで住所を入力し、お住まいの建物で使えるかを確認してから申し込みます。工事が必要な場合は、立ち会いや工事費がかかることがあります。今の回線の解約のタイミング、違約金、工事費の残りは、今の会社に直接ご確認ください。ahamo光を提案された方は、先に携帯をahamoに乗り換えてから申し込んでください。"}, {"key": "電気", "text": "エネチェンジで選んだプランを、エネチェンジから申し込みます。今の電力会社への解約の連絡は原則不要です。申し込みには今の検針票や請求書の情報が必要になるので、手元に用意しておきましょう。プランの条件や手続きの詳細は、乗り換え先の会社に直接ご確認ください。"}, {"key": "都市ガス", "text": "エネチェンジで選んだプランを、エネチェンジから申し込みます。申し込みには今の検針票や請求書の情報が必要になるので、手元に用意しておきましょう。エネファームの利用などの加入条件や手続きの詳細は、乗り換え先の会社に直接ご確認ください。"}, {"key": "メインカード", "text": "提案したカードを申し込み、届いたら公共料金や携帯代などの支払い先を順に変更します。カードの条件や手続きの詳細は、カード会社に直接ご確認ください。"}, {"key": "積立カード", "text": "証券会社のサイトで、積立の支払い方法を提案したカードに設定します。変更が反映される月は証券会社によって異なります。ポイントの条件や手続きの詳細は、証券会社とカード会社に直接ご確認ください。"}, {"key": "ふるさと納税", "text": "ふるさと納税サイトから、上限額の範囲で寄付します。寄付のあとは、ワンストップ特例の申請または確定申告が必要です。手続きの詳細は、寄付先の自治体やふるさと納税サイトでご確認ください。"}]};
+const CONFIG = {
+  GAS_URL: "https://script.google.com/macros/s/AKfycbwluqBA8qbO7vpR29vNlF44dizbFK8hF9E0ChaPT4t4S5uygc7IFzDpMTBssT0deNWX-w/exec",   // 受信用スクリプト（統合版）のウェブアプリURL。空欄＝テストモード
+};
+const $ = id => document.getElementById(id);
+const val = n => (document.querySelector(`input[name=${n}]:checked`) || {}).value || "";
+const num = id => { const v = $(id).value.trim().replace(/[,，円]/g,"").replace(/[０-９．]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)); return v === "" ? null : Number(v); };
+const yen = n => MinaoshiReport.yen(n);
+let M = null, step = 1, lastPdf = null;
+const STEPS = 6;
+
+async function loadMaster() {
+  if (!CONFIG.GAS_URL) { $("demo").classList.remove("hide"); return FALLBACK_MASTER; }
+  const r = await fetch(CONFIG.GAS_URL + "?action=master"); const j = await r.json();
+  if (!j.ok) throw new Error(j.error); return j.master;
+}
+function fillSelects() {
+  const opt = (arr, ph) => `<option value="">${ph || "選択してください"}</option>` + arr.map(x => `<option>${x}</option>`).join("");
+  $("carrier").innerHTML = opt(Object.keys(M.phoneCurrent));
+  $("gb").innerHTML = opt(M.gbBuckets.map(b => b.label));
+  $("ccard").innerHTML = opt(M.mainCards.map(c => c.name).concat(["その他のカード", "クレジットカードを使っていない"]));
+  const brokers = [...new Set(M.tsumitate.map(t => t.broker))];
+  $("broker").innerHTML = opt(brokers.concat(["その他の証券会社"]));
+}
+function tcardOptions() {
+  const b = $("broker").value, cards = M.tsumitate.filter(t => t.broker === b).map(t => t.card);
+  $("tcard").innerHTML = `<option value="">選択してください</option>` + cards.concat(["その他のカード", "現金・銀行引き落とし"]).map(x => `<option>${x}</option>`).join("");
+}
+
+function input() {
+  const elec = val("elecResult"), gas = val("gasResult"), nisa = val("nisa");
+  const ccard = $("ccard").value;
+  return {
+    age: num("age"),
+    elecSave: elec === "found" ? num("elecSave") : 0, elecPlan: $("elecPlan").value.trim(),
+    gasUse: gas !== "skip", gasPlan: $("gasPlan").value.trim(),
+    gasCur: gas === "found" ? num("gasCur") : null, gasAfter: gas === "found" ? num("gasAfter") : null,
+    phone: { carrier: $("carrier").value, network: $("network").value, gb: $("gb").value, cost: $("pcostNA").checked ? null : num("pcost"), changeNetwork: val("chg") },
+    net: { house: val("house"), cost: $("ncostNA").checked ? null : num("ncost"), choice: val("netc") || "大手" },
+    card: { curCard: ccard === "クレジットカードを使っていない" ? "その他" : ccard, curRate: ccard === "クレジットカードを使っていない" ? 0 : num("crate"),
+      curFee: $("cfeeNA").checked ? null : num("cfee"), monthlySpend: num("spend") || 0, nisa: nisa,
+      broker: nisa === "口座なし" ? "" : ($("broker").value === "その他の証券会社" ? "その他" : $("broker").value),
+      tsumiCard: nisa === "積み立てている" ? $("tcard").value : "", tsumiMonthly: nisa === "積み立てている" ? num("tmon") : 0 },
+    furusato: val("furu"), furusatoLimit: val("furu") === "していない" ? num("flim") : null
+  };
+}
+
+function toggle() {
+  $("elecFound").classList.toggle("hide", val("elecResult") !== "found");
+  $("gasFound").classList.toggle("hide", val("gasResult") !== "found");
+  $("f-network").classList.toggle("hide", M.phoneCurrent[$("carrier").value] !== "選択");
+  $("pcost").disabled = $("pcostNA").checked; $("ncost").disabled = $("ncostNA").checked; $("cfee").disabled = $("cfeeNA").checked;
+  $("f-crate").classList.toggle("hide", $("ccard").value !== "その他のカード");
+  const nisa = val("nisa");
+  $("f-broker").classList.toggle("hide", !nisa || nisa === "口座なし");
+  $("f-tcard").classList.toggle("hide", nisa !== "積み立てている");
+  $("f-tmon").classList.toggle("hide", nisa !== "積み立てている");
+  $("f-flim").classList.toggle("hide", val("furu") !== "していない");
+}
+
+function bad(id, cond) { $(id).classList.toggle("bad", !!cond); return !!cond; }
+function check(s) {
+  let b = false; const I = input();
+  if (s === 1) {
+    b = bad("f-name", !$("name").value.trim()) | bad("f-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim()))
+      | bad("f-email2", $("email2").value.trim().toLowerCase() !== $("email").value.trim().toLowerCase());
+    $("ageErr").textContent = I.age >= 65 ? "このシミュレーターは65歳未満の方が対象です" : "18〜64の数字で入力してください";
+    b = bad("f-age", !(Number.isInteger(I.age) && I.age >= 18 && I.age < 65)) | b; b = bad("f-house", !val("house")) | b;
+  }
+  if (s === 2) {
+    b = bad("f-elecResult", !val("elecResult"));
+    if (val("elecResult") === "found") b = bad("f-elecPlan", !I.elecPlan) | bad("f-elecSave", !(I.elecSave > 0)) | b;
+    if (val("gasResult") === "found") b = bad("f-gasPlan", !I.gasPlan) | bad("f-gasCur", !(I.gasCur > 0)) | bad("f-gasAfter", !(I.gasAfter > 0 && I.gasAfter < I.gasCur)) | b;
+  }
+  if (s === 3) {
+    b = bad("f-carrier", !I.phone.carrier) | bad("f-gb", !I.phone.gb) | bad("f-chg", !I.phone.changeNetwork)
+      | bad("f-pcost", !$("pcostNA").checked && !(I.phone.cost >= 0 && I.phone.cost !== null)) | bad("f-ncost", !$("ncostNA").checked && !(I.net.cost >= 0 && I.net.cost !== null));
+    if (M.phoneCurrent[I.phone.carrier] === "選択") b = bad("f-network", !I.phone.network) | b;
+  }
+  if (s === 4) {
+    b = bad("f-ccard", !$("ccard").value) | bad("f-cfee", !$("cfeeNA").checked && !(num("cfee") >= 0 && num("cfee") !== null)) | bad("f-spend", !(num("spend") >= 0 && num("spend") !== null)) | bad("f-nisa", !val("nisa"));
+    if ($("ccard").value === "その他のカード") b = bad("f-crate", !(num("crate") >= 0 && num("crate") !== null)) | b;
+    if (val("nisa") && val("nisa") !== "口座なし") b = bad("f-broker", !$("broker").value) | b;
+    if (val("nisa") === "積み立てている") b = bad("f-tcard", !$("tcard").value) | bad("f-tmon", !(num("tmon") >= 0 && num("tmon") !== null)) | b;
+  }
+  if (s === 5) b = bad("f-furu", !val("furu"));
+  return !b;
+}
+
+function result() {
+  const I = input(), R = MinaoshiCalc.run(M, I);
+  $("rlead").textContent = `${I.age}歳から${M.settings.targetAge}歳までの${R.years}年間で見込める金額です。`;
+  $("vUku").textContent = yen(R.uku); $("sUku").textContent = `毎年${yen(R.mamoruAnnual)} × ${R.years}年`;
+  $("vKas").textContent = yen(R.kasegu); $("sKas").textContent = `毎年${yen(R.kaseguAnnual)} × ${R.years}年`;
+  $("vFuy").textContent = yen(R.fuyasu); $("sFuy").textContent = `浮いた分と稼いだ分（ふるさと納税を除く）を年${Math.round(M.settings.rate * 100)}%で運用した運用益`;
+  $("vTok").textContent = yen(R.tokusuru);
+  const nc = R.net.known && R.net.cheap;
+  $("netChoice").classList.toggle("hide", !nc);
+  if (nc) { $("netBig").textContent = `大手の中で一番安い：${R.net.big.line.name}（月${yen(R.net.big.line.price)}）`; $("netCheap").textContent = `安さ重視：${R.net.cheap.line.name}（月${yen(R.net.cheap.line.price)}）※東日本4世帯未満・西日本6世帯未満の集合住宅は戸建ての料金`; }
+  $("rows").innerHTML = MinaoshiReport.rows(R, I).map(r => `<tr><td><b>${r.k}</b><br>${r.to}${r.note ? `<div class="nt">${r.note}</div>` : ""}</td><td class="n">${yen(r.y)}</td></tr>`).join("");
+  $("nextList").innerHTML = MinaoshiReport.nextSteps(R, I, M).map(s => `<li><b>${s.k}</b>${s.y > 0 ? `（年${yen(s.y)}）` : ""}<div class="t">${s.t}</div></li>`).join("");
+}
+
+function show(s) {
+  step = s;
+  document.querySelectorAll(".step").forEach(el => el.classList.toggle("hide", Number(el.dataset.s) !== s));
+  $("prog").innerHTML = Array.from({ length: STEPS }, (_, i) => `<i class="${i < s ? "on" : ""}"></i>`).join("");
+  $("prev").style.visibility = s > 1 ? "visible" : "hidden";
+  $("next").textContent = s === 5 ? "結果を見る" : (s === STEPS ? "結果を送信する" : "次へ");
+  if (s === STEPS) result();
+  $("msg").textContent = ""; window.scrollTo(0, 0);
+}
+
+async function send() {
+  if (!$("agree").checked) { bad("f-agree", true); return; } bad("f-agree", false);
+  const btn = $("next"); btn.disabled = true; btn.textContent = "送信しています…";
+  const body = { input: input(), meta: { name: $("name").value.trim(), email: $("email").value.trim(), gender: $("gender").value, consult: $("consult").checked, agree: true }, website: $("website").value };
+  try {
+    if (CONFIG.GAS_URL) {
+      const r = await fetch(CONFIG.GAS_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
+      const j = await r.json(); if (!j.ok) throw new Error(j.error); lastPdf = j;
+    } else { await new Promise(r => setTimeout(r, 600)); lastPdf = null; }
+    document.querySelectorAll(".step").forEach(el => el.classList.add("hide")); $("nav").classList.add("hide"); $("prog").classList.add("hide");
+    $("done").classList.remove("hide"); $("dl").classList.toggle("hide", !lastPdf); window.scrollTo(0, 0);
+  } catch (e) {
+    $("msg").textContent = "送信できませんでした。通信環境を確認して、もう一度お試しください。（" + e.message + "）";
+  } finally { btn.disabled = false; btn.textContent = "結果を送信する"; }
+}
+$("dl").onclick = () => {
+  if (!lastPdf) return; const bin = atob(lastPdf.pdf), a = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i);
+  const url = URL.createObjectURL(new Blob([a], { type: "application/pdf" })), l = document.createElement("a");
+  l.href = url; l.download = lastPdf.fileName; l.click(); setTimeout(() => URL.revokeObjectURL(url), 5000);
+};
+$("next").onclick = () => { if (step < STEPS) { if (check(step)) show(step + 1); else $("msg").textContent = "赤く表示された項目を確認してください"; } else send(); };
+$("prev").onclick = () => show(step - 1);
+document.addEventListener("input", () => { toggle(); if (step === STEPS) result(); });
+document.addEventListener("change", e => { if (e.target.id === "broker") tcardOptions(); toggle(); if (step === STEPS) result(); });
+
+(async () => {
+  try { M = await loadMaster(); fillSelects(); tcardOptions(); toggle(); $("loading").classList.add("hide"); $("nav").classList.remove("hide"); show(1); }
+  catch (e) { $("loading").textContent = "料金表を読み込めませんでした。時間をおいて開き直してください。（" + e.message + "）"; }
+})();
+
+</script></body></html>
