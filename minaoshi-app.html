@@ -40,25 +40,57 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
 .demo{background:#fff8d6;color:#6b5400;border-radius:8px;padding:8px 12px;font-size:13px;margin-bottom:12px}
 .msg{color:var(--err);font-size:14px;margin-top:10px}.note{font-size:11.5px;color:var(--sub);margin-top:14px;line-height:1.7}
 .hp{position:absolute;left:-9999px}
+.steplabel{font-size:13px;font-weight:700;color:var(--brand);margin:-6px 0 10px}
+.flow{margin:0;padding-left:1.4em}.flow li{font-size:14.5px;margin-bottom:4px}.flow .t{font-size:12.5px;color:var(--sub)}
+.prep{margin:0;padding-left:1.2em}.prep li{font-size:14px;margin-bottom:3px}
+.goalbox{background:var(--brand-soft);border-radius:12px;padding:12px 14px;font-size:14.5px;margin-bottom:6px}
 </style></head><body><div class="wrap">
 <div class="brand">YourLife</div><h1>家計見直しシミュレーター</h1>
 <p class="lead">入力はこのページだけ。送信すると、浮く・稼ぐ・増やす・得する金額がわかり、結果のPDFが届きます。</p>
 <div id="demo" class="demo hide">テストモードです（送信先が未設定のため、保存・PDF・メールは行われません）。</div>
 <div id="loading" class="card">料金表を読み込んでいます…</div>
-<div class="prog" id="prog"></div>
+<div class="prog hide" id="prog"></div>
+<div class="steplabel hide" id="stepLabel"></div>
+<section class="card hide" id="intro">
+ <h2>はじめに</h2>
+ <div class="goalbox"><b>このシミュレーターでわかること</b><br>携帯・インターネット・電気・ガス・カードなどの毎月の支払いを見直すと、65歳までにいくら得するかがわかります。浮いたお金をNISAの積立に回すところまで、あなたが次にやることも順番にお伝えします。</div>
+ <div class="sec">対象と所要時間</div>
+ <p style="margin:0;font-size:14.5px">65歳未満の方が対象です。入力は<b>約15分</b>です。スマホでもパソコンでもできます。</p>
+ <div class="sec">進み方（全部で6ステップ）</div>
+ <ol class="flow">
+  <li>あなたについて</li>
+  <li>電気・都市ガス<div class="t">途中で、エネチェンジという比較サイトを別のタブで開いて比べます。比べ終わったら、このページに戻って続きを入力します。</div></li>
+  <li>携帯・インターネット</li>
+  <li>カード・NISA</li>
+  <li>ふるさと納税</li>
+  <li>結果を見て送信<div class="t">送信すると、結果のPDFがメールで届きます。</div></li>
+ </ol>
+ <div class="sec">手元に用意するもの</div>
+ <ul class="prep">
+  <li>電気・ガスの検針票か請求書（エネチェンジで比べるときに使います）</li>
+  <li>携帯の請求書かマイページ（毎月の料金とギガ数）</li>
+  <li>インターネットの請求書かマイページ（毎月の料金）</li>
+  <li>クレジットカードの明細かアプリ（年会費と毎月の利用額）</li>
+  <li>NISAをしている方は、証券会社名と毎月の積立額</li>
+  <li>ふるさと納税の上限額（わかる方のみ）</li>
+ </ul>
+ <p class="hint">携帯代、ネット代、カードの年会費は、わからなければ「わからない」を選んで進めます。</p>
+ <div class="guide" style="margin-top:12px">入力した内容は途中で保存されません。最後の「結果を送信する」まで、一度に進めてください。途中でページを閉じたり読み込み直したりすると、最初からになります。</div>
+ <button class="btn" id="start" type="button" style="width:100%">始める</button>
+</section>
 <section class="card step hide" data-s="1">
  <h2>1. あなたについて</h2><p class="d">結果のお届けと、65歳までの期間の計算に使います。</p>
  <div class="f" id="f-name"><label>お名前<span class="req">必須</span></label><input type="text" id="name" autocomplete="name" placeholder="例：山田 太郎"><div class="err">入力してください</div></div>
  <div class="f" id="f-email"><label>メールアドレス<span class="req">必須</span></label><input type="email" id="email" autocomplete="email"><div class="err">メールアドレスの形式で入力してください</div></div>
  <div class="f" id="f-email2"><label>メールアドレス（確認のためもう一度）<span class="req">必須</span></label><input type="email" id="email2" autocomplete="off"><div class="err">上と同じメールアドレスを入力してください</div></div>
  <div class="f" id="f-age"><label>年齢<span class="req">必須</span></label><div class="row"><input type="number" id="age" inputmode="numeric" min="18" max="64"><span>歳</span></div><div class="err" id="ageErr">18〜64の数字で入力してください</div></div>
- <div class="f"><span class="lb">性別<span class="opt">任意</span></span><select id="gender"><option value="">選択してください</option><option>男性</option><option>女性</option><option>回答しない</option></select></div>
+ <div class="f" id="f-gender"><span class="lb">性別<span class="req">必須</span></span><select id="gender"><option value="">選択してください</option><option>男性</option><option>女性</option><option>回答しない</option></select><div class="err">選んでください</div></div>
  <div class="f" id="f-house"><span class="lb">お住まい<span class="req">必須</span></span><div class="radios"><label class="radio"><input type="radio" name="house" value="戸建て"><span>戸建て</span></label><label class="radio"><input type="radio" name="house" value="マンション"><span>マンション・アパート</span></label></div><div class="err">選んでください</div></div>
 </section>
 
 <section class="card step hide" data-s="2">
  <h2>2. 電気・都市ガス</h2><p class="d">エネチェンジで比較した結果を書き写してください。</p>
- <div class="guide">エネチェンジ（<a href="https://enechange.jp/" target="_blank" rel="noopener">enechange.jp</a>）で、電気は結果を<b>「電気代の安い順」</b>に切り替え、赤枠の<b>「初年度 電気代 ○円節約」</b>の金額を使います。キャッシュバックやポイントは含めません。</div>
+ <div class="guide">エネチェンジ（<a href="https://enechange.jp/" target="_blank" rel="noopener">enechange.jp</a>）で、電気は結果を<b>「電気代の安い順」</b>に切り替え、赤枠の<b>「初年度 電気代 ○円節約」</b>の金額を使います。キャッシュバックやポイントは含めません。<br>エネチェンジは別のタブで開きます。比べ終わったら、このタブに戻ってください。入力した内容はそのまま残っています。</div>
  <div class="sec">電気<span class="req">必須</span></div>
  <div class="f" id="f-elecResult"><div class="radios"><label class="radio"><input type="radio" name="elecResult" value="found"><span>今より安いプランが見つかった</span></label><label class="radio"><input type="radio" name="elecResult" value="current"><span>今のプランが一番安かった</span></label></div><div class="err">選んでください</div></div>
  <div id="elecFound" class="hide">
@@ -126,8 +158,9 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
 <section class="card hide" id="done">
  <h2>結果を送信しました</h2>
  <p>結果のPDFを、入力いただいたメールアドレスにお送りしました。届かない場合は迷惑メールのフォルダもご確認ください。</p>
- <button class="btn" id="dl" type="button">結果のPDFをダウンロード</button>
- <p class="note">内容を変えてもう一度確かめたいときは、ページを開き直して入力してください。新しい結果も保存されます。</p>
+ <button class="btn" id="dl" type="button" style="width:100%">結果のPDFをダウンロード</button>
+ <button class="btn g" id="restart" type="button" style="width:100%;margin-top:10px">最初に戻る</button>
+ <p class="note">「最初に戻る」を押すと、入力した内容は消えて「はじめに」のページに戻ります。内容を変えてもう一度確かめたいときや、ご家族の分を入力するときにお使いください。新しい結果も保存されます。</p>
 </section>
 
 <div class="nav hide" id="nav"><button class="btn g" id="prev" type="button">戻る</button><button class="btn" id="next" type="button">次へ</button></div>
@@ -136,7 +169,7 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
 <script>
 /* 見直しシミュレーター 計算エンジン（画面と受信用スクリプトで共通） */
 var MinaoshiCalc = (function () {
-  function n(v) { var x = Number(v); return isFinite(x) ? x : null; }
+  function n(v) { if (v === null || v === undefined || v === "") return null; var x = Number(v); return isFinite(x) ? x : null; } // 空欄・「わからない」は null のまま扱う
 
   // 携帯：ギガ数を満たすプランの最安（network 指定時はその電波のみ）
   function bestPhone(M, cap, network) {
@@ -342,18 +375,18 @@ var MinaoshiReport = (function () {
     return "<html><head><meta charset='UTF-8'><style>" +
       "body{font-family:'Noto Sans JP','Noto Sans CJK JP','Hiragino Sans',sans-serif;color:#1c2736;font-size:9.5pt;line-height:1.45;margin:0}" +
       "h1{font-size:17pt;margin:0}.top td{vertical-align:bottom}.brand{color:#2563eb;font-weight:bold}.meta{text-align:right;font-size:8.5pt;color:#5b6878}" +
-      "table{width:100%;border-collapse:collapse}.box td{padding:8px 10px}.lb{font-size:8.5pt;font-weight:bold}.v{font-size:15pt;font-weight:bold}.s{font-size:8pt;color:#5b6878}" +
-      ".total td{background:#1c2736;color:#fff;padding:10px 12px}.tv{font-size:20pt;font-weight:bold;text-align:right}" +
+      "table{width:100%;border-collapse:collapse}.box td{padding:8px 10px;border:1px solid #d9e1ea}.lb{font-size:8.5pt;font-weight:bold}.v{font-size:15pt;font-weight:bold}.s{font-size:8pt;color:#5b6878}" +
+      ".total td{background:#f6f8fb;color:#1c2736;border-top:3px solid #1c2736;border-bottom:3px solid #1c2736;padding:10px 12px;font-weight:bold}.tv{font-size:20pt;font-weight:bold;text-align:right}" +
       "h2{font-size:11pt;margin:10px 0 4px;border-left:4px solid #2563eb;padding-left:7px}.list td{border-bottom:1px solid #d9e1ea;padding:3px 6px;vertical-align:top}" +
-      ".k{width:22%;font-weight:bold}.n{width:16%;text-align:right;white-space:nowrap}.nt{font-size:8pt;color:#5b6878}.no{width:5%;color:#2563eb;font-weight:bold}.sm{font-size:7.8pt;color:#3b4756}.goal td{background:#e6ecfd}" +
+      ".k{width:22%;font-weight:bold}.n{width:16%;text-align:right;white-space:nowrap}.nt{font-size:8pt;color:#5b6878}.no{width:5%;color:#2563eb;font-weight:bold}.sm{font-size:7.8pt;color:#3b4756}.goal td{background:#e6ecfd;border-top:2px solid #1d4fd0;border-bottom:2px solid #1d4fd0}" +
       ".note{font-size:7pt;color:#5b6878;margin-top:8px;line-height:1.4}</style></head><body>" +
       "<table class='top'><tr><td><div class='brand'>YourLife株式会社</div><h1>家計見直し 結果レポート</h1></td><td class='meta'>" + esc(meta.name) + " 様（" + I.age + "歳）<br>作成日：" + esc(meta.date) + "<br>受付ID：" + esc(meta.id) + "</td></tr></table>" +
       "<p>今回の見直しを実践した場合に、" + M.settings.targetAge + "歳までの" + R.years + "年間で見込める効果です。</p>" +
       "<table class='box'><tr>" +
-      "<td style='background:#fff1d6'><div class='lb' style='color:#9a5b00'>守って浮く金額</div><div class='v'>" + yen(R.uku) + "</div><div class='s'>毎年" + yen(R.mamoruAnnual) + " × " + R.years + "年</div></td>" +
-      "<td style='background:#dff3f3'><div class='lb' style='color:#0e6e70'>" + M.settings.targetAge + "歳まで稼ぐ金額</div><div class='v'>" + yen(R.kasegu) + "</div><div class='s'>毎年" + yen(R.kaseguAnnual) + " × " + R.years + "年</div></td>" +
-      "<td style='background:#e6ecfd'><div class='lb' style='color:#1d4fd0'>" + M.settings.targetAge + "歳までで増やす金額</div><div class='v'>" + yen(R.fuyasu) + "</div><div class='s'>浮いた分と稼いだ分（ふるさと納税を除く）を年" + Math.round(M.settings.rate * 100) + "%で運用した運用益</div></td>" +
-      "</tr></table><table class='total' style='margin-top:6px'><tr><td>見直しを実践することでこれから得する金額<br><span class='s' style='color:#b4c0cf'>浮く金額 ＋ 稼ぐ金額 ＋ 増やす金額（" + M.settings.targetAge + "歳時点）</span></td><td class='tv'>" + yen(R.tokusuru) + "</td></tr></table>" +
+      "<td style='background:#fff1d6;border-top:4px solid #9a5b00'><div class='lb' style='color:#9a5b00'>守って浮く金額</div><div class='v'>" + yen(R.uku) + "</div><div class='s'>毎年" + yen(R.mamoruAnnual) + " × " + R.years + "年</div></td>" +
+      "<td style='background:#dff3f3;border-top:4px solid #0e6e70'><div class='lb' style='color:#0e6e70'>" + M.settings.targetAge + "歳まで稼ぐ金額</div><div class='v'>" + yen(R.kasegu) + "</div><div class='s'>毎年" + yen(R.kaseguAnnual) + " × " + R.years + "年</div></td>" +
+      "<td style='background:#e6ecfd;border-top:4px solid #1d4fd0'><div class='lb' style='color:#1d4fd0'>" + M.settings.targetAge + "歳までで増やす金額</div><div class='v'>" + yen(R.fuyasu) + "</div><div class='s'>浮いた分と稼いだ分（ふるさと納税を除く）を年" + Math.round(M.settings.rate * 100) + "%で運用した運用益</div></td>" +
+      "</tr></table><table class='total' style='margin-top:6px'><tr><td>見直しを実践することでこれから得する金額<br><span class='s' style='color:#5b6878;font-weight:normal'>浮く金額 ＋ 稼ぐ金額 ＋ 増やす金額（" + M.settings.targetAge + "歳時点）</span></td><td class='tv'>" + yen(R.tokusuru) + "</td></tr></table>" +
       "<h2>項目ごとの内訳（年あたり）</h2><table class='list'>" + tr + "</table>" +
       "<h2 style='page-break-before:always'>次にやること</h2><div class='sm' style='margin-bottom:4px'>" + esc(COMMON) + "</div><table class='list'>" + ns + "</table>" +
       "<div class='note'>本レポートは参考値です。電気・ガスはエネチェンジの比較結果をもとに、ポイントやキャッシュバックを除いた金額で計算しています。携帯・インターネット・カードは公式に確認した割引前の基本料金・還元率で計算しています。使ったデータ量によって月額料金が変わるインターネット回線は比較の対象外としています。インターネットはお住まいの建物で利用できるかのご確認が必要です。料金や使用量が今のまま続いた場合の見込みで、実際の削減額を保証するものではありません。運用利回りは年" + Math.round(M.settings.rate * 100) + "%を使用しています。為替の影響を除いた株式指数（S&amp;P500・全世界株式）の長期実績を下回る、控えめな水準として設定しています。将来の運用成果を保証するものではありません。ポイントは1ポイント＝1円として計算しています。</div>" +
@@ -371,7 +404,8 @@ const $ = id => document.getElementById(id);
 const val = n => (document.querySelector(`input[name=${n}]:checked`) || {}).value || "";
 const num = id => { const v = $(id).value.trim().replace(/[,，円]/g,"").replace(/[０-９．]/g,c=>String.fromCharCode(c.charCodeAt(0)-0xFEE0)); return v === "" ? null : Number(v); };
 const yen = n => MinaoshiReport.yen(n);
-let M = null, step = 1, lastPdf = null;
+let M = null, step = 1, lastPdf = null, tried = {}, armed = false;
+const STEP_NAMES = ["あなたについて", "電気・都市ガス", "携帯・インターネット", "カード・NISA", "ふるさと納税", "結果を見て送信"];
 const STEPS = 6;
 
 async function loadMaster() {
@@ -430,7 +464,7 @@ function check(s) {
     b = bad("f-name", !$("name").value.trim()) | bad("f-email", !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($("email").value.trim()))
       | bad("f-email2", $("email2").value.trim().toLowerCase() !== $("email").value.trim().toLowerCase());
     $("ageErr").textContent = I.age >= 65 ? "このシミュレーターは65歳未満の方が対象です" : "18〜64の数字で入力してください";
-    b = bad("f-age", !(Number.isInteger(I.age) && I.age >= 18 && I.age < 65)) | b; b = bad("f-house", !val("house")) | b;
+    b = bad("f-age", !(Number.isInteger(I.age) && I.age >= 18 && I.age < 65)) | b; b = bad("f-gender", !$("gender").value) | b; b = bad("f-house", !val("house")) | b;
   }
   if (s === 2) {
     b = bad("f-elecResult", !val("elecResult"));
@@ -470,6 +504,7 @@ function show(s) {
   step = s;
   document.querySelectorAll(".step").forEach(el => el.classList.toggle("hide", Number(el.dataset.s) !== s));
   $("prog").innerHTML = Array.from({ length: STEPS }, (_, i) => `<i class="${i < s ? "on" : ""}"></i>`).join("");
+  $("stepLabel").textContent = `ステップ ${s}／${STEPS}　${STEP_NAMES[s - 1]}`;
   $("prev").style.visibility = s > 1 ? "visible" : "hidden";
   $("next").textContent = s === 5 ? "結果を見る" : (s === STEPS ? "結果を送信する" : "次へ");
   if (s === STEPS) result();
@@ -485,7 +520,7 @@ async function send() {
       const r = await fetch(CONFIG.GAS_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(body) });
       const j = await r.json(); if (!j.ok) throw new Error(j.error); lastPdf = j;
     } else { await new Promise(r => setTimeout(r, 600)); lastPdf = null; }
-    document.querySelectorAll(".step").forEach(el => el.classList.add("hide")); $("nav").classList.add("hide"); $("prog").classList.add("hide");
+    document.querySelectorAll(".step").forEach(el => el.classList.add("hide")); $("nav").classList.add("hide"); $("prog").classList.add("hide"); $("stepLabel").classList.add("hide"); armed = false;
     $("done").classList.remove("hide"); $("dl").classList.toggle("hide", !lastPdf); window.scrollTo(0, 0);
   } catch (e) {
     $("msg").textContent = "送信できませんでした。通信環境を確認して、もう一度お試しください。（" + e.message + "）";
@@ -497,13 +532,37 @@ $("dl").onclick = () => {
   const url = URL.createObjectURL(new Blob([a], { type: "application/pdf" })), l = document.createElement("a");
   l.href = url; l.download = lastPdf.fileName; l.click(); setTimeout(() => URL.revokeObjectURL(url), 5000);
 };
-$("next").onclick = () => { if (step < STEPS) { if (check(step)) show(step + 1); else $("msg").textContent = "赤く表示された項目を確認してください"; } else send(); };
+$("next").onclick = () => { if (step < STEPS) { if (check(step)) show(step + 1); else { tried[step] = true; $("msg").textContent = "赤く表示された項目を確認してください"; } } else send(); };
+// 一度「次へ」で止まった画面は、入力のたびに確認し直して、直した欄の赤い表示をすぐ消す
+function recheck(e) {
+  if (step < STEPS && tried[step] && check(step)) $("msg").textContent = "";
+  if (e && e.target && e.target.id === "agree" && e.target.checked) bad("f-agree", false);
+}
 $("prev").onclick = () => show(step - 1);
-document.addEventListener("input", () => { toggle(); if (step === STEPS) result(); });
-document.addEventListener("change", e => { if (e.target.id === "broker") tcardOptions(); toggle(); if (step === STEPS) result(); });
+function startInput() {
+  $("intro").classList.add("hide"); $("prog").classList.remove("hide"); $("stepLabel").classList.remove("hide"); $("nav").classList.remove("hide");
+  armed = true; show(1);
+}
+$("start").onclick = startInput;
+// 最初に戻る：入力をすべて消して「はじめに」へ
+$("restart").onclick = () => {
+  document.querySelectorAll("input, select").forEach(el => {
+    if (el.type === "checkbox") el.checked = false;
+    else if (el.type === "radio") el.checked = el.defaultChecked;
+    else if (el.tagName === "SELECT") el.selectedIndex = 0;
+    else el.value = "";
+  });
+  document.querySelectorAll(".bad").forEach(el => el.classList.remove("bad"));
+  tried = {}; lastPdf = null; armed = false; tcardOptions(); toggle();
+  $("done").classList.add("hide"); $("msg").textContent = ""; $("intro").classList.remove("hide"); window.scrollTo(0, 0);
+};
+// 入力の途中でページを閉じようとしたら確認を出す（送信後と「はじめに」では出さない）
+window.addEventListener("beforeunload", e => { if (armed) { e.preventDefault(); e.returnValue = ""; } });
+document.addEventListener("input", e => { toggle(); recheck(e); if (step === STEPS) result(); });
+document.addEventListener("change", e => { if (e.target.id === "broker") tcardOptions(); toggle(); recheck(e); if (step === STEPS) result(); });
 
 (async () => {
-  try { M = await loadMaster(); fillSelects(); tcardOptions(); toggle(); $("loading").classList.add("hide"); $("nav").classList.remove("hide"); show(1); }
+  try { M = await loadMaster(); fillSelects(); tcardOptions(); toggle(); $("loading").classList.add("hide"); $("intro").classList.remove("hide"); }
   catch (e) { $("loading").textContent = "料金表を読み込めませんでした。時間をおいて開き直してください。（" + e.message + "）"; }
 })();
 
