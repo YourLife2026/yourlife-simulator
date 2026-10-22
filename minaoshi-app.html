@@ -28,6 +28,7 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
 .radio input:checked+span{border-color:var(--brand);background:var(--brand-soft)}.radio input:focus-visible+span{outline:3px solid rgba(37,99,235,.35)}
 .chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin-top:6px;cursor:pointer}.chk input{width:18px;height:18px;margin-top:3px;accent-color:var(--brand)}
 .hint{font-size:12.5px;color:var(--sub);margin-top:4px;line-height:1.6}.guide{background:var(--brand-soft);border-radius:10px;padding:10px 12px;font-size:13.5px;margin-bottom:12px}
+.howto{border:1px solid #e4007f;border-radius:10px;margin:0 0 12px;background:#fff}.howto summary{cursor:pointer;padding:10px 12px;font-weight:700;color:#c4006d;font-size:14px}.howto .in{padding:0 12px 12px}.howto ol{margin:0;padding-left:1.3em}.howto li{margin:0 0 14px;font-size:13.5px;line-height:1.6}.howto img{display:block;width:100%;max-width:360px;margin-top:6px;border:1px solid #ddd;border-radius:8px}.howto .tip{font-size:12.5px;color:var(--sub);margin:0}
 .err{display:none;color:var(--err);font-size:12.5px;margin-top:4px}.bad .err{display:block}.bad input,.bad select{border-color:var(--err)}
 .hide{display:none!important}
 .nav{display:flex;gap:10px}.btn{flex:1;font:inherit;font-weight:700;font-size:16px;border-radius:10px;padding:13px;cursor:pointer;border:2px solid var(--brand);background:var(--brand);color:#fff}
@@ -92,6 +93,11 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
  <h2>2. 電気・都市ガス</h2><p class="d">エネチェンジで比較した結果を書き写してください。</p>
  <div class="guide">エネチェンジ（<a href="https://enechange.jp/" target="_blank" rel="noopener">enechange.jp</a>）で、電気は結果を<b>「電気代の安い順」</b>に切り替え、赤枠の<b>「初年度 電気代 ○円節約」</b>の金額を使います。キャッシュバックやポイントは含めません。<br>エネチェンジは別のタブで開きます。比べ終わったら、このタブに戻ってください。入力した内容はそのまま残っています。</div>
  <div class="sec">電気<span class="req">必須</span></div>
+<details class="howto"><summary>電気のやり方を画像で見る</summary><div class="in"><ol>
+<li>「電気」を選び、「今のお住まい での切り替え」を押します。<img src="ene_denki_1.jpg" alt="電気を選んで今のお住まいでの切り替えを押す画面" loading="lazy"></li>
+<li>検針票を見ながら、電力会社・プラン名・アンペア数・1か月の電気代を入れ、「結果へ進む」を押します。<img src="ene_denki_2.jpg" alt="電力会社などを入力して結果へ進むを押す画面" loading="lazy"></li>
+<li>「電気代の安い順」を必ず押します。一番上のプラン名と、赤枠の「初年度 電気代 ○円節約」の金額を書き写します。「料金詳細」を開くと出るオレンジの金額（特典金額を含む）は使いません。<img src="ene_denki_3.jpg" alt="電気代の安い順を押して赤枠の金額を見る画面" loading="lazy"></li>
+</ol><p class="tip">画面のデザインが変わっていても、「電気代の安い順」と「初年度 電気代 ○円節約」の2つを探してください。</p></div></details>
  <div class="f" id="f-elecResult"><div class="radios"><label class="radio"><input type="radio" name="elecResult" value="found"><span>今より安いプランが見つかった</span></label><label class="radio"><input type="radio" name="elecResult" value="current"><span>今のプランが一番安かった</span></label></div><div class="err">選んでください</div></div>
  <div id="elecFound" class="hide">
   <div class="f" id="f-elecPlan"><label>選んだプラン名<span class="req">必須</span></label><input type="text" id="elecPlan"><div class="err">入力してください</div></div>
@@ -99,6 +105,11 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
  </div>
  <div class="sec">都市ガス<span class="opt">任意</span></div>
  <div class="hint" style="margin-bottom:8px">都市ガスの方のみ。結果画面に並び替えがないため、各プランの「料金詳細」の表の<b>「ガス代」の行</b>を使います。加入条件（エネファーム利用など）も確認してください。</div>
+<details class="howto"><summary>都市ガスのやり方を画像で見る</summary><div class="in"><ol>
+<li>エネチェンジの最初の画面で「都市ガス」を選んで進み、郵便番号と1か月のガス代を入れて「この条件で節約額を見る」を押します。<img src="ene_gas_1.jpg" alt="郵便番号とガス代を入れる画面" loading="lazy"></li>
+<li>プランの「料金詳細」を必ず押します。赤枠の金額はキャッシュバックなどを含むため、使いません。<img src="ene_gas_2.jpg" alt="料金詳細を押す画面" loading="lazy"></li>
+<li>表の一番上「ガス代」の行の「現在のプラン」と「切り替え後」の2つの金額を書き写します。表は横にスライドできます。<img src="ene_gas_3.jpg" alt="ガス代の行の2つの金額を見る画面" loading="lazy"></li>
+</ol><p class="tip">画面のデザインが変わっていても、「料金詳細」と「ガス代」の行の2つを探してください。</p></div></details>
  <div class="f"><div class="radios"><label class="radio"><input type="radio" name="gasResult" value="skip" checked><span>入力しない（都市ガスではない／今回は見直さない）</span></label><label class="radio"><input type="radio" name="gasResult" value="found"><span>今より安いプランが見つかった</span></label><label class="radio"><input type="radio" name="gasResult" value="current"><span>今のプランが一番安かった</span></label></div></div>
  <div id="gasFound" class="hide">
   <div class="f" id="f-gasPlan"><label>選んだプラン名<span class="req">必須</span></label><input type="text" id="gasPlan"><div class="err">入力してください</div></div>
