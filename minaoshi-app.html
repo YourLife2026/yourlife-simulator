@@ -437,8 +437,15 @@ var MinaoshiReport = (function () {
     var c = R.card;
     out.push({ k: "メインカード", to: c.status === "提案" ? c.best.main.name : "今のカードのまま", y: (c.mamoru || 0) + (c.kaseguMain || 0),
       note: c.status === "提案" && c.mamoru > 0 ? "年会費" + yen(c.mamoru) + "（今のカードの特典を使っていない場合）を含みます" : "", ref: "" });
+    // 積立カードの説明：計算に使った積立額（積み立てている人は今の積立額、それ以外は浮いたお金の月額）をそのまま出す
+    var tExp = "";
+    if (!c.brokerOutside && c.status === "提案" && c.tsumiChange && c.kaseguT > 0) {
+      tExp = I.card.nisa === "積み立てている"
+        ? "今の積立（毎月" + yen(Number(I.card.tsumiMonthly) || 0) + "）の支払いを" + c.best.t.card + "に変えると、今より増えるポイントです。"
+        : "浮いたお金（毎月約" + yen((R.elec + R.gas + R.phone.annual + R.net.annual) / 12) + "）を" + c.best.t.broker + "のNISAで積み立て、支払いを" + c.best.t.card + "にすると、もらえるポイントです。";
+    }
     out.push({ k: "積立カード", to: c.brokerOutside ? "計算の対象外" : (c.status === "提案" && c.tsumiChange ? c.best.t.broker + "／" + c.best.t.card : "今のまま"), y: c.kaseguT || 0,
-      note: c.tsumiLoss > 0 ? "メインカードを変えると今の積立カードの条件を外れ、積立のポイントが年" + yen(c.tsumiLoss) + "減ります（差し引き済み）" : "", ref: "" });
+      note: tExp + (c.tsumiLoss > 0 ? "メインカードを変えると今の積立カードの条件を外れ、積立のポイントが年" + yen(c.tsumiLoss) + "減ります（差し引き済み）" : ""), ref: "" });
     out.push({ k: "ふるさと納税", to: I.furusato === "している" ? "ご利用中" : (R.furusato > 0 ? "上限額の範囲で寄付" : "上限額を入力すると計算します"), y: R.furusato,
       note: R.furusato > 0 ? "返礼品の価値を寄付額の30%とみなした目安で、現金で戻る金額ではありません" : "", ref: "" });
     return out;
