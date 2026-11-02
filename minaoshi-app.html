@@ -507,7 +507,8 @@ var MinaoshiReport = (function () {
   const tr = rows(R, I).map(r =>
     "<tr><td class='k'>" + esc(r.k) + "</td><td>" + esc(r.to) + (r.note ? "<div class='s'>" + esc(r.note) + "</div>" : "") + (r.ref ? "<div class='ref'>" + esc(r.ref) + "</div>" : "") + "</td><td class='n'>" + yen(r.y) + "</td></tr>").join('');
   const bk = meta.consult ? booking(M) : "";
-  const bkBtn = (u) => "<div class='bk'><a href='" + esc(u) + "'>" + BOOK_LABEL + "</a></div><div class='lk'>" + esc(u) + "</div>";
+  // PDFでは背景色が消えることがあるため、白地に青い太字と青い枠で目立たせる（URLの文字も青の太字で載せる）
+  const bkBtn = (u) => "<table class='bk'><tr><td><a href='" + esc(u) + "'><span class='bkt'>" + BOOK_LABEL + " ＞</span></a></td></tr></table><div class='bku'><a href='" + esc(u) + "'><span class='bkt2'>" + esc(u) + "</span></a></div>";
   const ns = nextSteps(R, I, M, meta.consult).map((x, i) => {
     const g = x.goal ? " class='goal'" : "";
     const lk = (x.links || []).map(l => "<div class='lk'>詳細は" + esc(l.label) + "の公式サイトでご確認ください：<a href='" + esc(l.url) + "'>" + esc(l.url) + "</a></div>").join('');
@@ -524,8 +525,9 @@ var MinaoshiReport = (function () {
     ".ref{font-size:11pt;color:#0c447c;background:#e6f1fb;border-radius:4px;padding:3px 6px;margin-top:3px}" +
     ".steps td{border-bottom:1px solid #d9e1ea;padding:6px 4px;vertical-align:top;page-break-inside:avoid}.steps tr{page-break-inside:avoid}.no{width:5%;color:#2563eb;font-weight:bold}.st{font-size:11.5pt;line-height:1.55}" +
     ".lk{font-size:10pt;color:#5b6878;margin-top:3px;word-break:break-all}.lk a{color:#2563eb}" +
-    ".bk{margin-top:6px}.bk a{display:inline-block;background:#2563eb;color:#fff;font-weight:bold;font-size:12.5pt;text-decoration:none;border-radius:6px;padding:5px 14px}" +
-    ".bkbox{margin-top:10px;border:2px solid #2563eb;border-radius:6px;padding:7px 10px;page-break-inside:avoid}.bkbox p{margin:0;font-size:11.5pt}" +
+    ".bk{width:auto;margin-top:6px}.bk td{border:3px solid #1d4fd0;border-radius:6px;padding:6px 16px}.bk a{text-decoration:none}.bkt{color:#1d4fd0;font-weight:bold;font-size:14pt}" +
+    ".bku{margin-top:4px;word-break:break-all}.bku a{text-decoration:underline;color:#1d4fd0}.bkt2{color:#1d4fd0;font-weight:bold;font-size:10.5pt}" +
+    ".bkbox{margin-top:10px;border:2px solid #1d4fd0;border-radius:6px;padding:7px 10px;page-break-inside:avoid}.bkbox p{margin:0;font-size:11.5pt}" +
     ".goal td{border-top:2px solid #1d4fd0;border-bottom:2px solid #1d4fd0}.note{font-size:9pt;color:#5b6878;margin-top:12px;line-height:1.5}" +
     "</style></head><body>" +
     "<table><tr><td><div class='brand'>YourLife株式会社</div><h1>家計見直し 結果レポート</h1></td><td class='meta'>" + esc(meta.name) + " 様（" + I.age + "歳）<br>作成日：" + esc(meta.date) + "<br>受付ID：" + esc(meta.id) + "</td></tr></table>" +
