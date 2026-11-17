@@ -52,7 +52,7 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
 .ic svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ic b{display:block;font-size:11px;font-weight:500;color:var(--sub);margin-top:3px}
 .ic.e span{background:#fff4d6;color:#a86e00}.ic.g span{background:#ffe8e1;color:#c8401f}.ic.c span{background:var(--k-soft);color:var(--k)}
-.catch{font-size:20px;font-weight:700;line-height:1.5;margin:0 0 6px}.catch small{display:block;font-size:14px;font-weight:500;color:var(--sub);margin-top:4px}
+.catch{font-size:20px;font-weight:700;line-height:1.5;margin:0 0 6px}.catch .c65{display:block;font-size:15px;color:#1d4fd0;margin-top:6px}.catch small{display:block;font-size:14px;font-weight:500;color:var(--sub);margin-top:4px}
 .chart{display:block;width:100%;max-width:340px;margin:6px auto 4px}
 .termlead{font-size:14.5px;font-weight:700;margin:10px 0 8px;text-align:left}
 .terms{display:grid;gap:7px;margin:0 0 6px}.term{display:flex;gap:10px;align-items:baseline;border-radius:10px;padding:9px 12px;font-size:14px;line-height:1.6;text-align:left}
@@ -88,7 +88,7 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
    <div class="ic g"><span><svg viewBox="0 0 24 24"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1.2-3.6 2.2-4.6.2 1.6 1 2.6 2 3 0-3 .3-5.6.8-8.4z"/></svg></span><b>ガス</b></div>
    <div class="ic c"><span><svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 10h19M6 15h4"/></svg></span><b>カード</b></div>
   </div>
-  <p class="catch">毎月の支払いを見直すと、<br>65歳までにいくら得するか<br>がわかります<small>浮いたお金をNISAの積立に回すところまで、次にやることもお伝えします</small></p>
+  <p class="catch">毎月の支払いを見直すと、<br>65歳までにいくら得するか<br>がわかります<span class="c65">65歳以上の方は、毎月と1年間で浮く金額がわかります</span><small>浮いたお金をNISAの積立に回すところまで、次にやることもお伝えします</small></p>
   <svg class="chart" viewBox="0 0 320 156" role="img" aria-label="浮く、もらえる、増えるを合わせたものが得する金額になる図">
    <rect x="8" y="104" width="40" height="26" rx="4" fill="#f6c77d"/>
    <text x="58" y="122" text-anchor="middle" font-size="18" font-weight="700" fill="#5b6878">+</text>
@@ -113,7 +113,7 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
    <div class="term f"><b>増える</b><span>浮いたお金を積み立てて、運用で増える分</span></div>
    <div class="term t"><b>得する</b><span>この3つを合わせた、65歳までの合計</span></div>
   </div>
-  <div class="chips"><span>65歳未満の方が対象</span><span>入力は約15分</span><span>スマホでもパソコンでも</span></div>
+  <div class="chips"><span>入力は約15分</span><span>スマホでもパソコンでも</span></div>
  </div>
  <div class="sec">進み方（全部で7ステップ）</div>
  <ol class="flow">
@@ -140,8 +140,8 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
  <button class="btn" id="start" type="button" style="width:100%">始める</button>
 </section>
 <section class="card step hide" data-s="1">
- <h2>1. あなたについて</h2><p class="d">65歳までの期間と、インターネットの料金の計算に使います。</p>
- <div class="f" id="f-age"><label>年齢<span class="req">必須</span></label><div class="row"><input type="number" id="age" inputmode="numeric" min="18" max="64"><span>歳</span></div><div class="err" id="ageErr">18〜64の数字で入力してください</div></div>
+ <h2>1. あなたについて</h2><p class="d">結果を計算する期間と、インターネットの料金の計算に使います。</p>
+ <div class="f" id="f-age"><label>年齢<span class="req">必須</span></label><div class="row"><input type="number" id="age" inputmode="numeric" min="18" max="99"><span>歳</span></div><div class="err" id="ageErr">18〜99の数字で入力してください</div></div>
  <div class="f" id="f-gender"><span class="lb">性別<span class="req">必須</span></span><select id="gender"><option value="">選択してください</option><option>男性</option><option>女性</option><option>回答しない</option></select><div class="err">選んでください</div></div>
  <div class="f" id="f-house"><span class="lb">お住まいの建物のタイプ（賃貸・持ち家どちらも）<span class="req">必須</span></span><div class="radios"><label class="radio"><input type="radio" name="house" value="戸建て"><span>戸建て</span></label><label class="radio"><input type="radio" name="house" value="マンション"><span>マンション・アパート</span></label></div><div class="err">選んでください</div></div>
 </section>
@@ -217,10 +217,10 @@ input:focus,select:focus{outline:3px solid rgba(37,99,235,.25);border-color:var(
 
 <section class="card step hide" data-s="7">
  <h2>7. あなたの見直し効果</h2><p class="d" id="rlead"></p>
- <div class="box mam"><div class="l">固定費の見直しで浮く金額</div><div class="v" id="vUku"></div><div class="s" id="sUku"></div></div>
- <div class="box kas"><div class="l">カードのポイントや返礼品でもらえる金額</div><div class="v" id="vKas"></div><div class="s" id="sKas"></div></div>
- <div class="box fuy"><div class="l">浮いたお金を運用して増える金額</div><div class="v" id="vFuy"></div><div class="s" id="sFuy"></div></div>
- <div class="total"><div class="l">見直しを実践することでこれから得する金額</div><div class="v" id="vTok"></div><div class="s" id="sTok"></div></div>
+ <div class="box mam"><div class="l" id="lUku">固定費の見直しで浮く金額</div><div class="v" id="vUku"></div><div class="s" id="sUku"></div></div>
+ <div class="box kas"><div class="l" id="lKas">カードのポイントや返礼品でもらえる金額</div><div class="v" id="vKas"></div><div class="s" id="sKas"></div></div>
+ <div class="box fuy" id="boxFuy"><div class="l">浮いたお金を運用して増える金額</div><div class="v" id="vFuy"></div><div class="s" id="sFuy"></div></div>
+ <div class="total"><div class="l" id="lTok">見直しを実践することでこれから得する金額</div><div class="v" id="vTok"></div><div class="s" id="sTok"></div></div>
  <div id="netChoice" class="f hide" style="margin-top:14px"><span class="lb">インターネットの候補を選んでください</span><div class="radios"><label class="radio"><input type="radio" name="netc" value="大手" checked><span id="netBig"></span></label><label class="radio"><input type="radio" name="netc" value="安さ重視"><span id="netCheap"></span></label></div></div>
  <div class="sec">内訳（年あたり）</div><table class="list" id="rows"></table>
  <div class="sendnote">「結果を送信する」を押すと、あなたが次にやることをまとめたPDFが届きます。次にやることは、送信したあとの画面にも表示されます。</div>
@@ -371,7 +371,8 @@ var MinaoshiCalc = (function () {
   }
 
   function run(M, inp) {
-    var years = M.settings.targetAge - inp.age;
+    var senior = inp.age >= M.settings.targetAge; // 65歳以上の方は1年分だけ計算し、運用で増える金額は出さない
+    var years = senior ? 1 : M.settings.targetAge - inp.age;
     var elec = Math.max(n(inp.elecSave) || 0, 0);
     var gas = inp.gasCur != null && inp.gasAfter != null ? Math.max(inp.gasCur - inp.gasAfter, 0) : 0;
     var ph = phone(M, inp.phone);
@@ -390,8 +391,8 @@ var MinaoshiCalc = (function () {
     return { years: years, elec: elec, gas: gas, phone: ph, net: nt, card: cd, furusato: furu,
       mamoruAnnual: mamoru, kaseguAnnual: kasegu,
       uku: Math.round(mamoru * years), kasegu: Math.round(kasegu * years),
-      fuyasu: Math.round(F - inv * years), next: next, invMonthly: inv / 12,
-      tokusuru: Math.round(mamoru * years) + Math.round(kasegu * years) + Math.round(F - inv * years) };
+      fuyasu: senior ? 0 : Math.round(F - inv * years), next: next, invMonthly: inv / 12, senior: senior,
+      tokusuru: Math.round(mamoru * years) + Math.round(kasegu * years) + (senior ? 0 : Math.round(F - inv * years)) };
   }
   return { run: run, tsumiPts: tsumiPts, mainPts: mainPts, fv: fv };
 })();
@@ -407,6 +408,15 @@ var MinaoshiReport = (function () {
   // 3つの金額の見出しと説明（画面・PDF・メールで同じ言葉を使う）
   function labels(R, M) {
     var rate = Math.round(M.settings.rate * 100);
+    if (R.senior) { // 65歳以上の方：1年間と毎月の金額
+      var mo = function (a) { return "毎月約" + yen(a / 12); };
+      return {
+        uku: { t: "固定費の見直しで浮く金額（1年間）", s: "携帯・ネット・電気・ガス・カードの年会費が下がった分（" + mo(R.mamoruAnnual) + "）" },
+        kas: { t: "カードのポイントや返礼品でもらえる金額（1年間）", s: "カードのポイントと、ふるさと納税の返礼品の分（" + mo(R.kaseguAnnual) + "）" },
+        fuy: { t: "", s: "" },
+        tok: { t: "見直しを実践することで1年間に得する金額", s: "浮く ＋ もらえる（" + mo(R.mamoruAnnual + R.kaseguAnnual) + "）" }
+      };
+    }
     return {
       uku: { t: "固定費の見直しで浮く金額", s: "携帯・ネット・電気・ガス・カードの年会費が下がった分（毎年" + yen(R.mamoruAnnual) + " × " + R.years + "年）" },
       kas: { t: "カードのポイントや返礼品でもらえる金額", s: "カードのポイントと、ふるさと納税の返礼品の分（毎年" + yen(R.kaseguAnnual) + " × " + R.years + "年）" },
@@ -490,7 +500,7 @@ var MinaoshiReport = (function () {
         how = cur > 0 ? "今の積立額（毎月" + yen(cur) + "）に上乗せして、毎月約" + yen(cur + m) + "にします。" : "今の積立額に、毎月約" + yen(m) + "を上乗せします。";
       } else if (I.card.nisa === "積み立てていない") how = "今の証券会社で、毎月約" + yen(m) + "の積立を始めましょう。";
       else how = "提案した証券会社でNISA口座を開設し、毎月約" + yen(m) + "の積立を始めましょう。";
-      list.push({ k: "浮いたお金を積み立てる", y: 0, goal: true, t: head + how + "「浮いたお金を運用して増える金額」は、この金額を" + M.settings.targetAge + "歳まで積み立てた場合の見込みです。",
+      list.push({ k: "浮いたお金を積み立てる", y: 0, goal: true, t: head + how + (R.senior ? "" : "「浮いたお金を運用して増える金額」は、この金額を" + M.settings.targetAge + "歳まで積み立てた場合の見込みです。"),
         links: I.card.nisa === "口座なし" && c.best && c.best.t ? links(M, [c.best.t.broker]) : [] });
     }
     // 相談希望の方だけ：最後に「担当コンサルタントに相談する」
@@ -499,7 +509,7 @@ var MinaoshiReport = (function () {
     return list;
   }
 
-  var NOTE = function (rate) { return "本レポートは参考値です。電気・ガスはエネチェンジの比較結果をもとに、ポイントやキャッシュバックを除いた金額で計算しています。携帯・インターネット・カードは公式に確認した割引前の基本料金・還元率で計算しています。使ったデータ量によって月額料金が変わるインターネット回線は比較の対象外としています。インターネットはお住まいの建物で利用できるかのご確認が必要です。料金や使用量が今のまま続いた場合の見込みで、実際の削減額を保証するものではありません。運用利回りは年" + rate + "%を使用しています。為替の影響を除いた株式指数（S&amp;P500・全世界株式）の長期実績を下回る、控えめな水準として設定しています。将来の運用成果を保証するものではありません。ポイントは1ポイント＝1円として計算しています。"; };
+  var NOTE = function (rate, senior) { return "本レポートは参考値です。電気・ガスはエネチェンジの比較結果をもとに、ポイントやキャッシュバックを除いた金額で計算しています。携帯・インターネット・カードは公式に確認した割引前の基本料金・還元率で計算しています。使ったデータ量によって月額料金が変わるインターネット回線は比較の対象外としています。インターネットはお住まいの建物で利用できるかのご確認が必要です。料金や使用量が今のまま続いた場合の見込みで、実際の削減額を保証するものではありません。" + (senior ? "" : "運用利回りは年" + rate + "%を使用しています。為替の影響を除いた株式指数（S&amp;P500・全世界株式）の長期実績を下回る、控えめな水準として設定しています。将来の運用成果を保証するものではありません。") + "ポイントは1ポイント＝1円として計算しています。"; };
 
   function html(R, I, M, meta) {
   const age = M.settings.targetAge, rate = Math.round(M.settings.rate * 100), L = labels(R, M);
@@ -531,14 +541,14 @@ var MinaoshiReport = (function () {
     ".goal td{border-top:2px solid #1d4fd0;border-bottom:2px solid #1d4fd0}.note{font-size:9pt;color:#5b6878;margin-top:12px;line-height:1.5}" +
     "</style></head><body>" +
     "<table><tr><td><div class='brand'>YourLife株式会社</div><h1>家計見直し 結果レポート</h1></td><td class='meta'>" + esc(meta.name) + " 様（" + I.age + "歳）<br>作成日：" + esc(meta.date) + "<br>受付ID：" + esc(meta.id) + "</td></tr></table>" +
-    "<p style='margin:12px 0 4px'>今回の見直しを実践した場合に、" + age + "歳までの" + R.years + "年間で見込める効果です。</p>" +
+    "<p style='margin:12px 0 4px'>今回の見直しを実践した場合に、" + (R.senior ? "1年間" : age + "歳までの" + R.years + "年間") + "で見込める効果です。</p>" +
     box(L.uku.t, '#9a5b00', R.uku, L.uku.s) +
     box(L.kas.t, '#0e6e70', R.kasegu, L.kas.s) +
-    box(L.fuy.t, '#1d4fd0', R.fuyasu, L.fuy.s) +
-    "<table class='tot'><tr><td><div class='tl'>見直しを実践することで<br>これから得する金額</div><div class='s'>" + L.tok.s + "</div></td><td class='tv'>" + yen(R.tokusuru) + "</td></tr></table>" +
+    (R.senior ? "" : box(L.fuy.t, '#1d4fd0', R.fuyasu, L.fuy.s)) +
+    "<table class='tot'><tr><td><div class='tl'>見直しを実践することで<br>" + (R.senior ? "1年間に" : "これから") + "得する金額</div><div class='s'>" + L.tok.s + "</div></td><td class='tv'>" + yen(R.tokusuru) + "</td></tr></table>" +
     "<h2>項目ごとの内訳（年あたり）</h2><table class='list'>" + tr + "</table>" +
     "<h2 style='page-break-before:always'>次にやること</h2>" + (bk ? "<div class='bkbox' style='margin:0 0 10px'><p>" + BOOK_LEAD + "</p>" + bkBtn(bk) + "</div>" : "") + "<div class='s' style='margin-bottom:4px'>" + COMMON + "</div><table class='steps'>" + ns + "</table>" +
-    "<div class='note'>" + NOTE(rate) + "</div>" +
+    "<div class='note'>" + NOTE(rate, R.senior) + "</div>" +
     "</body></html>";
 }
 
@@ -561,8 +571,8 @@ var MinaoshiReport = (function () {
       "<tr><td style='padding:0 4px 14px;font-size:15px;line-height:1.7;color:#1c2736'>" + esc(name) + " 様<br>家計見直しシミュレーターのご利用ありがとうございます。<br>結果レポート（PDF）を添付いたします。</td></tr>" +
       "<tr><td style='padding:0 0 14px'><table width='100%' cellpadding='0' cellspacing='0' style='background:#fff1d6;border:2px solid #e86f00;border-radius:10px'><tr><td style='padding:12px 14px;font-size:14px;line-height:1.7;color:#7a3d00;font-weight:bold'>添付のPDFには、項目ごとの内訳と、これからの進め方をくわしく載せています。必ず開いて、手元に保存してください。</td></tr></table></td></tr>" +
       (bk ? "<tr><td style='padding:0 0 14px'><table width='100%' cellpadding='0' cellspacing='0' style='background:#e8effd;border:2px solid #2563eb;border-radius:10px'><tr><td style='padding:12px 14px;font-size:14px;line-height:1.7;color:#1c2736'>" + BOOK_LEAD + bkBtn(bk) + "</td></tr></table></td></tr>" : "") +
-      "<tr><td style='padding:0 4px 8px;font-size:15px;font-weight:bold;color:#1c2736;border-left:4px solid #2563eb'>&nbsp;あなたの見直し効果（" + age + "歳までの" + R.years + "年間）</td></tr>" +
-      amt(L.uku.t, L.uku.s, R.uku, "#9a5b00", "#fff1d6") + amt(L.kas.t, L.kas.s, R.kasegu, "#0e6e70", "#dff3f3") + amt(L.fuy.t, L.fuy.s, R.fuyasu, "#1d4fd0", "#e6ecfd") +
+      "<tr><td style='padding:0 4px 8px;font-size:15px;font-weight:bold;color:#1c2736;border-left:4px solid #2563eb'>&nbsp;あなたの見直し効果（" + (R.senior ? "1年間" : age + "歳までの" + R.years + "年間") + "）</td></tr>" +
+      amt(L.uku.t, L.uku.s, R.uku, "#9a5b00", "#fff1d6") + amt(L.kas.t, L.kas.s, R.kasegu, "#0e6e70", "#dff3f3") + (R.senior ? "" : amt(L.fuy.t, L.fuy.s, R.fuyasu, "#1d4fd0", "#e6ecfd")) +
       "<tr><td style='padding:0 0 18px'><table width='100%' cellpadding='0' cellspacing='0' style='background:#1c2736;border-radius:10px'><tr><td style='padding:14px 16px'><div style='font-size:13px;color:#c9d4e2'>" + L.tok.t + "</div><div style='font-size:32px;font-weight:bold;color:#fff;line-height:1.3'>" + yen(R.tokusuru) + "</div><div style='font-size:12px;color:#c9d4e2'>" + L.tok.s + "</div></td></tr></table></td></tr>" +
       "<tr><td style='padding:0 4px 4px;font-size:15px;font-weight:bold;color:#1c2736;border-left:4px solid #2563eb'>&nbsp;次にやること</td></tr>" +
       "<tr><td style='padding:0 4px 10px;font-size:12px;color:#5b6878'>" + COMMON + "</td></tr>" + st +
@@ -570,8 +580,8 @@ var MinaoshiReport = (function () {
       "</table></div>";
     const text = name + " 様\n\n家計見直しシミュレーターのご利用ありがとうございます。\n結果レポート（PDF）を添付いたします。\n添付のPDFには、項目ごとの内訳と、これからの進め方をくわしく載せています。必ず開いて、手元に保存してください。\n\n"
       + (bk ? BOOK_LEAD + "\n" + BOOK_LABEL + "：" + bk + "\n\n" : "")
-      + "■ あなたの見直し効果（" + age + "歳までの" + R.years + "年間）\n"
-      + L.uku.t + "：" + yen(R.uku) + "\n" + L.kas.t + "：" + yen(R.kasegu) + "\n" + L.fuy.t + "：" + yen(R.fuyasu) + "\n" + L.tok.t + "：" + yen(R.tokusuru) + "\n\n"
+      + "■ あなたの見直し効果（" + (R.senior ? "1年間" : age + "歳までの" + R.years + "年間") + "）\n"
+      + L.uku.t + "：" + yen(R.uku) + "\n" + L.kas.t + "：" + yen(R.kasegu) + "\n" + (R.senior ? "" : L.fuy.t + "：" + yen(R.fuyasu) + "\n") + L.tok.t + "：" + yen(R.tokusuru) + "\n\n"
       + "■ 次にやること\n" + COMMON + "\n\n"
       + steps.map((s, i) => (i + 1) + ". " + s.k + (s.y > 0 ? "（年" + yen(s.y) + "）" : "") + "\n" + s.t + (s.links || []).map(l => "\n詳細は" + l.label + "の公式サイトでご確認ください：" + l.url).join('') + (s.book ? "\n" + BOOK_LABEL + "：" + s.book : "")).join("\n\n") + "\n\n"
       + "浮いたお金の活かし方は、担当コンサルタントとご一緒に考えていきましょう。\n\nYourLife株式会社";
@@ -647,8 +657,7 @@ function bad(id, cond) { $(id).classList.toggle("bad", !!cond); return !!cond; }
 function check(s) {
   let b = false; const I = input();
   if (s === 1) {
-    $("ageErr").textContent = I.age >= 65 ? "このシミュレーターは65歳未満の方が対象です" : "18〜64の数字で入力してください";
-    b = bad("f-age", !(Number.isInteger(I.age) && I.age >= 18 && I.age < 65)) | b; b = bad("f-gender", !$("gender").value) | b; b = bad("f-house", !val("house")) | b;
+    b = bad("f-age", !(Number.isInteger(I.age) && I.age >= 18 && I.age <= 99)) | b; b = bad("f-gender", !$("gender").value) | b; b = bad("f-house", !val("house")) | b;
   }
   if (s === 2) {
     b = bad("f-elecResult", !val("elecResult"));
@@ -674,8 +683,11 @@ function check(s) {
 
 function result() {
   const I = input(), R = MinaoshiCalc.run(M, I);
-  $("rlead").textContent = `${I.age}歳から${M.settings.targetAge}歳までの${R.years}年間で見込める金額です。`;
+  $("rlead").textContent = R.senior ? "見直しを実践した場合に、1年間で見込める金額です。" : `${I.age}歳から${M.settings.targetAge}歳までの${R.years}年間で見込める金額です。`;
   const L = MinaoshiReport.labels(R, M);
+  // 65歳以上の方は1年間の金額だけ（運用で増える金額は出さない）
+  $("lUku").textContent = L.uku.t; $("lKas").textContent = L.kas.t; $("lTok").textContent = L.tok.t;
+  $("boxFuy").classList.toggle("hide", !!R.senior);
   $("vUku").textContent = yen(R.uku); $("sUku").textContent = L.uku.s;
   $("vKas").textContent = yen(R.kasegu); $("sKas").textContent = L.kas.s;
   $("vFuy").textContent = yen(R.fuyasu); $("sFuy").textContent = L.fuy.s;
